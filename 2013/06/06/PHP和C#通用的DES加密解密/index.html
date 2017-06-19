@@ -1,0 +1,894 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="I'm toryzen,thx..." />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="因为一个项目的需要，需要PHP与C#之间的DES加密解密实现，网上一顿找例子，大部分都是坑爹的啊，即使题目上写着能互通的都不行，后来经过自己的一些改进，终于把这个PHP和C#的DES加密解密给调通了，不容易啊，有需要的朋友，可以直接拿来用，绝不坑爹！ 关于DES的原理以后有时间再慢慢的研究，研究完到时候跟大家汇报一下～">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP和C#通用的DES加密解密">
+<meta property="og:url" content="http://toryzen.cn/2013/06/06/PHP和C#通用的DES加密解密/index.html">
+<meta property="og:site_name" content="Hello Toryzen">
+<meta property="og:description" content="因为一个项目的需要，需要PHP与C#之间的DES加密解密实现，网上一顿找例子，大部分都是坑爹的啊，即使题目上写着能互通的都不行，后来经过自己的一些改进，终于把这个PHP和C#的DES加密解密给调通了，不容易啊，有需要的朋友，可以直接拿来用，绝不坑爹！ 关于DES的原理以后有时间再慢慢的研究，研究完到时候跟大家汇报一下～">
+<meta property="og:updated_time" content="2017-06-19T04:02:50.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP和C#通用的DES加密解密">
+<meta name="twitter:description" content="因为一个项目的需要，需要PHP与C#之间的DES加密解密实现，网上一顿找例子，大部分都是坑爹的啊，即使题目上写着能互通的都不行，后来经过自己的一些改进，终于把这个PHP和C#的DES加密解密给调通了，不容易啊，有需要的朋友，可以直接拿来用，绝不坑爹！ 关于DES的原理以后有时间再慢慢的研究，研究完到时候跟大家汇报一下～">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2013/06/06/PHP和C#通用的DES加密解密/"/>
+
+
+
+
+
+  <title>PHP和C#通用的DES加密解密 | Hello Toryzen</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1262360703&web_id=1262360703" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hello Toryzen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2013/06/06/PHP和C#通用的DES加密解密/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello Toryzen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP和C#通用的DES加密解密</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-06-06T21:04:55+08:00">
+                2013-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>因为一个项目的需要，需要PHP与C#之间的DES加密解密实现，网上一顿找例子，大部分都是坑爹的啊，即使题目上写着能互通的都不行，后来经过自己的一些改进，终于把这个PHP和C#的DES加密解密给调通了，不容易啊，有需要的朋友，可以直接拿来用，绝不坑爹！</p>
+<p>关于DES的原理以后有时间再慢慢的研究，研究完到时候跟大家汇报一下～</p>
+<a id="more"></a>
+<p>PHP代码：</p>
+<p>[php]<br>class DesCrypt {</p>
+<pre><code>var $key ;
+var $iv ;
+
+function DES($key) {
+    // key长度8例如:1234abcd
+    $this-&amp;gt;key = $key;
+    $this-&amp;gt;iv  = $key;
+}
+
+function encrypt($str) {
+    // 加密，返回大写十六进制字符串
+    $size = mcrypt_get_block_size ( MCRYPT_DES, MCRYPT_MODE_CBC );
+    $str = $this-&amp;gt;pkcs5Pad ( $str, $size );
+    return strtoupper ( bin2hex ( mcrypt_cbc ( MCRYPT_DES, $this-&amp;gt;key, $str, MCRYPT_ENCRYPT, $this-&amp;gt;iv ) ) );
+}
+
+function decrypt($str) {
+    // 解密
+    $strBin = $this-&amp;gt;hex2bin ( strtolower ( $str ) );
+    $str = mcrypt_cbc ( MCRYPT_DES, $this-&amp;gt;key, $strBin, MCRYPT_DECRYPT, $this-&amp;gt;iv );
+    $str = $this-&amp;gt;pkcs5Unpad ( $str );
+    return $str;
+}
+
+function hex2bin($hexData) {
+    $binData = &amp;quot;&amp;quot;;
+    for($i = 0; $i &amp;lt; strlen ( $hexData ); $i += 2) {             $binData .= chr ( hexdec ( substr ( $hexData, $i, 2 ) ) );         }         return $binData;     }     function pkcs5Pad($text, $blocksize) {         $pad = $blocksize - (strlen ( $text ) % $blocksize);         return $text . str_repeat ( chr ( $pad ), $pad );     }     function pkcs5Unpad($text) {         $pad = ord ( $text {strlen ( $text ) - 1} );         if ($pad &amp;gt; strlen ( $text ))
+        return false;
+    if (strspn ( $text, chr ( $pad ), strlen ( $text ) - $pad ) != $pad)
+        return false;
+    return substr ( $text, 0, - 1 * $pad );
+}
+</code></pre><p>}<br>[/php]</p>
+<p>C#代码</p>
+<p>[code lang=”c”]<br>class MYDES<br>    {</p>
+<pre><code>    public static string Encrypt(string source, string _DESKey)
+    {
+
+        byte[] inputByteArray = Encoding.UTF8.GetBytes(source);
+        byte[] k = ASCIIEncoding.ASCII.GetBytes(_DESKey);
+        byte[] result = null;
+        StringBuilder sb = new StringBuilder();
+        string encrypt = &amp;quot;&amp;quot;;
+        using (DES des = new DESCryptoServiceProvider() { Key = k, IV = k })
+        {
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                using (CryptoStream encStream = new CryptoStream(outStream, des.CreateEncryptor(), CryptoStreamMode.Write))
+                {
+                    encStream.Write(inputByteArray, 0, inputByteArray.Length);
+                    encStream.Close();
+                    result = outStream.ToArray();
+                    foreach (byte b in outStream.ToArray())
+                    {
+                        sb.AppendFormat(&amp;quot;{0:X2}&amp;quot;, b);
+                    }
+                    encrypt = sb.ToString();
+                }
+            }
+        }
+
+        //string encrypt;
+        return MYDES.byteToHexStr(result);
+    }
+    public static byte[] strToToHexByte(string hexString)
+    {
+        hexString = hexString.Replace(&amp;quot; &amp;quot;, &amp;quot;&amp;quot;); if ((hexString.Length % 2) != 0) hexString += &amp;quot; &amp;quot;;
+        byte[] returnBytes = new byte[hexString.Length / 2]; for (int i = 0; i &amp;lt; returnBytes.Length; i++)
+            returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+        return returnBytes;
+    }
+
+    public static string byteToHexStr(byte[] bytes)
+    {
+        string returnStr = &amp;quot;&amp;quot;; if (bytes != null)
+        {
+            for (int i = 0; i &amp;lt; bytes.Length; i++)
+            {
+                returnStr += bytes[i].ToString(&amp;quot;X2&amp;quot;);
+            }
+        }
+        return returnStr;
+    }
+
+    public static string Decrypt(string source, string sKey)
+    {
+        try
+        {
+            byte[] s = MYDES.strToToHexByte(source);
+            byte[] k = ASCIIEncoding.ASCII.GetBytes(sKey);
+            byte[] result = null;
+            using (DES des = new DESCryptoServiceProvider() { Key = k, IV = k })
+            using (MemoryStream inStream = new MemoryStream(s))
+            {
+                using (CryptoStream encStream = new CryptoStream(inStream, des.CreateDecryptor(), CryptoStreamMode.Read))
+                {
+                    List byteList = new List();
+                    int i;
+                    while ((i = encStream.ReadByte()) != -1)
+                    {
+                        byteList.Add((byte)i);
+                    }
+                    result = byteList.ToArray();
+                }
+            }
+            string str = Encoding.UTF8.GetString(result);
+            return str;
+
+        }
+        catch (Exception e) { return e.ToString(); }
+    }
+
+}
+</code></pre><p>[/code]</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/06/06/项目管理系统上线讲解PPT/" rel="next" title="项目管理系统上线讲解PPT">
+                <i class="fa fa-chevron-left"></i> 项目管理系统上线讲解PPT
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/07/04/某产品整体架构/" rel="prev" title="某产品整体架构">
+                某产品整体架构 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=576" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="toryzen" />
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=576"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

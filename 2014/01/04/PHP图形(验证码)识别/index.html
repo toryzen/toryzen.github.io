@@ -1,0 +1,1194 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="I'm toryzen,thx..." />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="因为一个项目的需要，需要验证码的识别，以前并没有接触过，后来研究了一下，做了个简单的PHP脚本(文章中的仅是做了简单整理,不是很严谨)，基本上满足了现在的需要，来分享一下，适合于基础选手。 验证码是这样的没有背景色，并且只有在深色的背景下才能看清，一共只有4个数字。 看了部分资料知道了思路，就很好办了。 1、图形按坐标转换为0,1 2、去除干扰(这个图片里没有) 3、切割 4、对比(主要是字典强大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP图形(验证码)识别">
+<meta property="og:url" content="http://toryzen.cn/2014/01/04/PHP图形(验证码)识别/index.html">
+<meta property="og:site_name" content="Hello Toryzen">
+<meta property="og:description" content="因为一个项目的需要，需要验证码的识别，以前并没有接触过，后来研究了一下，做了个简单的PHP脚本(文章中的仅是做了简单整理,不是很严谨)，基本上满足了现在的需要，来分享一下，适合于基础选手。 验证码是这样的没有背景色，并且只有在深色的背景下才能看清，一共只有4个数字。 看了部分资料知道了思路，就很好办了。 1、图形按坐标转换为0,1 2、去除干扰(这个图片里没有) 3、切割 4、对比(主要是字典强大">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/01/code.gif">
+<meta property="og:image" content="http://torblog.sinaapp.com/wp-includes/js/tinymce/plugins/wordpress/img/trans.gif">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/01/RTX截图未命名-158x300.jpg">
+<meta property="og:updated_time" content="2017-06-19T04:56:55.519Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP图形(验证码)识别">
+<meta name="twitter:description" content="因为一个项目的需要，需要验证码的识别，以前并没有接触过，后来研究了一下，做了个简单的PHP脚本(文章中的仅是做了简单整理,不是很严谨)，基本上满足了现在的需要，来分享一下，适合于基础选手。 验证码是这样的没有背景色，并且只有在深色的背景下才能看清，一共只有4个数字。 看了部分资料知道了思路，就很好办了。 1、图形按坐标转换为0,1 2、去除干扰(这个图片里没有) 3、切割 4、对比(主要是字典强大">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2014/01/code.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2014/01/04/PHP图形(验证码)识别/"/>
+
+
+
+
+
+  <title>PHP图形(验证码)识别 | Hello Toryzen</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1262360703&web_id=1262360703" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hello Toryzen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/01/04/PHP图形(验证码)识别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello Toryzen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP图形(验证码)识别</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-01-04T15:53:19+08:00">
+                2014-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>因为一个项目的需要，需要验证码的识别，以前并没有接触过，后来研究了一下，做了个简单的PHP脚本(文章中的仅是做了简单整理,不是很严谨)，基本上满足了现在的需要，来分享一下，适合于基础选手。</p>
+<p>验证码是这样的<a href="/uploads/2014/01/code.gif"><img src="/uploads/2014/01/code.gif" alt="" title="code"></a>没有背景色，并且只有在深色的背景下才能看清，一共只有4个数字。</p>
+<p>看了部分资料知道了思路，就很好办了。</p>
+<p>1、图形按坐标转换为0,1</p>
+<p>2、去除干扰(这个图片里没有)</p>
+<p>3、切割</p>
+<p>4、对比(主要是字典强大,用到的主要函数就是similar_text)</p>
+<p>有了这四步就可以开工了。<br><a id="more"></a><img src="http://torblog.sinaapp.com/wp-includes/js/tinymce/plugins/wordpress/img/trans.gif" alt="" title="更多..."></p>
+<blockquote>
+<p>[php]</p>
+<p>class code{</p>
+<pre><code>public $keyvalues;
+
+public $hexarray = array();
+
+public $pwidth;
+
+public function __construct(){
+
+    for($i=0;$i&amp;lt;256;$i++){
+
+        $this-&amp;gt;hexarray[$i] = dechex($i);
+
+    }
+
+    $this-&amp;gt;keyvalues = array(
+
+        array(0,&apos;001110001100100100001010000101000010100001010000101100100011100&apos;),
+
+        array(0,&apos;111000010010000000100000010000001000000100000010010010001110000&apos;),
+
+        array(0,&apos;011100011001001000010100001010000101000010100001011001000111000&apos;),
+
+        array(0,&apos;111000100100000010000010000010000010000010100100111000&apos;),
+
+        array(1,&apos;000010000011000010100000010000001000000100000010000001000000100&apos;),
+
+        array(1,&apos;000001000011000101000001000001000001000001000001000001&apos;),
+
+        array(1,&apos;100000100000110000101000000110000011000001100000110000010000001&apos;),
+
+        array(1,&apos;001000001100001010001001000100100010010001001000100100010010000&apos;),
+
+        array(2,&apos;011110000001100000010000001000001000011000011000001000001111110&apos;),
+
+        array(2,&apos;011110000000110000000100000001000000100000110000011000000100000011111100&apos;),
+
+        array(2,&apos;011110000011000001000001000010001100011000010000111111&apos;),
+
+        array(2,&apos;001111000011001100110000100000000100000001100000001000000010000000100000001000000011000000111111100&apos;),
+
+        array(3,&apos;011100010001000000100001100000011000000100000010010010000111000&apos;),
+
+        array(3,&apos;001110001000100000010000110000001100000010000001001001000011100&apos;),
+
+        array(3,&apos;000111000100010000001000011000000110000001000000100100100001110&apos;),
+
+        array(3,&apos;111000000100000100011000001100000100000100001000111000&apos;),
+
+        array(3,&apos;011100001000100100001001001100010001100100001001000010011001000101110000&apos;),
+
+        array(4,&apos;000010000011000010100001010001001001000100111111000001000000100&apos;),
+
+        array(4,&apos;000010000110001010001010010010100010111111000010000010&apos;),
+
+        array(5,&apos;011111001000000100000111110010001100000010000001011001100111100&apos;),
+
+        array(5,&apos;000111100010000001000001111100100010000000000000000110010001111&apos;),
+
+        array(5,&apos;011111010000010000111110100011000001000001110011011110&apos;),
+
+        array(6,&apos;000001100010000100000100000011111101000001100001001001000010000&apos;),
+
+        array(6,&apos;000111000100110100000010111001100110100001010000101100100011110&apos;),
+
+        array(6,&apos;011100010011000000000011100010011000000100000010010010001111000&apos;),
+
+        array(6,&apos;0001110000110010011000110100000001011100011000110100000101000001010000010010001000011100&apos;),
+
+        array(7,&apos;111111100000010000010000010000010000001000001000001000001000000&apos;),
+
+        array(7,&apos;011111100000100000010000010000001000000100000100000010000001000&apos;),
+
+        array(7,&apos;111111000010000010000100000100000100001000001000001000&apos;),
+
+        array(8,&apos;011110010000101000010011110011001101000010100001011001100111100&apos;),
+
+        array(9,&apos;001110001100100100001010000101100110011101000000101000100011100&apos;),
+
+        array(9,&apos;0111100011000100100001101000001010000010110001100111101000000010100001101100110001111000&apos;),
+
+        array(9,&apos;001111000011000100010000110010000010010000010011000110001111010000000010010000110011001100001111000&apos;),
+
+    );
+
+}
+
+//获取图片
+
+public function getImage($url){
+
+    if(!$url)return false;
+
+    $dot = explode(&amp;quot;.&amp;quot;,$url);
+
+    if($dot[count($dot)-1]==&amp;quot;gif&amp;quot;){
+
+        $img = imagecreatefromgif($url);
+
+    }
+
+    else if($dot[count($dot)-1]==&amp;quot;png&amp;quot;){
+
+        $img = imagecreatefrompng($url);
+
+    }
+
+    else if($dot[count($dot)-1]==&amp;quot;jpg&amp;quot;){
+
+        $img = imagecreatefromjpeg($url);
+
+    }else{
+
+        $img  = false;
+
+    }
+
+    return $img;
+
+}
+
+//转为01
+
+public function imgTobin($image){
+
+    $data = array();
+
+    for($y = 0; $y &amp;lt; imagesy($image); $y++)
+
+    {
+
+        for($x = 0; $x &amp;lt; imagesx($image); $x++)
+
+        {
+
+            $colors_reg = imagecolorsforindex($image, imagecolorat($image, $x, $y));
+
+            if( $this-&amp;gt;hexarray[ $colors_reg[&apos;red&apos;] ].$this-&amp;gt;hexarray[ $colors_reg[&apos;green&apos;] ].$this-&amp;gt;hexarray[ $colors_reg[&apos;blue&apos;] ]==&apos;abacad&apos;){
+
+                $data[$y][$x]=0;
+
+            }else{
+
+                if($this-&amp;gt;hexarray[ $colors_reg[&apos;red&apos;] ].$this-&amp;gt;hexarray[ $colors_reg[&apos;green&apos;] ].$this-&amp;gt;hexarray[ $colors_reg[&apos;blue&apos;] ]&amp;gt;&amp;quot;969696&amp;quot;){
+
+                    $data[$y][$x]=1;
+
+                }else{
+
+                    $data[$y][$x]=0;
+
+                }
+
+            }
+
+
+        }
+
+    }
+
+    return $data;
+
+}
+
+//获取区域
+
+public function getArea($data){
+
+    foreach($data as  $lkey =&amp;gt; $line){
+
+
+        foreach($line as $fkey =&amp;gt; $filed){
+
+            if($line[$fkey-1]!=$line[$fkey]){
+
+                $sprx[] = &amp;quot;$fkey&amp;quot;;
+
+                $spry[] = &amp;quot;$lkey&amp;quot;;
+
+
+            }
+
+        }
+
+    }
+
+
+    sort($sprx);
+
+    sort($spry);
+
+    $sqare[&apos;min&apos;][&apos;x&apos;] = $sprx[0];
+
+    $sqare[&apos;min&apos;][&apos;y&apos;] = $spry[0];
+
+    $sqare[&apos;max&apos;][&apos;x&apos;] = $sprx[count($sprx)-1];
+
+    $sqare[&apos;max&apos;][&apos;y&apos;] = $spry[count($spry)-1];
+
+    $this-&amp;gt;pwidth = ($sqare[&apos;max&apos;][&apos;x&apos;]-$sqare[&apos;min&apos;][&apos;x&apos;])/4;
+
+    $xx = 0;
+
+    $yy = 0;
+
+    foreach($data as  $lkey =&amp;gt; $line){
+
+        foreach($line as $fkey =&amp;gt; $filed){
+
+            if($fkey&amp;gt;=$sqare[&apos;min&apos;][&apos;x&apos;]&amp;amp;&amp;amp;$lkey&amp;gt;=$sqare[&apos;min&apos;][&apos;y&apos;]&amp;amp;&amp;amp;$fkey&amp;lt;=$sqare[&apos;max&apos;][&apos;x&apos;]&amp;amp;&amp;amp;$lkey&amp;lt;=$sqare[&apos;max&apos;][&apos;y&apos;]){
+
+                $ndata[$yy][$xx]=$line[$fkey];
+
+                $xx++;
+
+            }
+
+        }
+
+        if($lkey&amp;gt;=$sqare[&apos;min&apos;][&apos;y&apos;]&amp;amp;&amp;amp;$lkey&amp;lt;=$sqare[&apos;max&apos;][&apos;y&apos;]){
+
+            $yy++;
+
+        }
+
+    }
+
+    return $ndata;
+
+}
+
+//切割
+
+public function pExplode($ndata){
+
+    for($i=0;$i&amp;lt;4;$i++){
+
+        $x = 0;
+
+        foreach($ndata as  $lkey =&amp;gt; $line){
+
+            foreach($line as $fkey =&amp;gt; $filed){
+
+                if($x&amp;gt;=$this-&amp;gt;pwidth*$i&amp;amp;&amp;amp;$x&amp;lt;$this-&amp;gt;pwidth*($i+1)){
+
+                    $word[$i].= $line[$fkey];
+
+                }
+
+                $x++;
+
+            }
+
+            $x = 0;
+
+        }
+
+    }
+
+    return $word;
+
+}
+
+//对比
+
+public function getNum($word){
+
+    $i = 0;
+
+    foreach($word as $numString)
+
+    {
+
+        $num = 0;
+
+        foreach($this-&amp;gt;keyvalues as $value)
+
+        {
+
+            $percent=0.0;
+
+            similar_text($value[1], $numString,$percent);
+
+            $n[$i][&apos;percent&apos;] = intval($percent);
+
+            $n[$i][&apos;key&apos;] = $value[0];
+
+            $i++;
+
+        }
+
+        $percent = 0;
+
+        foreach($n as $v){
+
+            if($v[&apos;percent&apos;]&amp;gt;$percent){
+
+                $percent = $v[&apos;percent&apos;];
+
+                $num = $v[&apos;key&apos;];
+
+            }
+
+        }
+
+        unset($n);
+
+        $result.=$num;
+
+    }
+
+    return  $result;
+
+}
+</code></pre><p>}</p>
+<p>[/php]<br>然后就是实例化然后调用<br>[php]</p>
+<p>$code = new code();</p>
+<p>$img = $code-&gt;getImage(&quot;1.gif&quot;);</p>
+<p>if($img){</p>
+<pre><code>$bin = $code-&amp;gt;imgTobin($img);
+
+foreach($bin as  $lkey =&amp;gt; $line){
+
+    foreach($line as $fkey =&amp;gt; $filed){
+
+        echo $line[$fkey]==1?$line[$fkey]:&amp;quot;0&amp;quot;;
+
+    }
+
+    echo &amp;quot;\n&amp;quot;;
+
+}
+
+echo &amp;quot;\n&amp;quot;;
+
+
+if($bin){
+
+    $are = $code-&amp;gt;getArea($bin);
+
+    if($are){
+
+
+        foreach($are as  $lkey =&amp;gt; $line){
+
+            foreach($line as $fkey =&amp;gt; $filed){
+
+                echo $line[$fkey]==1?$line[$fkey]:&amp;quot;0&amp;quot;;
+
+            }
+
+            echo &amp;quot;\n&amp;quot;;
+
+        }
+
+        echo &amp;quot;\n&amp;quot;;
+
+
+        foreach($are as  $lkey =&amp;gt; $line){
+
+            foreach($line as $fkey =&amp;gt; $filed){
+
+                echo $line[$fkey]==1?$line[$fkey]:&amp;quot; &amp;quot;;
+
+            }
+
+            echo &amp;quot;\n&amp;quot;;
+
+        }
+
+        echo &amp;quot;\n&amp;quot;;
+
+
+        $exp = $code-&amp;gt;pExplode($are);
+
+        if($exp){
+
+            $num = $code-&amp;gt;getNum($exp);
+
+            echo $num;
+
+        }else{
+
+            echo &amp;quot;Explode area error!&amp;quot;;
+
+        }
+
+
+    }else{
+
+        echo &amp;quot;get area error!&amp;quot; ;
+
+    }
+
+}else{
+
+    echo &amp;quot;get bin error!&amp;quot; ;
+
+}
+</code></pre><p>}else{</p>
+<pre><code>echo &amp;quot;img type error!&amp;quot; ;
+</code></pre><p>}</p>
+<p>[/php]<br>最后的效果<br><a href="/uploads/2014/01/RTX截图未命名.jpg"><img src="/uploads/2014/01/RTX截图未命名-158x300.jpg" alt="" title="RTX截图未命名"></a></p>
+</blockquote>
+<p>这个脚本只是为了满足我的这个验证码写的，如果需要验证其他的，还需要在图形01转换，和切割上做点文章，经过几天的字典填充，现在识别率还不错。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/01/01/个人终端 － 多平台消息通知/" rel="next" title="个人终端 － 多平台消息通知">
+                <i class="fa fa-chevron-left"></i> 个人终端 － 多平台消息通知
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/01/04/新项目管理绩效考核模型/" rel="prev" title="新项目管理绩效考核模型">
+                新项目管理绩效考核模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=576" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="toryzen" />
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=576"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

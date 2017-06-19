@@ -1,0 +1,888 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="I'm toryzen,thx..." />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="敏捷开发，作为系统部应用开发组的业务工作模式，以迭代为周期，时间为1周或2周。每一次迭代中包含多个项目。其工作成果以项目版本或文档版本为体现。迭代 - sprint：一个敏捷团队的一段完整工作时间，在现在团队中工作时间为1周或2周且均以周一作为开始，以本周末或下周末作为结束。 项目 - project：为了实现一个或一组特定目标的开发工作，在现在的团队中项目的体现为以产品的版本号为工作成果的一系列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="敏捷开发项目管理[2017版指导规范]">
+<meta property="og:url" content="http://toryzen.cn/2017/03/10/敏捷开发项目管理[2017版指导规范]/index.html">
+<meta property="og:site_name" content="Hello Toryzen">
+<meta property="og:description" content="敏捷开发，作为系统部应用开发组的业务工作模式，以迭代为周期，时间为1周或2周。每一次迭代中包含多个项目。其工作成果以项目版本或文档版本为体现。迭代 - sprint：一个敏捷团队的一段完整工作时间，在现在团队中工作时间为1周或2周且均以周一作为开始，以本周末或下周末作为结束。 项目 - project：为了实现一个或一组特定目标的开发工作，在现在的团队中项目的体现为以产品的版本号为工作成果的一系列">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/06/11.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/06/2-1024x494.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/06/4-300x144.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/06/5-300x140.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/06/6-300x205.png">
+<meta property="og:updated_time" content="2017-06-19T04:56:55.839Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="敏捷开发项目管理[2017版指导规范]">
+<meta name="twitter:description" content="敏捷开发，作为系统部应用开发组的业务工作模式，以迭代为周期，时间为1周或2周。每一次迭代中包含多个项目。其工作成果以项目版本或文档版本为体现。迭代 - sprint：一个敏捷团队的一段完整工作时间，在现在团队中工作时间为1周或2周且均以周一作为开始，以本周末或下周末作为结束。 项目 - project：为了实现一个或一组特定目标的开发工作，在现在的团队中项目的体现为以产品的版本号为工作成果的一系列">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2017/06/11.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2017/03/10/敏捷开发项目管理[2017版指导规范]/"/>
+
+
+
+
+
+  <title>敏捷开发项目管理[2017版指导规范] | Hello Toryzen</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1262360703&web_id=1262360703" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hello Toryzen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/03/10/敏捷开发项目管理[2017版指导规范]/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello Toryzen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">敏捷开发项目管理[2017版指导规范]</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T17:49:31+08:00">
+                2017-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/团队管理/" itemprop="url" rel="index">
+                    <span itemprop="name">团队管理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="敏捷开发，作为系统部应用开发组的业务工作模式，以迭代为周期，时间为1周或2周。每一次迭代中包含多个项目。其工作成果以项目版本或文档版本为体现。"><a href="#敏捷开发，作为系统部应用开发组的业务工作模式，以迭代为周期，时间为1周或2周。每一次迭代中包含多个项目。其工作成果以项目版本或文档版本为体现。" class="headerlink" title="敏捷开发，作为系统部应用开发组的业务工作模式，以迭代为周期，时间为1周或2周。每一次迭代中包含多个项目。其工作成果以项目版本或文档版本为体现。"></a><span style="font-size: 13px;">敏捷开发，作为系统部应用开发组的业务工作模式，以迭代为周期，时间为1周或2周。每一次迭代中包含多个项目。其工作成果以项目版本或文档版本为体现。</span></h1><p>迭代 - sprint：一个敏捷团队的一段完整工作时间，在现在团队中工作时间为1周或2周且均以周一作为开始，以本周末或下周末作为结束。</p>
+<p>项目 - project：为了实现一个或一组特定<a href="http://baike.baidu.com/subview/53876/5460643.htm" target="_blank" rel="external">目标</a>的开发工作，在现在的团队中项目的体现为以产品的版本号为工作成果的一系列工作集合。</p>
+<p>产品 - Product：以解决工作中某个特定业务的服务，在现在团队中我们的产品是一套以程序为中心的完整的解决方案，一款产品有多个模块和一系列文档组成。</p>
+<p>PB - Product backlog：产品待办事项，在现在团队中的体现为一个业务上的需求或一款产品需要提供的特性。</p>
+<p>SB - sprint backlog：PB的子集，在现在团队中的体现为一个项目。</p>
+<p>AC - Accept Case：完成SB所需要的可验收的工作细节。</p>
+<p>TC – Test Case：AC的验收指标。</p>
+<a id="more"></a>
+<p><a href="/uploads/2017/06/11.png"><img src="/uploads/2017/06/11.png" alt="" title="1"></a></p>
+<p>&nbsp;</p>
+<p>2过程管理</p>
+<p><a href="/uploads/2017/06/2.png"><img src="/uploads/2017/06/2-1024x494.png" alt="" title="2"></a></p>
+<p>在我们的敏捷开发过程中，团队是逐步建立的，并且团队由产品负责人、技术经理、部门成员协商组建，在迭代中团队成员与阶段的对应关系：</p>
+<p>启动阶段：产品负责人</p>
+<p>规划阶段（迭代规划会议前）：产品负责人、技术经理</p>
+<p>规划阶段（迭代规划会议后）：产品负责人、技术经理、团队成员</p>
+<p>执行阶段：产品负责人、技术经理、团队成员</p>
+<p>收尾阶段：产品负责人</p>
+<h2 id="2-1启动"><a href="#2-1启动" class="headerlink" title="2.1启动"></a>2.1启动</h2><table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="132"><br><br><strong>输入</strong><br><br></td><br><td valign="top" width="113"><br><br><strong>流程</strong><br><br></td><br><td valign="top" width="151"><br><br><strong>输出</strong><br><br></td><br><td valign="top" width="189"><br><br><strong>参与者</strong><br><br></td><br><td valign="top" width="94"><br><br><strong>形式</strong><br><br></td><br><td valign="top" width="246"><br><br><strong>备注</strong><br><br></td><br></tr><br><tr><br><td width="132">初始需求</td><br><td width="113">沟通</td><br><td width="151">《故事清单-PB》</td><br><td width="189">产品负责人</td><br><td width="94">会议、访谈</td><br><td width="246">——</td><br></tr><br></tbody><br></table><br>启动的过程即领导批准可以开始动用资源的过程，此过程在我们的部门内部通常为口头形式(也有部分为书面)，此时应由确立的产品负责人跟进，对原始需求定义章程，并为需求方简单整理《故事清单-PB》。<br><br>&nbsp;<br><br>## 2.2规划<br><br><table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="189"><br><br><strong>输入</strong><br><br></td><br><td valign="top" width="85"><br><br><strong>流程</strong><br><br></td><br><td valign="top" width="208"><br><br><strong>输出</strong><br><br></td><br><td valign="top" width="180"><br><br><strong>参与者</strong><br><br></td><br><td valign="top" width="66"><br><br><strong>形式</strong><br><br></td><br><td valign="top" width="198"><br><br><strong>备注</strong><br><br></td><br></tr><br><tr><br><td width="189">《故事清单-PB》</td><br><td width="85">需求分析/设计</td><br><td width="208">文档：《需求分析文档》<br><br>Git：《Docs Readme》</td><br><td width="180">技术经理、产品负责人、需求方</td><br><td width="66">——</td><br><td width="198">——</td><br></tr><br><tr><br><td width="189">《需求分析文档》<br><br>《系统概要设计》<br><br>文档：《故事清单-PB》</td><br><td width="85">召开迭代计划会议</td><br><td width="208">文档：《故事清单-SB》</td><br><td width="180">高管,主管,技术经理,产品负责人</td><br><td width="66">会议</td><br><td width="198">&nbsp;</td><br></tr><br><tr><br><td width="189">《需求分析文档》<br><br>《Docs Readme详细设计》<br><br>《故事清单-SB》<br><br>《Docs Readme数据库设计》</td><br><td width="85">召开任务拆解会议</td><br><td width="208">文档《迭代面板》<br><br>Git：《模块Readme》</td><br><td width="180">技术经理,产品负责人,程序开发人员</td><br><td width="66">会议</td><br><td width="198">发送迭代申请邮件</td><br></tr><br></tbody><br></table><br>规划阶段分为需求分析、迭代规划、任务拆解。<br><br>### 2.2.1需求分析<br><br>在开始需求分析之前，产品负责人需在为知笔记为系统创建业务文档目录，技术经理在Gitlab中为系统创建代码存放目录。从已经整理的原始需求与基础指标开始着手进入系统项目的需求分析阶段，目前我们团队接收到的需求可以大致分为两个方向：一个涉及业务逻辑，一类涉及技术研究。产品负责人分析整理业务逻辑，技术经理分析整理技术研究。<br><br><strong>1</strong>、<strong>业务逻辑</strong><br><br>复杂业务形式的项目比较有代表性的即为社招系统，故障管理系统，此类项目的难点不仅在角色，人员，流程关系上复杂，还需要对在用户体验上进行合理的设计，此类型业务在需求分析阶段由产品负责人负责分析，技术经理需要对产品负责人的需求分析的合理性与技术实现性提出修改意见。产品负责人根据技术经理的修改意见做出一份达到需求方满意的《<span style="text-decoration: underline;">需求分析文档</span>》<br><br><em>《<span style="text-decoration: underline;">需求分析文档</span>》中主要从复杂业务逻辑(<strong>流程)</strong>，角色，原型方面在项目前期为需求方提供一个可预见型的项目原型，并为项目组的后期开发提供依据。</em><br><br><strong>2、 **</strong>技术研究<strong><br><br>业务逻辑的实现是建立在合理的技术架构之上的，每个项目中的技术经理就是要保证项目实现的技术架构的合理性、可行性。技术经理根据产品负责人产出的《需求规格说明书》中的分析原型，出具《Docs Readme》，《Docs Readme》包括:《<em><span style="text-decoration: underline;">Git Readme</span>__<span style="text-decoration: underline;">系统架构</span></em>》《<em><span style="text-decoration: underline;">Git Readme</span>__<span style="text-decoration: underline;">数据库设计</span></em>》。<br><br><em>《<span style="text-decoration: underline;">Git Readme</span><strong><span style="text-decoration: underline;">系统架构</span></strong>》中主要涉及程序的逻辑/<strong>时序,</strong>技术选型，核心技术点，为领导确定项目风险起关键性作用</em><br><br><em>《<span style="text-decoration: underline;">Git Readme</span><strong><span style="text-decoration: underline;">数据库设计</span></strong>》中主要描述项目的数据库详细设计</em><br><br>### 2.2.2迭代规划<br><br>经由领导层/需求方确认需求分析产出后，即可进入迭代规划阶段，以每周三的迭代规划会议为分界点。在【</strong>迭代规划会议<strong>】之前，产品负责人按照需求分析阶段的《需求分析文档》拆解出项目的《故事清单-SB》，并保证《故事清单-SB》里的每一个事项完成时间不超过一周。在【</strong>迭代规划会议<strong>】上，产品负责人讲解《故事清单-SB》，主管为每个故事事项确定优先级，并确定下一个迭代的内容和开发人员。<br><br>### 2.2.3任务拆解<br><br>迭代规划会议之后进入任务拆解阶段，由产品负责人组织召开【</strong>任务拆解会议<strong>】，成员包括产品负责人、技术经理、团队开发人员。在【</strong>任务拆解会议<strong>】上，需要对《故事清单》里的任务做详细设计。为了共同提升我们的技术能力，团队中每一个人员都要参与详细设计；在【</strong>任务拆解会议<strong>】上，产品负责人为团队讲解此次迭代《故事清单》的每一个故事，保证团队的每一个成员对每一个故事都能正确理解，技术经理根据《<em><span style="text-decoration: underline;">Git Readme</span>__<span style="text-decoration: underline;">概要设计</span></em>》《<em><span style="text-decoration: underline;">Git Readme</span>__<span style="text-decoration: underline;">数据库设计</span></em>》将每一个故事拆解成合理的模块，再由团队成员讨论成合理的详细设计方案。会议结束后技术经理根据大家的讨论结果修订《<em>Git Docs Readme</em>》，并由技术经理或指定成员完善《<em>Git Readme__模块详设</em>》。<br><br>会议上除了全团队补充修订完成详细设计外，还有一部分重要内容：根据迭代中项目的详细设计将《故事清单》进行细节拆分形成AC与TC并完成《迭代面板》，《迭代面板》应该提供最合适的产品行为描述，且每项AC均需达到可验收的标准且每项AC往往会对应多项TC来确保功能的可验收性，如AC中往往会包含用户登录，用户注册，采集数据至Mysql等，TC中包含使用正确用户名可以成功登陆并跳转至正确页面，使用错误用户名不可成功登陆且弹出错误提示等等。会议后产品负责人将产出的资料《迭代面板》发送团队的全体成员，并给主管发送一份迭代申请的邮件。<br><br>注意：1、一个迭代周期总是固定并一致的，一次迭代的标准时间是1周。<br><br>2、完成《迭代面板》时加入敏捷开发中的出牌阶段，为每一个迭代任务分配一个工作时长（由于每个人的技能特长不一样，这个时长是一个<br><br>相对值），每个迭代任务的工作时长不能超过8小时<br><br><em>这个会议的时间可能持续较长，但这也是我们共同提升的一个大好机会。</em>
+
+</strong>迭代申请邮件：<strong><br><table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="561"><br><br>        发件人：产品负责人<br><br>        收件人：主管，各职能组长<br><br>        抄送：团队成员，副总裁<br><br>                   标题：迭代申请-团队名- [2017年2月第一周] -周期1周<br><br>                   邮件内容：<br><br>             <em>“《迭代申请》内容”</em><br><br>        附件：<br><br>             《迭代申请》 《迭代面板》<br><br></td><br></tr><br></tbody><br></table><br>注意，后续邮件采用全部回复形式，从第一封迭代申请开始，后续邮件追上封全部回复<br><br>## 2.3 执行<br><br><table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="177">
+
+</td></tr></tbody></table></strong>输入<strong><br><br><br><td valign="top" width="76">
+
+</td></strong>流程<strong><br><br><br><td valign="top" width="151">
+
+</td></strong>输出<strong><br><br><br><td valign="top" width="189">
+
+</td></strong>参与者<strong><br><br><br><td valign="top" width="94">
+
+</td></strong>形式<strong><br><br><br><td valign="top" width="257">
+
+</td></strong>备注<strong><br><br><br><br><tr><br><td width="177">《需求分析文档》<br><br>《Git Readme系统架构》<br><br>《Git Readme数据库设计》<br><br>《<em>Git Readme__模块详设</em>》<br><br>《迭代面板》</td><br><td width="76">开发</td><br><td width="151">《迭代面板》(更新)</td><br><td width="189">技术经理、产品负责人、开发人员</td><br><td width="94">——</td><br><td width="257">每日发送敏捷记录</td><br></tr><br><br><br>迭代开发就不在详述了，期间均由产品负责人督促举行【日站会】并负责发送日敏捷记录邮件，日敏捷记录里包括每日站会的会议纪要和燃尽图。<br><br>&nbsp;
+
+</strong>日敏捷记录邮件：<strong><br><br><table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="561"><br><br>        发件人：产品负责人<br><br>        收件人：主管，各职能组长<br><br>        抄送：团队成员，副总裁<br><br>                   标题：日敏捷记录-周-星期 -团队名- [2017年2月第一周] -周期1周<br><br>                   邮件内容：<br><br>                 <em>燃尽图</em><br><br>                 日站会会议纪要<br><br></td><br></tr><br></tbody><br></table><br>注意，邮件采用全部回复形式，从第一封迭代申请开始，后续邮件追上封转发<br><br>### 2.3.1紧急任务<br><br>运维项目是为一线工作人员使用的，需要保证项目长期稳定的运行。紧急任务是指已上线系统功能存在目前影响正常业务运转的功能性BUG与已经过部门级领导审批的确定必须立即进展的临时性工作。接到紧急任务时，职能组长指定具体产品负责人负责。产品负责人接到任务后，产品负责人判断此任务是否可划分为紧急任务，如果是就加入到当前的《迭代面板》中，如果不是就加入到《故事清单-PB》中。紧急任务的一旦加入到《迭代面板》中，就必须要完成。<br><br>### 2.3.2项目开发<br><br>每次迭代可能包含多个项目。每个项目开始的前一天，产品负责人需要给需求方发送立项通知邮件
+
+</strong>立项通知邮件：<strong><br><table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="561">发件人：产品负责人<br><br>收件人：需求方<br><br>抄送：项目组所有干系人，团队成员,组长,主管<br><br>标题：项目名称[版本号]立项通知-团队名- [2017年2月第一周]迭代<br><br>邮件内容：<br><br>本项目开始开发，功能如下：<br><br>1、  *</td></tr></tbody></table></strong><br><br>2、  <em>*</em><br><br>&nbsp;<br><br>详细内容见附件<br><br>附件：<br><br>《需求文档》<br><br><br>
+
+<h3 id="2-3-3部署验收-测试"><a href="#2-3-3部署验收-测试" class="headerlink" title="2.3.3部署验收(测试)"></a>2.3.3部署验收(测试)</h3><p>内部验收为我们测试环境的验收，测试环境部署（在测试Jenkins环境中构建成功）完成后，由产品负责人对其进行功能性验收。注意，只有当在测试环境验收完成后，才可以进行正式环境的上线部署申请。</p>
+<h3 id="2-3-4部署交付-正式"><a href="#2-3-4部署交付-正式" class="headerlink" title="2.3.4部署交付(正式)"></a>2.3.4部署交付(正式)</h3><p>正式部署交付即将在测试环境已经测试通过的产品部署至正式环境（运维部署），并开通相应权限，由产品负责人进行简单点击测试，发送交付邮件。 自此时项目的资源由项目组转移至产品负责人。</p>
+<p><strong>结项通知邮件</strong></p>
+<table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="561"><br><br>        发件人：产品负责人<br><br>        收件人：需求方<br><br>        抄送：项目组所有干系人，团队成员，组长，主管<br><br>                   标题：产品名称[版本号]验收通知-团队名- [2017年2月第一周]迭代<br><br>                   邮件内容：<br><br>            本项目已完成，并已上线正式环境，请验收并及时回复确认邮件。<br><br>功能点：<br><br>1、  xxx<br><br>2、  xxx<br><br>        附件：<br><br>             《使用手册》<br><br></td><br></tr><br></tbody><br></table>
+
+<p>结项通知发出后，产品负责人需要与需求方沟通，为项目的工作成果的打分。需求方在结项通知邮件后回复反馈意见。</p>
+<h2 id="2-4-收尾"><a href="#2-4-收尾" class="headerlink" title="2.4 收尾"></a>2.4 收尾</h2><table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="132"><br><br><strong>输入</strong><br><br></td><br><td valign="top" width="113"><br><br><strong>流程</strong><br><br></td><br><td valign="top" width="151"><br><br><strong>输出</strong><br><br></td><br><td valign="top" width="189"><br><br><strong>参与者</strong><br><br></td><br><td valign="top" width="94"><br><br><strong>形式</strong><br><br></td><br><td valign="top" width="257"><br><br><strong>备注</strong><br><br></td><br></tr><br><tr><br><td width="132">–</td><br><td width="113">整理</td><br><td width="151">Email：《迭代验收》</td><br><td width="189">技术经理、产品负责人</td><br><td width="94">——</td><br><td width="257">&nbsp;</td><br></tr><br></tbody><br></table><br>收尾阶段工作为整理项目的产出文档，产品负责人完成相应工作，发送至各项目干系人，（注意：收尾执行必须与项目交付同天内完成）<br><br><strong>迭代验收邮件</strong><br><table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="561"><br><br>        发件人：产品负责人<br><br>        收件人：项目组所有干系人<br><br>        收件人：主管，各职能组长<br><br>        抄送：团队成员，副总裁<br><br>                   标题：迭代总结报告-团队名- [2017年2月第一周] -周期1周<br><br>                   邮件内容：<br><br>             <em>“《迭代总结》内容”</em><br><br>        附件：<br><br>             《迭代总结》，本次迭代中所涉及项目的流程邮件(压缩包)<br><br></td><br></tr><br></tbody><br></table>
+
+<h2 id="2-5会议"><a href="#2-5会议" class="headerlink" title="2.5会议"></a>2.5会议</h2><p><strong>会议清单</strong></p>
+<p><div align="center"></div></p>
+<table width="48%" border="0" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td nowrap="nowrap" width="19%"><br><br><strong>会议名称</strong><br><br></td><br><td nowrap="nowrap" width="26%"><br><br><strong>迭代计划会</strong><br><br></td><br><td nowrap="nowrap" width="28%"><br><br><strong>任务拆解会</strong><br><br></td><br><td nowrap="nowrap" width="25%"><br><br><strong>每日站会</strong><br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="19%"><br><br><strong>主持人</strong><br><br></td><br><td width="26%"><br><br>产品负责人<br><br></td><br><td width="28%"><br><br>产品负责人<br><br></td><br><td width="25%"><br><br>产品负责人<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="19%"><br><br><strong>参会</strong><br><br></td><br><td width="26%"><br><br>敏捷团队成员<br><br>职能组长<br><br>部门主管<br><br>高层领导<br><br></td><br><td width="28%"><br><br>敏捷团队成员<br><br></td><br><td width="25%"><br><br>敏捷团队成员<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="19%"><br><br><strong>时间</strong><br><br></td><br><td width="26%"><br><br>周三<br><br></td><br><td width="28%"><br><br>周四-周五<br><br></td><br><td nowrap="nowrap" width="25%"><br><br>工作日<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="19%"><br><br><strong>输入</strong><br><br></td><br><td width="26%"><br><br>《故事清单》<br><br></td><br><td width="28%"><br><br>《迭代计划》<br><br></td><br><td nowrap="nowrap" width="25%"><br><br>《迭代计划》<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="19%"><br><br><strong>产出</strong><br><br></td><br><td width="26%"></td><br><td width="28%"><br><br>《迭代申请》<br><br>《迭代面板》<br><br></td><br><td nowrap="nowrap" width="25%"></td><br></tr><br></tbody><br></table><br><br>&nbsp;<br><br>### 2.5.1迭代规划会议<br><br>产品负责人组织召开迭代计划会，产品负责人讲解《故事清单》里的事项，主管，组长或其他高层确定下一个迭代需要完成的PB，并为与PO，技术经理协商为每个PB确定一个交付时间，职能组长为下一个迭代确定团队开发人员。<br><br><strong>参与人员：</strong>产品负责人、主管、职能组长、技术经理<br><br><strong>时间：</strong>每周三17点<br><br>### 2.5.2 任务拆解会议<br><br>产品负责人组织召开任务拆解会议，开发团队将《故事清单》会中确定的SB拆解成可完成的任务，拆解过程中加入出牌环节，为每一个任务分配一个合理的完成时长。<br><br><strong>参与人员：</strong>产品负责人、技术经理、团队成员<br><br><strong>时间：</strong>每周四-周五<br><br><strong>产出文档：</strong>迭代面板<br><br>### 2.5.3 每日站会<br><br>产品负责人组织召开每日站会，开发人员交流任务完成的情况，领取未完成的任务，及时更新项目敏捷面板<br><br><strong>参与人员：</strong>产品负责人、技术经理、团队成员<br><br><strong>时间：</strong>每个工作日<br><br><strong>产出文档：</strong>迭代面板，日敏捷报告(Email)<br><br># <strong>3**</strong>成果列表<strong><br><br>## 3.1文档<br><br><table width="939" border="0" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td nowrap="nowrap" width="86">
+
+</td></tr></tbody></table></strong>类型<strong><br><br><br><td nowrap="nowrap" width="312">
+
+</td></strong>存数位置<strong><br><br><br><td nowrap="nowrap" width="350">
+
+</td></strong>名称<strong><br><br><br><td nowrap="nowrap" width="47">
+
+</td></strong>模板<strong><br><br><br><td nowrap="nowrap" width="47">
+
+</td></strong>必有<strong><br><br><br><td nowrap="nowrap" width="97">
+
+</td></strong>操作类型**<br><br><br><br><tr><br><td rowspan="2" nowrap="nowrap" width="86"><br><br>过程文档<br><br></td><br><td nowrap="nowrap" width="312">为知笔记/应用开发/部门报表/</td><br><td nowrap="nowrap" width="350"><br><br>故事清单<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="97"><br><br>更新<br><br></td><br></tr><br><tr><br><td width="312"><br><br>为知笔记/应用开发/部门报表/迭代记录<br><br></td><br><td nowrap="nowrap" width="350"><br><br>团队名- [2017年2月第一周] -周期1周<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="97"><br><br>新增<br><br></td><br></tr><br><tr><br><td rowspan="3" width="86"><br><br>技术文档<br><br></td><br><td rowspan="3" width="312"><a href="http://x.cn/[项目英文简称]/docs/" target="_blank" rel="external">http://x.cn/[项目英文简称]/docs/</a> [大版本号]/</td><br><td nowrap="nowrap" width="350"><br><br>Docs Readme系统概要设计<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="47"><br><br>×<br><br></td><br><td nowrap="nowrap" width="97"><br><br>新增/追加<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="350"><br><br>模块Readme详细设计<br><br></td><br><td nowrap="nowrap" width="47"><br><br>×<br><br></td><br><td nowrap="nowrap" width="47"><br><br>×<br><br></td><br><td nowrap="nowrap" width="97"><br><br>新增/追加<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="350"><br><br>Docs Readme 数据库的详细设计<br><br></td><br><td nowrap="nowrap" width="47"><br><br>×<br><br></td><br><td nowrap="nowrap" width="47"><br><br>×<br><br></td><br><td nowrap="nowrap" width="97"><br><br>新增/追加<br><br></td><br></tr><br><tr><br><td rowspan="4" width="86"><br><br>业务文档<br><br></td><br><td rowspan="4" width="312"><br><br>为知笔记/应用开发/核心业务/项目中文名/<br><br></td><br><td nowrap="nowrap" width="350"><br><br>需求文档<br><br></td><br><td nowrap="nowrap" width="47"><br><br>×<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="97"><br><br>新增<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="350"><br><br>需求规格说明书<br><br></td><br><td nowrap="nowrap" width="47"><br><br>×<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="97"><br><br>新增<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="350"><br><br>系统使用说明书<br><br></td><br><td nowrap="nowrap" width="47"><br><br>×<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="97"><br><br>新增<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="350"><br><br>版本更新记录<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="47"><br><br>●<br><br></td><br><td nowrap="nowrap" width="97"><br><br>新增<br><br></td><br></tr><br><br>
+
+<h2 id="3-2邮件"><a href="#3-2邮件" class="headerlink" title="3.2邮件"></a>3.2邮件</h2><p><div align="center"></div></p>
+<table width="82%" border="0" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td nowrap="nowrap" width="21%"><br><br><strong>邮件类型</strong><br><br></td><br><td nowrap="nowrap" width="9%"><br><br><strong>模板</strong><br><br></td><br><td nowrap="nowrap" width="7%"><br><br><strong>必有</strong><br><br></td><br><td nowrap="nowrap" width="20%"><br><br><strong>责任人</strong><br><br></td><br><td nowrap="nowrap" width="40%"><br><br><strong>默认抄送</strong><br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="21%"><br><br>迭代申请 邮件<br><br></td><br><td nowrap="nowrap" width="9%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="7%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="20%"><br><br>产品负责人<br><br></td><br><td rowspan="6" nowrap="nowrap" width="40%"><br><br>主管/技术经理/需求部门直接上级/中心副总/<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="21%"><br><br>立项通知 邮件<br><br></td><br><td nowrap="nowrap" width="9%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="7%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="20%"><br><br>产品负责人<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="21%"><br><br>日敏捷报告 邮件<br><br></td><br><td nowrap="nowrap" width="9%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="7%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="20%"><br><br>产品负责人<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="21%"><br><br>会议纪要 邮件<br><br></td><br><td nowrap="nowrap" width="9%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="7%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="20%"><br><br>产品负责人<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="21%"><br><br>结项通知 邮件<br><br></td><br><td nowrap="nowrap" width="9%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="7%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="20%"><br><br>产品负责人<br><br></td><br></tr><br><tr><br><td nowrap="nowrap" width="21%"><br><br>迭代总结报告 邮件<br><br></td><br><td nowrap="nowrap" width="9%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="7%"><br><br>●<br><br></td><br><td nowrap="nowrap" width="20%"><br><br>产品负责人<br><br></td><br></tr><br></tbody><br></table><br><br>&nbsp;<br><br># <em>管理概论<br><br>## PMI项目管理<br><br><table border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="472"> <a href="/uploads/2017/06/4.png"><img src="/uploads/2017/06/4-300x144.png" alt="" title="4"></a></td><br><td valign="top" width="472"><br><br><strong>项目边界</strong><br><br>项目的一个重要的事情就是认清项目边界，项目的完成与我们目前所说的项目落地为不同的概念，而且是最容易混淆的概念，项目落地涉及项目的运营，并非仅凭项目经理个人能力所能实现的（但是项目交付成果的质量会起到重大作用）。<br><br>在我们新一版本的项目管理规范中，重新定义此边界，即验收方在部署验收(测试)阶段通过项目即进入收尾程序，且项目的正式交付仅由项目经理进行简单的功能性测试后整理相应的记录文档，即项目结项。<br><br><strong>项目成功不代表项目的运营一定有较高产出回报</strong><br><br>注意：以我们的特殊环境，虽然项目结项了，项目经理对每个版本需要继续跟进后续运营，且后续运营成果将关系到项目组绩效。<br><br></td><br></tr><br><tr><br><td valign="top" width="472"> <a href="/uploads/2017/06/5.png"><img src="/uploads/2017/06/5-300x140.png" alt="" title="5"></a></td><br><td valign="top" width="472"><br><br><strong>阶段与成本</strong><br><br><em>* </em></td></tr></tbody></table></em><br><br>PMI为我们介绍了一个项目的阶段与成本对应关系，在我们的新版项目管理中的体现即为项目组的逐渐建立过程，从项目的启动开始，逐步的建立项目组，至项目的结束阶段(收尾)，项目组解散。<br><br>其实，我们的曲线与PMI标准会有少许变化，我们将在组织与准备(规划)阶段增大成本的投入，这样更能保证项目的一次性成功落地。<br><br><br><br><br>
+
+<h2 id="Scrum敏捷开发"><a href="#Scrum敏捷开发" class="headerlink" title="Scrum敏捷开发"></a>Scrum敏捷开发</h2><p><table border="1" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td valign="top" width="472"> <a href="/uploads/2017/06/6.png"><img src="/uploads/2017/06/6-300x205.png" alt="" title="6"></a></td></p>
+<td valign="top" width="472">
+
+<p><strong>敏捷开发与[**</strong>本规范]<strong>**关系</strong></p>
+<hr>
+<p>   一个团队使用项目管理或敏捷并非完全照搬理论，而是根据目前团队的特性进行合理的增减，使其模式更加符合我们的现状。</p>
+<p>   敏捷开发与PMI项目管理并无冲突，而且可以再多方便找到共同点，在我们的项目管理模式中，与融汇了两者的各类特性。</p>
+<p>  产品订单：故事清单</p>
+<p>  冲刺订单：迭代面板</p>
+<p>  冲刺规划会议：规划会议</p>
+<p>  每日站立会议：日站会</p>
+<p>  冲刺复审会议：讲解会[非必须]</p>
+<p>  冲刺回顾会议：部门常规会议</p>
+<p></p></td><br><br><br><br>&nbsp;<p></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/08/2016大总结,2017大畅想/" rel="next" title="2016大总结,2017大畅想..">
+                <i class="fa fa-chevron-left"></i> 2016大总结,2017大畅想..
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/10/混合云管理思维导图/" rel="prev" title="混合云管理思维导图">
+                混合云管理思维导图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=576" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="toryzen" />
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#敏捷开发，作为系统部应用开发组的业务工作模式，以迭代为周期，时间为1周或2周。每一次迭代中包含多个项目。其工作成果以项目版本或文档版本为体现。"><span class="nav-number">1.</span> <span class="nav-text">敏捷开发，作为系统部应用开发组的业务工作模式，以迭代为周期，时间为1周或2周。每一次迭代中包含多个项目。其工作成果以项目版本或文档版本为体现。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1启动"><span class="nav-number">1.1.</span> <span class="nav-text">2.1启动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3部署验收-测试"><span class="nav-number">1.1.1.</span> <span class="nav-text">2.3.3部署验收(测试)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4部署交付-正式"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.3.4部署交付(正式)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-收尾"><span class="nav-number">1.2.</span> <span class="nav-text">2.4 收尾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5会议"><span class="nav-number">1.3.</span> <span class="nav-text">2.5会议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2邮件"><span class="nav-number">1.4.</span> <span class="nav-text">3.2邮件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scrum敏捷开发"><span class="nav-number">1.5.</span> <span class="nav-text">Scrum敏捷开发</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=576"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

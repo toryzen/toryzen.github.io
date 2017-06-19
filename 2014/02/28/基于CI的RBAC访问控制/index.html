@@ -1,0 +1,834 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="PHP,ci," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="公司内部一直是在用ThinkPHP,最近偶然间接触CI,感觉不错,公司内部使用ThinkPHP用了他们官方示例的RBAC,最近花时间根据CI的一些特性以及ThinkPHP RBAC的基本理念,用CI实现了一套,说是RBAC,其实不只是权限控制,导航菜单的定制以及RBAC的后台页面化管理都已经初步完工了,下面就来看看最初版本。 整个RBAC基本上就是RBAC0的模型，甚至比他更简单，用到的CI钩子-">
+<meta name="keywords" content="PHP,ci">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于CI的RBAC访问控制">
+<meta property="og:url" content="http://toryzen.cn/2014/02/28/基于CI的RBAC访问控制/index.html">
+<meta property="og:site_name" content="Hello Toryzen">
+<meta property="og:description" content="公司内部一直是在用ThinkPHP,最近偶然间接触CI,感觉不错,公司内部使用ThinkPHP用了他们官方示例的RBAC,最近花时间根据CI的一些特性以及ThinkPHP RBAC的基本理念,用CI实现了一套,说是RBAC,其实不只是权限控制,导航菜单的定制以及RBAC的后台页面化管理都已经初步完工了,下面就来看看最初版本。 整个RBAC基本上就是RBAC0的模型，甚至比他更简单，用到的CI钩子-">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/02/RTX截图未命名-300x166.jpg">
+<meta property="og:updated_time" content="2017-06-19T04:56:55.682Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于CI的RBAC访问控制">
+<meta name="twitter:description" content="公司内部一直是在用ThinkPHP,最近偶然间接触CI,感觉不错,公司内部使用ThinkPHP用了他们官方示例的RBAC,最近花时间根据CI的一些特性以及ThinkPHP RBAC的基本理念,用CI实现了一套,说是RBAC,其实不只是权限控制,导航菜单的定制以及RBAC的后台页面化管理都已经初步完工了,下面就来看看最初版本。 整个RBAC基本上就是RBAC0的模型，甚至比他更简单，用到的CI钩子-">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2014/02/RTX截图未命名-300x166.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2014/02/28/基于CI的RBAC访问控制/"/>
+
+
+
+
+
+  <title>基于CI的RBAC访问控制 | Hello Toryzen</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1262360703&web_id=1262360703" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hello Toryzen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/02/28/基于CI的RBAC访问控制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello Toryzen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于CI的RBAC访问控制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-02-28T10:02:48+08:00">
+                2014-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>公司内部一直是在用ThinkPHP,最近偶然间接触CI,感觉不错,公司内部使用ThinkPHP用了他们官方示例的RBAC,最近花时间根据CI的一些特性以及ThinkPHP RBAC的基本理念,用CI实现了一套,说是RBAC,其实不只是权限控制,导航菜单的定制以及RBAC的后台页面化管理都已经初步完工了,下面就来看看最初版本。</p>
+<p>整个RBAC基本上就是RBAC0的模型，甚至比他更简单，用到的CI钩子-扩展框架的核心。</p>
+<p>先看一下RBAC的配置文件,这基本上就是这个的辅助功能了。关于rbac_manage_menu_hidden，rbac_manage_node_hidden这是在使用think的rbac时感觉别扭的地方，RBAC的管理也是根据自身的这套架构来控制的，但是根本没人去再对其进行操作，每次显示在后台特别别扭，所以这里增加两个参数，可以使不想显示在后台的管理节点以及菜单显示。</p>
+<a id="more"></a>
+<p>[php]<br>$config[‘rbac_auth_on’]                 = TRUE;            //是否开启认证<br>$config[‘rbac_auth_type’]         = ‘2’;            //认证方式1,登录认证;2,实时认证<br>$config[‘rbac_auth_key’]         = ‘MyAuth’;        //SESSION标记<br>$config[‘rbac_auth_gateway’]         = ‘Index/login’;        //默认认证网关<br>$config[‘rbac_default_index’]        = ‘manage/Role/index’;     //成功登录默认跳转模块<br>$config[‘rbac_manage_menu_hidden’]   = array(‘后台管理’);        //后台管理导航中不显示的菜单<br>$config[‘rbac_manage_node_hidden’]   = array(‘manage’);        //后台管理节点中不显示的菜单<br>$config[‘rbac_notauth_dirc’]         = array(‘’);             //默认无需认证目录array(&quot;public&quot;,&quot;manage&quot;)<br>[/php]</p>
+<p>下面小讲一下代码和原理</p>
+<p>config/hooks.php增加</p>
+<p>[php]<br>$hook[‘post_controller_constructor’] = array(<br>        ‘class’    =&gt; ‘Rbac’,<br>        ‘function’ =&gt; ‘aoto_verify’,<br>        ‘filename’ =&gt; ‘rbac_hook.php’,<br>        ‘filepath’ =&gt; ‘hooks’,<br>        ‘params’   =&gt; ‘’,<br>);<br>$hook[‘display_override’] = array(<br>        ‘class’    =&gt; ‘Rbac’,<br>        ‘function’ =&gt; ‘view_override’,<br>        ‘filename’ =&gt; ‘rbac_hook.php’,<br>        ‘filepath’ =&gt; ‘hooks’,<br>        ‘params’   =&gt; ‘’,<br>);</p>
+<p>$hook[‘pre_system’] = array(<br>        ‘class’    =&gt; ‘’,<br>        ‘function’ =&gt; ‘session_start’,<br>        ‘filename’ =&gt; ‘’,<br>        ‘filepath’ =&gt; ‘’,<br>        ‘params’   =&gt; ‘’,<br>);<br>[/php]</p>
+<p>post_controller_constructor在你的控制器实例化之后,任何方法调用之前调用权限检测，display_override这个主要是方便显示用的，关于最后的pre_system调用的session_start,整个验证过程都要用到session,而我实在是没有找到好地方调用，只能放在这里了，不知道ci是不是有啥参数之类的能直接开启？</p>
+<p>下面是关于aoto_verify的验证的方法，与ThinkPHP是类似的，Think是继承Action自己写的一个Action,以后所有的方法都再集成，既然有了CI的钩子，就不需要那么费劲了，ThinkPHP验证的是分组/模块/方法，在CI中验证的是目录/控制器/方法。为了更方便的取到上面的数据，使用CI的get_instance获取超级对象，然后调用$ci_obj-&gt;router就可以了。</p>
+<p>aoto_verify()</p>
+<p>[php]<br>public function aoto_verify(){<br>    $ci_obj = &amp;get_instance();<br>    //目录<br>    $directory = substr($ci_obj-&gt;router-&gt;fetch_directory(),0,-1);<br>    //控制器<br>    $controller = $ci_obj-&gt;router-&gt;fetch_class();<br>    //方法<br>    $function = $ci_obj-&gt;router-&gt;fetch_method();<br>    //echo &quot;(&quot;.$directory.&quot;/&quot;.$controller.&quot;/&quot;.$function.&quot;)&quot;;<br>    if($directory!=&quot;&quot;){//当非主目录<br>        if($ci_obj-&gt;config-&gt;item(‘rbac_auth_on’)){//开启认证<br>            if(!in_array($directory,$ci_obj-&gt;config-&gt;item(‘rbac_notauth_dirc’))){//需要验证的目录<br>                //验证是否登录<br>                if(!isset($_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;INFO&quot;][&quot;id&quot;])){<br>                    error_redirct($ci_obj-&gt;config-&gt;item(‘rbac_auth_gateway’),&quot;请先登录！&quot;);<br>                    die();<br>                }<br>                if($ci_obj-&gt;config-&gt;item(‘rbac_auth_type’)==2){//若为实时认证<br>                    $ci_obj-&gt;load-&gt;model(&quot;rbac_model&quot;);<br>                    //检测用户状态<br>                    $STATUS = $ci_obj-&gt;rbac_model-&gt;check_user_by_id($_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;INFO&quot;][&quot;id&quot;]);<br>                    if($STATUS==FALSE){<br>                        error_redirct($this-&gt;config-&gt;item(‘rbac_auth_gateway’),$STATUS);<br>                        die();<br>                    }<br>                    //ACL重新赋权<br>                    $ci_obj-&gt;rbac_model-&gt;get_acl($_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;INFO&quot;][&quot;id&quot;]);<br>                }<br>                //验证ACL权限<br>                if(@!$_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;ACL&quot;][$directory][$controller][$function]){<br>                    error_redirct(&quot;&quot;,&quot;无权访问此节点！(&quot;.$directory.&quot;/&quot;.$controller.&quot;/&quot;.$function.&quot;)&quot;);<br>                    die();<br>                }<br>            }<br>        }<br>        //已登录且有权限,获取左侧菜单<br>        if($ci_obj-&gt;config-&gt;item(‘rbac_auth_type’)==2){//若为实时认证<br>            $ci_obj-&gt;get_menu = $this-&gt;get_menu();<br>        }else{<br>            if(isset($_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;MENU&quot;])){<br>                $ci_obj-&gt;get_menu = $_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;MENU&quot;];<br>            }else{<br>                $_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;MENU&quot;] = $this-&gt;get_menu();<br>                $ci_obj-&gt;get_menu = $_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;MENU&quot;];<br>            }<br>        }<br>        //默认重写View开<br>        $ci_obj-&gt;view_override = TRUE;<br>    }<br>}<br>[/php]</p>
+<p>PS：在这里只对controllers中的二级目录做了权限控制，一级没有。在上述方法后，还有一句$this-&gt;get_menu()，这里是获取左侧的导航菜单数据。</p>
+<p>get_menu()</p>
+<p>[php]<br>$ci_obj = &amp;get_instance();<br>$ci_obj-&gt;load-&gt;database();<br>$query = $ci_obj-&gt;db-&gt;query(&quot;SELECT rm.id,rm.title,rm.node_id,rm.p_id,rn.dirc,rn.cont,rn.func FROM rbac_menu rm left join rbac_node rn on rm.node_id = rn.id WHERE rm.status = 1 AND rm.p_id is NULL ORDER BY sort asc&quot;);<br>$menu_data = $query-&gt;result();<br>$i = 0;<br>while(count($menu_data)&gt;0){<br>    $id_list = &quot;&quot;;<br>    foreach($menu_data as $vo){<br>        if($i==2){<br>            $vo-&gt;p_p_id = $Tmp_menu[1][$vo-&gt;p_id]-&gt;p_id;<br>        }<br>        $Tmp_menu[$i][$vo-&gt;id] = $vo;<br>        $id_list .= $vo-&gt;id.&quot;,&quot;;<br>    }<br>    $id_list = substr($id_list,0,-1);<br>    $query = $ci_obj-&gt;db-&gt;query(&quot;SELECT rm.id,rm.title,rm.node_id,rm.p_id,rn.dirc,rn.cont,rn.func FROM rbac_menu rm left join rbac_node rn on rm.node_id = rn.id WHERE rm.status = 1 AND rm.p_id in (&quot;.$id_list.&quot;) ORDER BY sort asc&quot;);<br>    $menu_data = $query-&gt;result();<br>    $i++;<br>}<br>$j = 0;<br>//按权限进行展示<br>foreach($Tmp_menu as $vo){<br>    foreach($vo as $cvo){<br>        if(@$_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;ACL&quot;][$cvo-&gt;dirc][$cvo-&gt;cont][$cvo-&gt;func]||!$cvo-&gt;node_id){<br>            if($j==0){<br>                if(@$_SESSION[$ci_obj-&gt;config-&gt;item(‘rbac_auth_key’)][&quot;ACL&quot;][$cvo-&gt;dirc][$cvo-&gt;cont][$cvo-&gt;func]){<br>                    $menu[$cvo-&gt;id][&quot;shown&quot;] = 1;<br>                }<br>                $menu[$cvo-&gt;id][&quot;self&quot;] = array(&quot;title&quot;=&gt;$cvo-&gt;title,&quot;uri&quot;=&gt;$cvo-&gt;dirc?$cvo-&gt;dirc.&quot;/&quot;.$cvo-&gt;cont.&quot;/&quot;.$cvo-&gt;func:$cvo-&gt;cont.&quot;/&quot;.$cvo-&gt;func);</p>
+<pre><code>        }elseif($j==1){
+            if(@$_SESSION[$ci_obj-&amp;gt;config-&amp;gt;item(&apos;rbac_auth_key&apos;)][&amp;quot;ACL&amp;quot;][$cvo-&amp;gt;dirc][$cvo-&amp;gt;cont][$cvo-&amp;gt;func]){
+                $menu[$cvo-&amp;gt;p_id][&amp;quot;shown&amp;quot;] = 1;
+                $menu[$cvo-&amp;gt;p_id][&amp;quot;child&amp;quot;][$cvo-&amp;gt;id][&amp;quot;shown&amp;quot;] = 1;
+            }
+            $menu[$cvo-&amp;gt;p_id][&amp;quot;child&amp;quot;][$cvo-&amp;gt;id][&amp;quot;self&amp;quot;] = array(&amp;quot;title&amp;quot;=&amp;gt;$cvo-&amp;gt;title,&amp;quot;uri&amp;quot;=&amp;gt;$cvo-&amp;gt;dirc?$cvo-&amp;gt;dirc.&amp;quot;/&amp;quot;.$cvo-&amp;gt;cont.&amp;quot;/&amp;quot;.$cvo-&amp;gt;func:$cvo-&amp;gt;cont.&amp;quot;/&amp;quot;.$cvo-&amp;gt;func);
+
+        }else{
+            if(@$_SESSION[$ci_obj-&amp;gt;config-&amp;gt;item(&apos;rbac_auth_key&apos;)][&amp;quot;ACL&amp;quot;][$cvo-&amp;gt;dirc][$cvo-&amp;gt;cont][$cvo-&amp;gt;func]){
+                $menu[$cvo-&amp;gt;p_p_id][&amp;quot;shown&amp;quot;] = 1;
+                $menu[$cvo-&amp;gt;p_p_id][&amp;quot;child&amp;quot;][$cvo-&amp;gt;p_id][&amp;quot;shown&amp;quot;] = 1;
+                $menu[$cvo-&amp;gt;p_p_id][&amp;quot;child&amp;quot;][$cvo-&amp;gt;p_id][&amp;quot;child&amp;quot;][$cvo-&amp;gt;id][&amp;quot;shown&amp;quot;] = 1;
+            }
+            $menu[$cvo-&amp;gt;p_p_id][&amp;quot;child&amp;quot;][$cvo-&amp;gt;p_id][&amp;quot;child&amp;quot;][$cvo-&amp;gt;id][&amp;quot;self&amp;quot;] = array(&amp;quot;title&amp;quot;=&amp;gt;$cvo-&amp;gt;title,&amp;quot;uri&amp;quot;=&amp;gt;$cvo-&amp;gt;dirc?$cvo-&amp;gt;dirc.&amp;quot;/&amp;quot;.$cvo-&amp;gt;cont.&amp;quot;/&amp;quot;.$cvo-&amp;gt;func:$cvo-&amp;gt;cont.&amp;quot;/&amp;quot;.$cvo-&amp;gt;func);
+        }
+    }
+}
+$j++;
+</code></pre><p>}<br>return $menu;<br>[/php]</p>
+<p>关于这个方法其实就是数组的拼接以及是否显示的验证。</p>
+<p>关于数据库，一共5张表，4张表实现权限的控制，1张表主要是左侧的菜单,各表之间的关系还是比较明了简洁的</p>
+<p>[sql]</p>
+<p>CREATE TABLE IF NOT EXISTS <code>rbac_auth</code> (<br>  <code>node_id</code> int(11) NOT NULL COMMENT ‘节点ID’,<br>  <code>role_id</code> int(11) NOT NULL COMMENT ‘角色ID’,<br>  UNIQUE KEY <code>nid_rid</code> (<code>node_id</code>,<code>role_id</code>)<br>) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT=’角色与节点对应表’;</p>
+<p>CREATE TABLE IF NOT EXISTS <code>rbac_menu</code> (<br>  <code>id</code> int(11) NOT NULL AUTO_INCREMENT,<br>  <code>title</code> varchar(20) NOT NULL COMMENT ‘导航名称’,<br>  <code>node_id</code> int(11) DEFAULT NULL COMMENT ‘节点ID’,<br>  <code>p_id</code> int(11) DEFAULT NULL COMMENT ‘导航父id’,<br>  <code>sort</code> int(11) NOT NULL DEFAULT ‘0’ COMMENT ‘排序’,<br>  <code>status</code> int(11) DEFAULT ‘1’ COMMENT ‘状态(1:正常,0:停用)’,<br>  PRIMARY KEY (<code>id</code>)<br>) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT=’菜单表’ AUTO_INCREMENT=20 ;</p>
+<p>CREATE TABLE IF NOT EXISTS <code>rbac_node</code> (<br>  <code>id</code> int(11) NOT NULL AUTO_INCREMENT,<br>  <code>dirc</code> varchar(20) NOT NULL COMMENT ‘目录’,<br>  <code>cont</code> varchar(10) NOT NULL COMMENT ‘控制器’,<br>  <code>func</code> varchar(10) NOT NULL COMMENT ‘方法’,<br>  <code>memo</code> varchar(25) DEFAULT NULL COMMENT ‘备注’,<br>  <code>status</code> int(11) NOT NULL DEFAULT ‘1’ COMMENT ‘状态(1:正常,0:停用)’,<br>  PRIMARY KEY (<code>id</code>),<br>  UNIQUE KEY <code>d_c_f</code> (<code>dirc</code>,<code>cont</code>,<code>func</code>)<br>) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT=’节点表’ AUTO_INCREMENT=24 ;</p>
+<p>CREATE TABLE IF NOT EXISTS <code>rbac_role</code> (<br>  <code>id</code> int(11) NOT NULL AUTO_INCREMENT,<br>  <code>rolename</code> varchar(25) NOT NULL COMMENT ‘角色名’,<br>  <code>status</code> int(11) NOT NULL DEFAULT ‘1’ COMMENT ‘状态(1:正常,0停用)’,<br>  PRIMARY KEY (<code>id</code>),<br>  UNIQUE KEY <code>rolename</code> (<code>rolename</code>)<br>) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT=’角色表’ AUTO_INCREMENT=4 ;</p>
+<p>CREATE TABLE IF NOT EXISTS <code>rbac_user</code> (<br>  <code>id</code> int(11) NOT NULL AUTO_INCREMENT,<br>  <code>username</code> varchar(20) NOT NULL COMMENT ‘用户名’,<br>  <code>password</code> varchar(32) NOT NULL COMMENT ‘密码’,<br>  <code>nickname</code> varchar(20) NOT NULL COMMENT ‘昵称’,<br>  <code>email</code> varchar(25) NOT NULL COMMENT ‘Email’,<br>  <code>role_id</code> int(11) DEFAULT NULL COMMENT ‘角色ID’,<br>  <code>status</code> int(11) NOT NULL DEFAULT ‘1’ COMMENT ‘状态(1:正常,0:停用)’,<br>  PRIMARY KEY (<code>id</code>),<br>  UNIQUE KEY <code>username</code> (<code>username</code>),<br>  UNIQUE KEY <code>email</code> (<code>email</code>)<br>) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT=’用户表’ AUTO_INCREMENT=6 ;</p>
+<p>[/sql]</p>
+<p>OK，CI刚刚接触，可能有些地方使用不当，这个在后期在进行改版。 PS这里我用的CI版本为2.1.4</p>
+<p>样式使用的bootstrap3.0,</p>
+<p><a href="/uploads/2014/02/RTX截图未命名.jpg"><img src="/uploads/2014/02/RTX截图未命名-300x166.jpg" alt="" title="RTX截图未命名"></a></p>
+<p>GITHUB:<a href="https://github.com/toryzen/CI_RBAC" target="_blank" rel="external">https://github.com/toryzen/CI_RBAC</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/ci/" rel="tag"># ci</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/02/20/osmocomBB-错误-FBS-RESP-result-255/" rel="next" title="osmocomBB 错误 FBSB RESP: result=255">
+                <i class="fa fa-chevron-left"></i> osmocomBB 错误 FBSB RESP: result=255
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/03/01/个人专版PHP MVC框架(TZN Framework)/" rel="prev" title="个人专版PHP MVC框架(TZN Framework)">
+                个人专版PHP MVC框架(TZN Framework) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=576" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="toryzen" />
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=576"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
