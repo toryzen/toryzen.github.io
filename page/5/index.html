@@ -279,6 +279,150 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/03/05/PHP字典序法获得排列组合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/03/05/PHP字典序法获得排列组合/" itemprop="url">PHP字典序法获得排列组合</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-03-05T13:34:09+08:00">
+                2014-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>前段时间一次聚会闲聊时聊到一个问题，就是给你一排数组，例如1,2,3,4,5,如何能高效的获取上述数列的所有排列组合，正巧没事，研究了一下，一开始以为是个很简单的问题，就直接开始写代码了，后来发现怎么循环也不理想，基本上都有一些不必要的消耗，百度一下看到一个不错的算法，字典序法，顺便学习一下，然后记录之。</p>
+<p>摘一段算法思想：</p>
+<blockquote>
+<p>设P是[1,n]的一个全排列。</p>
+<p>P=P1P2…Pn=P1P2…Pj-1PjPj+1…Pk-1PkPk+1…Pn , j=max{i|Pi&lt;Pi+1}, k=max{i|Pi&gt;Pj} ,对换Pj，Pk，将Pj+1…Pk-1PjPk+1…Pn翻转， P’= P1P2…Pj-1PkPn…Pk+1PjPk-1…Pj+1即P的下一个</p>
+<p>例子:839647521的下一个排列.</p>
+<p>从最右开始,找到第一个比右边小的数字4(因为4&lt;7，而7&gt;5&gt;2&gt;1),再从最右开始,找到4右边比4大的数字5(因为4&gt;2&gt;1而4&lt;5),交换4、5,此时5右边为7421,倒置为1247,即得下一个排列:839651247.用此方法写出全排列的非递归算<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2014/03/05/PHP字典序法获得排列组合/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/03/01/个人专版PHP MVC框架(TZN Framework)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1532,147 +1676,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/01/07/2013大总结,2014大畅想/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/01/07/2013大总结,2014大畅想/" itemprop="url">2013大总结,2014大畅想...</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-01-07T18:10:34+08:00">
-                2014-01-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/生活志/" itemprop="url" rel="index">
-                    <span itemprop="name">生活志</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li><p><strong>前言 </strong><br>这已经是我第四年写总结了，今年是有点晚了，开始写这个总结的时候已经1月多了，以前的总结都是在1号之前就开始构思，并且争取在1号之前就争取发布了，现在工作与上学的差距就显出来的，没有了那么多的空余时间，多了很多的各类事情，并且越来越多的精力放在工作上，在生活上也没有留下印记，这也是这一年的遗憾，从今年开始就要对此进行一个改观，绝对沿用大三时每月一主题思路，保留下以后生活中的点滴。</p>
-</li>
-<li><p><strong>2013大总结：</strong><br>今年的总结沿用去年的章节格式，继续从Life,Hobby,Career三个角度进行总结。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2014/01/07/2013大总结,2014大畅想/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1722,7 +1725,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-count">76</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
