@@ -139,16 +139,20 @@
 
 
 
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
 
 
-
-
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1262360703&web_id=1262360703" language="JavaScript"></script>
-  </div>
 
 
 
@@ -181,7 +185,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">爱技术,好产品,探管理</p>
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
       
   </div>
 
@@ -279,6 +283,156 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/06/07/集中认证实现(单点登录)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/06/07/集中认证实现(单点登录)/" itemprop="url">集中认证实现(单点登录)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-06-07T16:05:16+08:00">
+                2014-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/06/07/集中认证实现(单点登录)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/06/07/集中认证实现(单点登录)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>越看现在公司基于Thinkphp3.0的改版框架约不顺眼，先不说为了更改目录结构更改了其核心代码，光是RBAC的认证的冗余代码就让人很不舒服，并且这项目没人跟进，导致新项目用这套东西越来约中庸，现在我接手了团队，当然第一步要那这个开刀。</p>
+<p>鉴于目前的团队成员一直都在用ThinkPHP，所以不好直接引入我前端时间做的CI的权限框架，所以还得拿ThinkPHP入手，官网一看都已经到3.2.2了，并且跟以前的差距很大，那就直接选这个了，整体的权限思路还是按照当初CI的来设置的，下面就还遇到了一个问题，目前公司里有自己的统一验证平台Ucenter,但是那几乎是上一代程序员的产物了，所以现在要重新设计，但是还要兼容旧的，所以就出现了现在的这套集中认证。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2014/06/07/集中认证实现(单点登录)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/04/11/综合项目管理平台[整体设计&各模块用例图&类图]/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -345,6 +499,17 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/04/11/综合项目管理平台[整体设计&各模块用例图&类图]/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/04/11/综合项目管理平台[整体设计&各模块用例图&类图]/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -491,6 +656,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/03/27/规范化流程开发实践-敏捷任务管理模块/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/03/27/规范化流程开发实践-敏捷任务管理模块/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -631,6 +807,17 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/03/21/开发类项目实施规范指导/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/03/21/开发类项目实施规范指导/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -775,6 +962,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/03/07/一次悲剧的网站负载过高(被攻击)的经历/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/03/07/一次悲剧的网站负载过高(被攻击)的经历/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -913,6 +1111,17 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/03/05/PHP字典序法获得排列组合/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/03/05/PHP字典序法获得排列组合/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1058,6 +1267,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/03/01/个人专版PHP MVC框架(TZN Framework)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/03/01/个人专版PHP MVC框架(TZN Framework)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -1202,6 +1422,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/02/28/基于CI的RBAC访问控制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/02/28/基于CI的RBAC访问控制/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -1341,6 +1572,17 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/02/20/osmocomBB-错误-FBS-RESP-result-255/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/02/20/osmocomBB-错误-FBS-RESP-result-255/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1483,6 +1725,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/02/19/curl,fsockopen,file_get_contents,system实测/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/02/19/curl,fsockopen,file_get_contents,system实测/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -1546,151 +1799,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/02/11/PHP扩展开发基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/02/11/PHP扩展开发基础/" itemprop="url">PHP扩展开发基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-02-11T17:53:25+08:00">
-                2014-02-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术之道/" itemprop="url" rel="index">
-                    <span itemprop="name">技术之道</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>说来惭愧，接触PHP这么久了，就从来没有写过扩展，这也与实际生产环境有关，至今为止就没有用到要写扩展的示例，但是，不用咱们也不能不会是吧，这就来稍微实践一下，随便在一台LAMP的服务器上进行尝试一下，这次是个入门，至少知道如何操作，例子是个无参的函数，过几天写一个自定义简易的加密函数，再深入研究一下~</p>
-<p>这里环境是PHP5.3.3的环境，因为要用到ext_skel，服务器上没有留源文件，在官网下载了PHP5.3.28的源文件，来小介绍一下整个过程。</p>
-<p>第一步，进入/home/dev/php-5.3.28/ext，创建文件toryzen.skel 写入：</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2014/02/11/PHP扩展开发基础/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1735,7 +1848,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-count">81</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1803,6 +1916,15 @@
                     <i class="fa fa-fw fa-quora"></i>
                   
                   Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/toryzen/" target="_blank" title="Douban">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  Douban
                 </a>
               </span>
             
@@ -1966,6 +2088,14 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://toryzens-blog.disqus.com/count.js" async></script>
+    
+
+    
+
+  
+
 
 
 
@@ -1982,16 +2112,8 @@
 
 
   
-    
-
-    
-  
 
 
-
-
-
-  
 
 
 
