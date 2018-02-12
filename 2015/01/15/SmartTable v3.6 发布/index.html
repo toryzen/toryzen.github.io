@@ -102,7 +102,7 @@
 <meta property="og:description" content="聪明的表格，基于一套数据源使用Ajax获取数据，并展现成表格与图像的形式，并且支持下载（思路源于talkingdata） 开源引入：Bootstrap 3.0，Bootstrap respond (IE解决方案)，Jquery 11.02，dataTables，echarts，table2CSV 1.功能展示:">
 <meta property="og:image" content="https://github.com/toryzen/SmartTable/raw/master/screenshots/v3.5.png">
 <meta property="og:image" content="https://github.com/toryzen/SmartTable/raw/master/screenshots/v3.2_comb.png">
-<meta property="og:updated_time" content="2017-06-23T14:59:41.804Z">
+<meta property="og:updated_time" content="2018-02-12T06:31:05.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SmartTable v3.6 发布">
 <meta name="twitter:description" content="聪明的表格，基于一套数据源使用Ajax获取数据，并展现成表格与图像的形式，并且支持下载（思路源于talkingdata） 开源引入：Bootstrap 3.0，Bootstrap respond (IE解决方案)，Jquery 11.02，dataTables，echarts，table2CSV 1.功能展示:">
@@ -430,53 +430,37 @@
 <li>参1:data 数据源(时间维度)</li>
 <li>参2:column 表头(事件)</li>
 <li>参3:title SmartTable名称</li>
-<li><p>参3:pdim 默认维度</p>
-<ul>
+<li>参4:pdim 默认维度<ul>
 <li>time 时间纬度 ： 时间为横轴，每一条线为一个事件</li>
 <li>event 事件纬度 ： 事件为横轴，每一条线为一个时间</li>
 <li>total_time 统计(时间)纬度 ： 时间为横轴，展示各事件数值的一个加和与平均</li>
 <li>total_event 统计(事件)纬度 ： 事件为横轴，展示各时间数值的一个加和与平均</li>
 </ul>
 </li>
-<li><p>参4:front 默认显示在前面</p>
-<ul>
+<li>参5:front 默认显示在前面<ul>
 <li>all 全部显示</li>
 <li>table 表格</li>
 <li>graph 图形</li>
 </ul>
 </li>
-<li><p>辅参1:graph 图形的辅助参数</p>
-<ul>
-<li><p>ptype 图片类型(单图片支持多类型展示，采用;分割，且支持两个坐标系，追加:1，例如 “line;bar:1”)</p>
-<pre><code>*   line 线图
-</code></pre><ul>
+<li>辅参1:graph 图形的辅助参数<ul>
+<li>ptype 图片类型(单图片支持多类型展示，采用;分割，且支持两个坐标系，追加:1，例如 “line;bar:1”)</li>
+<li>line 线图</li>
 <li>bar 柱状图</li>
-<li><p>area 区域图</p>
-</li>
-<li><p>markPoint 图形中的点标注</p>
-<ul>
-<li>具体参考：<a href="http://echarts.baidu.com/doc/doc.html#SeriesMarkPoint" target="_blank" rel="external">http://echarts.baidu.com/doc/doc.html#SeriesMarkPoint</a></li>
+<li>area 区域图</li>
+<li>markPoint 图形中的点标注:具体参考：<a href="http://echarts.baidu.com/doc/doc.html#SeriesMarkPoint" target="_blank" rel="external">SeriesMarkPoint</a></li>
+<li>markLine 图形中的线标注:具体参考：<a href="http://echarts.baidu.com/doc/doc.html#SeriesMarkLine" target="_blank" rel="external">SeriesMarkLine</a></li>
+<li>zoom 数据拖拽条 -start 开始百分比 -end 结束报粉笔</li>
 </ul>
 </li>
-<li><p>markLine 图形中的线标注</p>
-<ul>
-<li>具体参考：<a href="http://echarts.baidu.com/doc/doc.html#SeriesMarkLine" target="_blank" rel="external">http://echarts.baidu.com/doc/doc.html#SeriesMarkLine</a></li>
-</ul>
-</li>
-<li><p>zoom 数据拖拽条 -start 开始百分比 -end 结束报粉笔</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>辅参2:table 表格的辅助参数</p>
-<ul>
+<li>辅参2:table 表格的辅助参数<ul>
 <li>scrolly y轴长度</li>
 <li>page 分页数</li>
-<li>scrollx 横轴拖拽条<br>注意：测试代码时请放入IIS或Apache下，然后使用URL路径访问，不要直接打开index.html</li>
+<li>scrollx 横轴拖拽条</li>
 </ul>
 </li>
 </ul>
+<p>注意：测试代码时请放入IIS或Apache下，然后使用URL路径访问，不要直接打开index.html</p>
 <h3 id="4-SmartTable汇集"><a href="#4-SmartTable汇集" class="headerlink" title="4.SmartTable汇集"></a>4.SmartTable汇集</h3><p>从v3.2版本，我们引入了一个新的功能元素，<strong>SmartTable汇集</strong>，它支持将相同事件的多个SmartTable的统计纬度中加和数据进行汇总展示<br><a href="https://github.com/toryzen/SmartTable/raw/master/screenshots/v3.2_comb.png" target="_blank" rel="external"><img src="https://github.com/toryzen/SmartTable/raw/master/screenshots/v3.2_comb.png" alt="image"></a></p>
 <h4 id="4-1-示例-amp-参数"><a href="#4-1-示例-amp-参数" class="headerlink" title="4-1.示例&amp;参数"></a>4-1.示例&amp;参数</h4><p><pre>&lt;div title=”统计维度汇总” src=”./demodata.txt;./demodata2.txt;./demodata.txt;./demodata.txt” ptitle=”汇总1;汇总2;汇总1;汇总1”&gt;&lt;/div&gt;</pre><br>元素的class设置为smart_comb_here,SmartTable会自动检测此组件并进行表写入</p>
 <ul>
@@ -493,8 +477,9 @@
 <li>2014-07-14发布:V2.3版本发布,元素改名smart_here</li>
 <li>2014-07-14发布:V2.2版本发布,将highchart,datatables封装入SmartTable</li>
 <li>2014-07-14发布:V2.0版本发布,采用在HTML中获取参数形式生成SmartTable</li>
-<li>2014-07-14发布:V1.0版本发布<br><a href="https://github.com/toryzen/SmartTable" target="_blank" rel="external">https://github.com/toryzen/SmartTable</a></li>
+<li>2014-07-14发布:V1.0版本发布</li>
 </ul>
+<p><a href="https://github.com/toryzen/SmartTable" target="_blank" rel="external">https://github.com/toryzen/SmartTable</a></p>
 
       
     </div>

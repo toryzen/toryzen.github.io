@@ -93,19 +93,19 @@
 
 
 
-<meta name="description" content="SMARTPING介绍SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能 ##功能 ##  机器间互PING，单向PING，绘图 绘制互PING间机器的拓扑及报警功能  设计思虑本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态">
+<meta name="description" content="SMARTPING介绍SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能 功能 机器间互PING，单向PING，绘图 绘制互PING间机器的拓扑及报警功能  设计思虑本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态，并API接">
 <meta name="keywords" content="golang,ping">
 <meta property="og:type" content="article">
 <meta property="og:title" content="smartping机器(点)间间互PING检测工具">
 <meta property="og:url" content="http://toryzen.cn/2017/06/19/smartping机器-点-间间互PING检测工具/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
-<meta property="og:description" content="SMARTPING介绍SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能 ##功能 ##  机器间互PING，单向PING，绘图 绘制互PING间机器的拓扑及报警功能  设计思虑本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态">
+<meta property="og:description" content="SMARTPING介绍SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能 功能 机器间互PING，单向PING，绘图 绘制互PING间机器的拓扑及报警功能  设计思虑本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态，并API接">
 <meta property="og:image" content="http://toryzen.cn/uploads/2017/06/smartping_index.jpg">
 <meta property="og:image" content="http://toryzen.cn/uploads/2017/06/smartping_topology.jpg">
-<meta property="og:updated_time" content="2017-06-23T14:55:29.027Z">
+<meta property="og:updated_time" content="2018-02-12T05:26:29.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="smartping机器(点)间间互PING检测工具">
-<meta name="twitter:description" content="SMARTPING介绍SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能 ##功能 ##  机器间互PING，单向PING，绘图 绘制互PING间机器的拓扑及报警功能  设计思虑本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态">
+<meta name="twitter:description" content="SMARTPING介绍SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能 功能 机器间互PING，单向PING，绘图 绘制互PING间机器的拓扑及报警功能  设计思虑本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态，并API接">
 <meta name="twitter:image" content="http://toryzen.cn/uploads/2017/06/smartping_index.jpg">
 
 
@@ -387,8 +387,7 @@
 
       
         <h1 id="SMARTPING"><a href="#SMARTPING" class="headerlink" title="SMARTPING"></a>SMARTPING</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能</p>
-<p>##功能 ##</p>
-<ul>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
 <li>机器间互PING，单向PING，绘图</li>
 <li>绘制互PING间机器的拓扑及报警功能</li>
 </ul>
@@ -712,7 +711,7 @@ CREATE INDEX pk_i_t ON pinglog (
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SMARTPING"><span class="nav-number">1.</span> <span class="nav-text">SMARTPING</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计思虑"><span class="nav-number">1.2.</span> <span class="nav-text">设计思虑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">1.3.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">1.4.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.5.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GITHUB"><span class="nav-number">1.6.</span> <span class="nav-text">GITHUB</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SMARTPING"><span class="nav-number">1.</span> <span class="nav-text">SMARTPING</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">1.2.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计思虑"><span class="nav-number">1.3.</span> <span class="nav-text">设计思虑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">1.4.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">1.5.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.6.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GITHUB"><span class="nav-number">1.7.</span> <span class="nav-text">GITHUB</span></a></li></ol></li></ol></div>
             
 
           </div>

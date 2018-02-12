@@ -102,7 +102,7 @@
 <meta property="og:description" content="偶然间翻看自己的一台VPS上的Cron脚本，发现一个每分钟定时跑的脚本，想了半天不知道是做什么的，后来打开发现，原来是N久之前弄的一个监控，当时有5台VPS，4台搭建了Nginx,做负载均衡，1台入口，3台负载，还有1台DB，因为单机经常502,所以做了负载均衡，为了看效果如何，准备监控一下内存和phpcgi,所以就有了这个。">
 <meta property="og:image" content="http://toryzen.cn/uploads/2014/01/2-300x90.jpg">
 <meta property="og:image" content="http://toryzen.cn/uploads/2014/01/1-300x109.jpg">
-<meta property="og:updated_time" content="2017-06-19T04:56:55.986Z">
+<meta property="og:updated_time" content="2018-02-12T06:52:43.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="超简易的内存与phpcgi监控">
 <meta name="twitter:description" content="偶然间翻看自己的一台VPS上的Cron脚本，发现一个每分钟定时跑的脚本，想了半天不知道是做什么的，后来打开发现，原来是N久之前弄的一个监控，当时有5台VPS，4台搭建了Nginx,做负载均衡，1台入口，3台负载，还有1台DB，因为单机经常502,所以做了负载均衡，为了看效果如何，准备监控一下内存和phpcgi,所以就有了这个。">
@@ -389,20 +389,21 @@
         <p>偶然间翻看自己的一台VPS上的Cron脚本，发现一个每分钟定时跑的脚本，想了半天不知道是做什么的，后来打开发现，原来是N久之前弄的一个监控，当时有5台VPS，4台搭建了Nginx,做负载均衡，1台入口，3台负载，还有1台DB，因为单机经常502,所以做了负载均衡，为了看效果如何，准备监控一下内存和phpcgi,所以就有了这个。<a id="more"></a></p>
 <p>原理就是调用系统命令查询相应的数值，然后写成本地文件，再有PHP+JS进行画图，画图用了2个插件，一个是jqChart，后来感觉不太好看，所以用了amcharts.</p>
 <p>看一下shell</p>
-<p>[shell]<br>not=<code>(date &amp;quot;+%H:%M&amp;quot;)</code><br>phpcgi=<code>(netstat -anpo |grep &amp;quot;php-cgi&amp;quot; |wc -l)</code><br>usmem=<code>(cat /proc/meminfo |grep MemFree | awk &#39;{print $2}&#39;)</code><br>tomem=<code>(cat /proc/meminfo |grep MemTotal | awk &#39;{print $2}&#39;)</code><br>mem=<code>(awk &#39;BEGIN{printf &amp;quot;%.2f\n&amp;quot;,&#39;$usmem&#39;/&#39;$tomem&#39;}&#39;)</code><br>indb=$not’|’$phpcgi’|’$mem’|’<br>ddd=<code>(date +&amp;quot;%m%d&amp;quot;)</code><br>echo $indb &gt;&gt;/www/p/logs/$ddd.txt<br>[/shell]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">not=`(date "+%H:%M")`</div><div class="line">phpcgi=`(netstat -anpo |grep "php-cgi" |wc -l)`</div><div class="line">usmem=`(cat /proc/meminfo |grep MemFree | awk '&#123;print $2&#125;')`</div><div class="line">tomem=`(cat /proc/meminfo |grep MemTotal | awk '&#123;print $2&#125;')`</div><div class="line">mem=`(awk 'BEGIN&#123;printf "%.2f\n",'$usmem'/'$tomem'&#125;')`</div><div class="line">indb=$not'|'$phpcgi'|'$mem'|'</div><div class="line">ddd=`(date +"%m%d")`</div><div class="line">echo $indb &gt;&gt;/www/p/logs/$ddd.txt</div></pre></td></tr></table></figure>
 <p>记录内存使用情况和php-cgi个数</p>
 <p>PHP就很简单了，就是读取一下相应的文件，然后作图。其中每个图都是在负载的机器上，我顺便在入口机上做个静态页面，嵌入这些图，全展示在一屏，很有我公司监控的味道，后来想顺道加上报警等机制，一耽搁就散伙了。</p>
 <p>源码：</p>
 <p>截图：<br><img src="/uploads/2014/01/2-300x90.jpg" alt="" title="2"><img src="/uploads/2014/01/1-300x109.jpg" alt="" title="1"></p>
 <p>最后在说一下优化后php-fpm的配置采用dynamic(apache-like)方式</p>
-<p>&lt;value name=”style”&gt;apache-like&lt;/value&gt;</p>
+<value name="style">apache-like</value>
+
 <p>相关的3个参数分别设置为：</p>
-<p>&lt;value name=”StartServers”&gt;10&lt;/value&gt;<br>&lt;value name=”MinSpareServers”&gt;10&lt;/value&gt;<br>&lt;value name=”MaxSpareServers”&gt;25&lt;/value&gt;</p>
+<value name="StartServers">10</value><br><value name="MinSpareServers">10</value><br><value name="MaxSpareServers">25</value>
+
 <p>三个参数的意义：</p>
 <p>StartServers：动态方式下的起始php-fpm进程数量。<br>MinSpareServers：动态方式下的最小php-fpm进程数量。<br>MaxSpareServers：动态方式下的最大php-fpm进程数量。</p>
 <p>BTW：用apache-like后max_children参数就没用了</p>
 <p>改成这样的设置以后，效果好多了..仅是好多了…</p>
-<p>&nbsp;</p>
 
       
     </div>

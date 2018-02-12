@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://toryzen.cn/uploads/2014/01/小Q截图-20140211182336-224x300.png">
 <meta property="og:image" content="http://toryzen.cn/uploads/2014/01/小Q截图-20140211182638-300x223.png">
 <meta property="og:image" content="http://toryzen.cn/uploads/2014/01/QQ20140112204320_thumb-300x161.jpg">
-<meta property="og:updated_time" content="2017-06-19T04:56:55.462Z">
+<meta property="og:updated_time" content="2018-02-12T06:50:37.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GSM Sniffing小实践">
 <meta name="twitter:description" content="前几天忽然想到以前看到的一个新闻，关于GSM Sniffing，顺道在网上百度了一下，发现寡人也能办的了，立马入手设备，配置环境，OK，别的不扯了，小介绍一下，主角是OsmocomBB，国外一个开源项目，是GSM协议栈(Protocols stack)的开源实现，全称是Open source mobile communication Baseband.目的是要实现手机端从物理层(layer1)到l">
@@ -395,24 +395,24 @@
 <p>我的环境是，Window7 + VirtualBox +Ubuntu 12.04 (32位)</p>
 <p>下面开始安装交叉编译环境</p>
 <p>step1:</p>
-<p>[shell]<br>sudo apt-get -f install build-essential libgmp3-dev libmpfr-dev libx11-6 libx11-dev texinfo flex bison libncurses5 libncurses5-dbg libncurses5-dev libncursesw5 libncursesw5-dbg libncursesw5-dev zlibc zlib1g-dev libmpfr4 libmpc-dev<br>mkdir source<br>cd source<br>mkdir arm<br>cd arm<br>mkdir src<br>mkdir build<br>mkdir src<br>cd src<br>wget <a href="http://ftp.gnu.org/gnu/gcc/gcc-4.5.2/gcc-4.5.2.tar.bz2" target="_blank" rel="external">http://ftp.gnu.org/gnu/gcc/gcc-4.5.2/gcc-4.5.2.tar.bz2</a><br>wget <a href="http://ftp.gnu.org/gnu/binutils/binutils-2.21.1a.tar.bz2" target="_blank" rel="external">http://ftp.gnu.org/gnu/binutils/binutils-2.21.1a.tar.bz2</a><br>wget ftp://sources.redhat.com/pub/newlib/newlib-1.19.0.tar.gz<br>wget <a href="http://bb.osmocom.org/trac/raw-attachment/wiki/GnuArmToolchain/gnu-arm-build.2.sh" target="_blank" rel="external">http://bb.osmocom.org/trac/raw-attachment/wiki/GnuArmToolchain/gnu-arm-build.2.sh</a><br>chmod +x  gnu-arm-build.2.sh<br>./gnu-arm-build.2.sh<br>[/shell]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">sudo apt-get -f install build-essential libgmp3-dev libmpfr-dev libx11-6 libx11-dev texinfo flex bison libncurses5 libncurses5-dbg libncurses5-dev libncursesw5 libncursesw5-dbg libncursesw5-dev zlibc zlib1g-dev libmpfr4 libmpc-dev</div><div class="line">mkdir source</div><div class="line">cd source</div><div class="line">mkdir arm</div><div class="line">cd arm</div><div class="line">mkdir src</div><div class="line">mkdir build</div><div class="line">mkdir src</div><div class="line">cd src</div><div class="line">wget http://ftp.gnu.org/gnu/gcc/gcc-4.5.2/gcc-4.5.2.tar.bz2</div><div class="line">wget http://ftp.gnu.org/gnu/binutils/binutils-2.21.1a.tar.bz2</div><div class="line">wget ftp://sources.redhat.com/pub/newlib/newlib-1.19.0.tar.gz</div><div class="line">wget http://bb.osmocom.org/trac/raw-attachment/wiki/GnuArmToolchain/gnu-arm-build.2.sh</div><div class="line">chmod +x  gnu-arm-build.2.sh</div><div class="line">./gnu-arm-build.2.sh</div></pre></td></tr></table></figure>
 <p>比较懒的同志可以直接复制粘贴。运行。。。PS:这是事后重新整理写的，不确定全写对了…</p>
 <p>Step2:<br>将arm/install/bin目录加入环境变量</p>
-<p>[shell]<br>vim ~/.bashrc<br>[/shell]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim ~/.bashrc</div></pre></td></tr></table></figure>
 <p>最后一行加入<br>export PATH=$PATH:你的arm/install/bin的绝对路径<br>然后关了当前的终端，再重新开一个</p>
 <p>Step3:<br>编译OsmocomBB</p>
-<p>[shell]<br>cd source<br>git clone git://git.osmocom.org/libosmocore.git $ cd libosmocore/<br>autoreconf -i<br>./configure<br>make<br>make install<br>cd ..<br>ldconfig<br>git clone git://git.osmocom.org/osmocom-bb.git $ cd osmocom-bb<br>git pull –rebase<br>cd src<br>make<br>[/shell]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">cd source</div><div class="line">git clone git://git.osmocom.org/libosmocore.git $ cd libosmocore/</div><div class="line">autoreconf -i</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div><div class="line">cd ..</div><div class="line">ldconfig</div><div class="line">git clone git://git.osmocom.org/osmocom-bb.git $ cd osmocom-bb</div><div class="line">git pull --rebase</div><div class="line">cd src</div><div class="line">make</div></pre></td></tr></table></figure>
 <p>Step4:<br>万事具备，查线，然后进入osmocom-bb/src/host/osmocon/ 执行</p>
-<p>[shell]<br>./osmocon -m c123 -p /dev/ttyUSB0 ../../target/firmware/board/compal_e88/layer1.compalram.bin<br>[/shell]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./osmocon -m c123 -p /dev/ttyUSB0 ../../target/firmware/board/compal_e88/layer1.compalram.bin</div></pre></td></tr></table></figure>
 <p>PS：手机现在要在关机状态，小按一下开机键，然后就开始刷机了。</p>
 <p><a href="/uploads/2014/01/小Q截图-20140211182336.png"><img src="/uploads/2014/01/小Q截图-20140211182336-224x300.png" alt="" title="小Q截图-20140211182336"></a></p>
 <p>Step5:<br>进入 /osmocom-bb/src/host/layer23/src/misc/ 目录执行</p>
-<p>[shell]<br>./cell_log －O<br>[/shell]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./cell_log －O</div></pre></td></tr></table></figure>
 <p>输出日志信息，在里面可以看到基站信息。找到一个信号比较好的基站</p>
 <p>Step6:</p>
-<p>[shell]<br>./ccch_scan -i 127.0.0.1 -a 基站号<br>[/shell]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ccch_scan -i 127.0.0.1 -a 基站号</div></pre></td></tr></table></figure>
 <p>Step7:<br>开始抓包</p>
-<p>[shell]<br>sudo wireshark -k -i lo -f ‘port 4729’<br>[/shell]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo wireshark -k -i lo -f 'port 4729'</div></pre></td></tr></table></figure>
 <p>OK｀ 开心的看下包数据吧～用wireshark有个坏处就是不好再把数据给进一步处理，看看有时间用tshark试试。</p>
 <p><a href="/uploads/2014/01/小Q截图-20140211182638.png"><img src="/uploads/2014/01/小Q截图-20140211182638-300x223.png" alt="" title="小Q截图-20140211182638"></a></p>
 <p>Last：对于如何插线的问题，像咱们这种没摸过板子的人着实郁闷，网上找半天找到一个接线照片..But，买来的线就是接好的，咱对不上号啊，哥其实试了所有的排列组合…</p>

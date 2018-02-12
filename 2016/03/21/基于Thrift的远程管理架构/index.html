@@ -100,7 +100,7 @@
 <meta property="og:url" content="http://toryzen.cn/2016/03/21/基于Thrift的远程管理架构/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
 <meta property="og:description" content="经过几个月的规划的施工，目前WEB自动化运维系统已经初见规模了，当然虽然是Web自动化运维系统，但究其根本还是一套远程管理系统，因为目前业务主要管理的是windows机器，所以整个系统使用C#来进行的编写，但也是有部分业务是跑在Linux下的，后续还会增加Linux的支持，虽然已经到内部的3.0版本，但目前项目还在初期阶段，整体的架构还存在很大的完善空间，目前项目还没有进行开源化，待管理界面确定后">
-<meta property="og:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321190341-300x166.jpg">
+<meta property="og:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321190341.jpg">
 <meta property="og:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321190428-1024x665.jpg">
 <meta property="og:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321190514-1024x640.jpg">
 <meta property="og:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321190542-1024x698.jpg">
@@ -113,11 +113,11 @@
 <meta property="og:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321191027-1024x82.jpg">
 <meta property="og:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321191106-1024x194.jpg">
 <meta property="og:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321191302-1024x83.jpg">
-<meta property="og:updated_time" content="2017-06-23T15:01:34.620Z">
+<meta property="og:updated_time" content="2018-02-12T06:06:33.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Thrift的远程管理架构">
 <meta name="twitter:description" content="经过几个月的规划的施工，目前WEB自动化运维系统已经初见规模了，当然虽然是Web自动化运维系统，但究其根本还是一套远程管理系统，因为目前业务主要管理的是windows机器，所以整个系统使用C#来进行的编写，但也是有部分业务是跑在Linux下的，后续还会增加Linux的支持，虽然已经到内部的3.0版本，但目前项目还在初期阶段，整体的架构还存在很大的完善空间，目前项目还没有进行开源化，待管理界面确定后">
-<meta name="twitter:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321190341-300x166.jpg">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2016/03/QQ截图20160321190341.jpg">
 
 
 
@@ -399,213 +399,56 @@
       
         <p>经过几个月的规划的施工，目前WEB自动化运维系统已经初见规模了，当然虽然是Web自动化运维系统，但究其根本还是一套远程管理系统，因为目前业务主要管理的是windows机器，所以整个系统使用C#来进行的编写，但也是有部分业务是跑在Linux下的，后续还会增加Linux的支持，虽然已经到内部的3.0版本，但目前项目还在初期阶段，整体的架构还存在很大的完善空间，目前项目还没有进行开源化，待管理界面确定后将会对其进行开源。</p>
 <a id="more"></a>
-<h1 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h1><p><strong><a href="/uploads/2016/03/QQ截图20160321190341.jpg"><img src="/uploads/2016/03/QQ截图20160321190341-300x166.jpg" alt="" title="QQ截图20160321190341"></a> </strong></p>
-<p><strong><span style="text-decoration: line-through;">#WOM</span>**</strong><span style="text-decoration: line-through;">：</span><strong><strong><span style="text-decoration: line-through;">WebOpsManager         WEB</span></strong></strong><span style="text-decoration: line-through;">运维自动化系统管理器</span>**</p>
-<p><strong>WOS**</strong>：<strong><strong>WebOpsServer        WEB</strong></strong>运维自动化系统服务端**</p>
-<p><strong>WOC**</strong>：<strong><strong>WebOpsClient        WEB</strong></strong>运维自动化系统客户端**</p>
-<p><strong>WOM**</strong>：<strong><strong>WebOpsModule   WEB</strong></strong>运维自动化系统模块**</p>
+<h1 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h1><p><strong><a href="/uploads/2016/03/QQ截图20160321190341.jpg"><img src="/uploads/2016/03/QQ截图20160321190341.jpg" alt="" title="QQ截图20160321190341"></a> </strong></p>
+<p><strong> WOS:WebOpsServer </strong>:WEB运维自动化系统服务端</p>
+<p><strong> WOC:WebOpsClient </strong>:WEB运维自动化系统客户端</p>
+<p><strong> WOM:WebOpsModule </strong>:WEB运维自动化系统模块</p>
 <h1 id="系统时序"><a href="#系统时序" class="headerlink" title="系统时序"></a><strong>系统时序</strong></h1><p>手动检测</p>
 <p><strong>主要用于主动发送指令，主要用于手动触发节点机上指令，如执行**</strong>Nginx<strong><strong>配置文件同步，</strong></strong>DNS<strong>**同步或对服务器进行单项业务检测</strong></p>
 <p><a href="/uploads/2016/03/QQ截图20160321190428.jpg"><img src="/uploads/2016/03/QQ截图20160321190428-1024x665.jpg" alt="" title="QQ截图20160321190428"></a></p>
 <p>触发检测</p>
-<p><strong>         **</strong>通过服务端进行事件触发，执行客户端指令**</p>
+<p><strong> 通过服务端进行事件触发，执行客户端指令 </strong></p>
 <p><a href="/uploads/2016/03/QQ截图20160321190514.jpg"><img src="/uploads/2016/03/QQ截图20160321190514-1024x640.jpg" alt="" title="QQ截图20160321190514"></a></p>
 <p>自助检测</p>
-<p><strong>依靠节点机自身时钟，进行定时任务，通过已经预设的定时任务</strong></p>
+<p><strong> 依靠节点机自身时钟，进行定时任务，通过已经预设的定时任务 </strong></p>
 <p><a href="/uploads/2016/03/QQ截图20160321190542.jpg"><img src="/uploads/2016/03/QQ截图20160321190542-1024x698.jpg" alt="" title="QQ截图20160321190542"></a></p>
 <h1 id="系统通讯"><a href="#系统通讯" class="headerlink" title="系统通讯"></a>系统通讯</h1><p>通讯协议是整个项目的核心组成部分，整套系统的交互基于Client端的指令接收器与Server端的异步返回处理器实现，数据传输部分仅存在两个结构体 ，即命令发送结构体与命令回收结构体</p>
 <p><strong>结构体</strong></p>
-<blockquote>
-<p>[csharp]</p>
-<pre><code>struct instruct{
-
-    1 : string instruct,
-
-    2 : string id,
-
-    3 : map&amp;lt;string,string&amp;gt; param
-
-}
-
-
-//命令回收结构体
-
-struct reinstruct{
-
-    1 : string instruct,
-
-    2 : string id,
-
-    3 : string ip,
-
-    4 : string memo
-
-}
-</code></pre><p>[/csharp]<br><strong>接口</strong><br>[csharp]</p>
-<p>//客户端服务</p>
-<pre><code>service InstructionInvokeService{
-
-    //指令接收器
-
-    list&amp;lt;reinstruct&amp;gt;  instructionInvoke(1: list&amp;lt;instruct&amp;gt; instruct)
-
-}
-
-
-//服务端服务
-
-service ServerService{
-
-    //异步返回结果
-
-    string DataTransport(1:reinstruct reinstruct)
-
-}
-</code></pre><p>[/csharp]</p>
-</blockquote>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> instruct&#123;</div><div class="line">    <span class="number">1</span> : <span class="keyword">string</span> instruct,</div><div class="line">    <span class="number">2</span> : <span class="keyword">string</span> id,</div><div class="line">    <span class="number">3</span> : map&lt;<span class="keyword">string</span>,<span class="keyword">string</span>&gt; param</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//命令回收结构体</span></div><div class="line"><span class="keyword">struct</span> reinstruct&#123;</div><div class="line">    <span class="number">1</span> : <span class="keyword">string</span> instruct,</div><div class="line">    <span class="number">2</span> : <span class="keyword">string</span> id,</div><div class="line">    <span class="number">3</span> : <span class="keyword">string</span> ip,</div><div class="line">    <span class="number">4</span> : <span class="keyword">string</span> memo</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//客户端服务</span></div><div class="line">service InstructionInvokeService&#123;</div><div class="line">    <span class="comment">//指令接收器</span></div><div class="line">    <span class="function">list&lt;reinstruct&gt;  <span class="title">instructionInvoke</span>(<span class="params"><span class="number">1</span>: list&lt;instruct&gt; instruct</span>)</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//服务端服务</span></div><div class="line">service ServerService&#123;</div><div class="line">    <span class="comment">//异步返回结果</span></div><div class="line">    <span class="function"><span class="keyword">string</span> <span class="title">DataTransport</span>(<span class="params"><span class="number">1</span>:reinstruct reinstruct</span>)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h1 id="模块开发"><a href="#模块开发" class="headerlink" title="模块开发"></a>模块开发</h1><h2 id="代码开发"><a href="#代码开发" class="headerlink" title="代码开发"></a>代码开发</h2><p>本项目已经做好的模块的Demo，在开发模块前需要先进行Demo的初始化工作</p>
 <p>1、  复制一份新的WebOpsModule<strong>Demo ，命名成WebOpsModule_{模块名称}，并将工程WebOpsModule</strong>Demo.csproj重命名为WebOpsModule_{模块名称}.csproj</p>
 <p><a href="/uploads/2016/03/QQ截图20160321190643.jpg"><img src="/uploads/2016/03/QQ截图20160321190643-1024x217.jpg" alt="" title="QQ截图20160321190643"></a></p>
 <p>2、  在VS2015中导入项目</p>
 <p><a href="/uploads/2016/03/QQ截图20160321190725.jpg"><img src="/uploads/2016/03/QQ截图20160321190725.jpg" alt="" title="QQ截图20160321190725"></a></p>
 <p>3、  修改基础信息</p>
-<p>a)         Log4NET配置文件名称</p>
+<p>a) Log4NET配置文件名称</p>
 <p><a href="/uploads/2016/03/QQ截图20160321190752.jpg"><img src="/uploads/2016/03/QQ截图20160321190752.jpg" alt="" title="QQ截图20160321190752"></a></p>
-<p>b)         AssemblyInfo基础信息</p>
+<p>b) AssemblyInfo基础信息</p>
 <p><a href="/uploads/2016/03/QQ截图20160321190816.jpg"><img src="/uploads/2016/03/QQ截图20160321190816.jpg" alt="" title="QQ截图20160321190816"></a></p>
-<p>c)         项目属性</p>
+<p>c) 项目属性</p>
 <p><a href="/uploads/2016/03/QQ截图20160321190858.jpg"><img src="/uploads/2016/03/QQ截图20160321190858-1024x283.jpg" alt="" title="QQ截图20160321190858"></a></p>
 <p>修改完成后即可开始编程了，Webops模块开发需要分为Server模块与Client模块，在开发时需要全部实现，Client一般是先客户机上的逻辑，Server段一般实现回收后的数据处理（入库等）</p>
-<p><strong>Client**</strong>端代码**</p>
-<blockquote>
-<p>[csharp]</p>
-<p>public class ClientService</p>
-<pre><code>{
-
-    public static log4net.ILog loginfo = log4net.LogManager.GetLogger(&amp;quot;loginfo&amp;quot;);
-
-    /*
-
-      reinstruct reins:
-
-        instruct.Id         本次事件的ID
-
-        reins.Instruct      本次事件的指令
-
-        instruct.Param      本次事件的参数,Dictionary
-
-    */
-
-    public string Exec(instruct instruct)
-
-    {
-
-        loginfo.Info(&amp;quot;__Demo Start !&amp;quot;);
-
-        string result = &amp;quot;&amp;quot;;
-
-        try
-
-        {
-
-            /*
-
-                在此编写业务逻辑
-
-            */
-
-            result = &amp;quot;返回内容&amp;quot;;
-
-        }
-
-        catch (Exception e)
-
-        {
-
-            result = e.ToString();
-
-        }
-
-        loginfo.Info(&amp;quot;__Demo Finish !&amp;quot;);
-
-        return result;
-
-    }
-</code></pre><p>}</p>
-<p>[/csharp]<br><strong>Server**</strong>端代码**<br>[csharp]</p>
-<p>class ServerService</p>
-<pre><code>{
-
-    public static log4net.ILog loginfo = log4net.LogManager.GetLogger(&amp;quot;loginfo&amp;quot;);
-
-    public static string connStr = &amp;quot;Database=xxx;Data Source=0.0.0.0;User Id=yyy;Password=zzz&amp;quot;;
-
-    /*
-
-      reinstruct reins:
-
-        reins.Id            本次事件的ID
-
-        reins.Instruct      本次事件的指令
-
-        reins.Memo          本次事件的反馈信息
-
-    */
-
-    public string Exec(reinstruct reins) {
-
-        loginfo.Info(&amp;quot;__Demo Start !&amp;quot;);
-
-        string result = &amp;quot;&amp;quot;;
-
-        try
-
-        {
-
-            MySqlConnection Conn = new MySqlConnection(connStr);
-
-            Conn.Open();
-
-            MySqlCommand command = Conn.CreateCommand();
-
-            /*
-
-
-                在此编写业务逻辑
-
-
-            */
-
-            Conn.Dispose();
-
-            result = &amp;quot;success&amp;quot;;
-
-        }
-
-        catch (Exception e) {
-
-            result = e.ToString();
-
-        }
-
-        loginfo.Info(&amp;quot;__Demo Finish !&amp;quot;);
-
-        return result;
-
-    }
-</code></pre><p>}</p>
-<p>[/csharp]<br>逻辑完成后，模块就开发完成了。</p>
-</blockquote>
+<p><strong> Client 端代码 </strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClientService</span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> log4net.ILog loginfo = log4net.LogManager.GetLogger(<span class="string">"loginfo"</span>);</div><div class="line">    <span class="comment">/*</span></div><div class="line">        reinstruct reins:</div><div class="line">        instruct.Id         本次事件的ID</div><div class="line">        reins.Instruct      本次事件的指令</div><div class="line">        instruct.Param      本次事件的参数,Dictionary</div><div class="line">    */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Exec</span>(<span class="params">instruct instruct</span>)</span>&#123;</div><div class="line">        loginfo.Info(<span class="string">"__Demo Start !"</span>);</div><div class="line">        <span class="keyword">string</span> result =<span class="string">""</span>;</div><div class="line">        <span class="keyword">try</span>&#123;</div><div class="line">            <span class="comment">/*</span></div><div class="line">            在此编写业务逻辑</div><div class="line">            */</div><div class="line">            result = <span class="string">"返回内容"</span>;</div><div class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</div><div class="line">            result = e.ToString();</div><div class="line">        &#125;</div><div class="line">        loginfo.Info(<span class="string">"__Demo Finish !"</span>);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong> Server 端代码 </strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">ServerService</span> &#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> log4net.ILog loginfo = log4net.LogManager.GetLogger(<span class="string">"loginfo"</span>);</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> connStr = <span class="string">"Database=xxx;Data Source=0.0.0.0;User Id=yyy;Password=zzz"</span>;</div><div class="line">    <span class="comment">/*</span></div><div class="line">        reinstruct reins:</div><div class="line">        reins.Id            本次事件的ID</div><div class="line">        reins.Instruct      本次事件的指令</div><div class="line">        reins.Memo          本次事件的反馈信息</div><div class="line">    */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Exec</span>(<span class="params">reinstruct reins</span>) </span>&#123;</div><div class="line">        loginfo.Info(<span class="string">"__Demo Start !"</span>);</div><div class="line">        <span class="keyword">string</span> result = <span class="string">""</span> ;</div><div class="line">        <span class="keyword">try</span></div><div class="line">        &#123;</div><div class="line">            MySqlConnection Conn = <span class="keyword">new</span> MySqlConnection(connStr);</div><div class="line">            Conn.Open();</div><div class="line">            MySqlCommand command = Conn.CreateCommand();</div><div class="line">            <span class="comment">/*</span></div><div class="line"></div><div class="line">            在此编写业务逻辑</div><div class="line">            */</div><div class="line">            Conn.Dispose();</div><div class="line">            result = <span class="string">"success"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            result = e.ToString();</div><div class="line">        &#125;</div><div class="line">        loginfo.Info(<span class="string">"__Demo Finish !"</span>);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>逻辑完成后，模块就开发完成了。</p>
 <h2 id="模块安装"><a href="#模块安装" class="headerlink" title="模块安装"></a>模块安装</h2><p>编写完成后，需要将打出的DLL文件，复制到Server端Update目录下：</p>
 <p>E:\MyServices\WebOpsServer\Module\update</p>
 <p>同时复制到被控机器的Client端下</p>
 <p>E:\MyServices\WebOpsClient\Module\update</p>
 <h2 id="模块调用"><a href="#模块调用" class="headerlink" title="模块调用"></a>模块调用</h2><p>目前此系统支持三种调用方式，分别为：</p>
 <p>1、  <strong>客户端定时调用</strong>，在每个客户端下均有crontab文件，将需要执行的模块写入内部，即可开始调用，文件写法规范如下：</p>
-<p>数字 模块名 参数</p>
-<p>│    │      └─代表的执行频率，秒钟，必须是5的倍数</p>
-<p>│    └──────模块的名称</p>
-<p>└──────────────────模块需要传入的参数(json)</p>
+<pre>
+数字 模块名 参数
+
+│    │      └─代表的执行频率，秒钟，必须是5的倍数
+
+│    └──────模块的名称
+
+└──────────────────模块需要传入的参数(json)
+</pre>
+
 <p>例如：</p>
 <p>#每25秒钟执行ServerRepoCheck 传入的参数为1-&gt; D:/OfficialCluster</p>
 <p>25 ServerRepoCheck {“1”:”D:/OfficialCluster”}</p>

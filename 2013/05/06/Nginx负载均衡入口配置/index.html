@@ -100,7 +100,7 @@
 <meta property="og:url" content="http://toryzen.cn/2013/05/06/Nginx负载均衡入口配置/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
 <meta property="og:description" content="以前做的一些网站都是放在Godaddy的虚拟主机下，也不考虑什么性能之类的事情，后来导致占用虚拟主机资源过高，没办法，只能换地方，就买了Burst的VPS，但是用了没多久，发现这个也撑不住，本来想买更高配置的VPS，后来转念一想，不如用几个便宜的搭个负载均衡，所以就索性买了4台VPS 一个入口VPS，两个负载VPS，一个DB,VPS 就这样搭了一个小型的负载均衡。 至于负载的VPS不用设置啥玩意，">
-<meta property="og:updated_time" content="2017-06-19T04:02:50.252Z">
+<meta property="og:updated_time" content="2018-02-12T07:08:18.739Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx负载均衡入口配置">
 <meta name="twitter:description" content="以前做的一些网站都是放在Godaddy的虚拟主机下，也不考虑什么性能之类的事情，后来导致占用虚拟主机资源过高，没办法，只能换地方，就买了Burst的VPS，但是用了没多久，发现这个也撑不住，本来想买更高配置的VPS，后来转念一想，不如用几个便宜的搭个负载均衡，所以就索性买了4台VPS 一个入口VPS，两个负载VPS，一个DB,VPS 就这样搭了一个小型的负载均衡。 至于负载的VPS不用设置啥玩意，">
@@ -388,82 +388,7 @@
 <p>至于负载的VPS不用设置啥玩意，就是在入口的主机上搭上Nginx并且简单配置一下就好了。</p>
 <p>我的代码如下：其中我把域名给换了123.com 和 321.com , 两个负载的IP分别是 184.82.107.126 和 184.82.2.222 ，如果有更多的负载可以在upstream 中继续追加就行了。</p>
 <a id="more"></a>
-<p>[shell]</p>
-<p>user  nginx;<br>worker_processes  1;</p>
-<p>error_log  /var/log/nginx/error.log warn;<br>pid        /var/run/nginx.pid;</p>
-<p>events {<br>    worker_connections  521000;<br>}</p>
-<p>http {<br>    include       /etc/nginx/mime.types;<br>    default_type  application/octet-stream;</p>
-<pre><code>server_names_hash_bucket_size 128;
-            client_header_buffer_size 32k;
-            large_client_header_buffers 4 32k;
-            client_max_body_size 50m;
-
-            sendfile on;
-            tcp_nopush     on;
-
-            keepalive_timeout 60;
-            tcp_nodelay on;
-            fastcgi_connect_timeout 300;
-            fastcgi_send_timeout 300;
-            fastcgi_read_timeout 300;
-            fastcgi_buffer_size 64k;
-            fastcgi_buffers 4 64k;
-            fastcgi_busy_buffers_size 128k;
-            fastcgi_temp_file_write_size 256k;
-
-            gzip on;
-            gzip_min_length  1k;
-            gzip_buffers     4 16k;
-            gzip_http_version 1.0;
-            gzip_comp_level 2;
-            gzip_types       text/plain application/x-javascript text/css application/xml;
-            gzip_vary on;
-            #limit_zone  crawler  $binary_remote_addr  10m;
-
-  upstream  *.123.com  {
-          server   184.82.107.126:80;
-          server   184.82.2.222:80;
-
-  }
-
-  upstream  *.321.com  {
-          server   184.82.107.126:80;
-          server   184.82.2.222:80;
-
-  }
-    server
-    {
-            listen       80;
-            server_name *.123.com ;
-            location / {
-                   proxy_pass         http://*.123.com;
-                   proxy_set_header   Host             $host;
-                   proxy_set_header   X-Real-IP        $remote_addr;
-                   proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
-          }
-</code></pre><p>}</p>
-<pre><code>    server
-    {
-            listen       80;
-            server_name *.321.com ;
-            location / {
-                   proxy_pass         http://*.321.com;
-                   proxy_set_header   Host             $host;
-                   proxy_set_header   X-Real-IP        $remote_addr;
-                   proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
-          }
-            access_log off;
-    }
-#access_log  /var/log/nginx/access.log  main;
-
-#sendfile        on;
-#tcp_nopush     on;
-
-#keepalive_timeout  65;
-
-#gzip  on;
-</code></pre><p>   #include /etc/nginx/conf.d/*.conf;<br>[/shell]</p>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">user  nginx;</div><div class="line">worker_processes  1;</div><div class="line"></div><div class="line">error_log  /var/log/nginx/error.log warn;</div><div class="line">pid        /var/run/nginx.pid;</div><div class="line"></div><div class="line">events &#123;</div><div class="line">    worker_connections  521000;</div><div class="line">&#125;</div><div class="line"></div><div class="line">http &#123;</div><div class="line">    include       /etc/nginx/mime.types;</div><div class="line">    default_type  application/octet-stream;</div><div class="line"></div><div class="line">    server_names_hash_bucket_size 128;</div><div class="line">                client_header_buffer_size 32k;</div><div class="line">                large_client_header_buffers 4 32k;</div><div class="line">                client_max_body_size 50m;</div><div class="line"></div><div class="line">                sendfile on;</div><div class="line">                tcp_nopush     on;</div><div class="line"></div><div class="line">                keepalive_timeout 60;</div><div class="line">                tcp_nodelay on;</div><div class="line">                fastcgi_connect_timeout 300;</div><div class="line">                fastcgi_send_timeout 300;</div><div class="line">                fastcgi_read_timeout 300;</div><div class="line">                fastcgi_buffer_size 64k;</div><div class="line">                fastcgi_buffers 4 64k;</div><div class="line">                fastcgi_busy_buffers_size 128k;</div><div class="line">                fastcgi_temp_file_write_size 256k;</div><div class="line"></div><div class="line">                gzip on;</div><div class="line">                gzip_min_length  1k;</div><div class="line">                gzip_buffers     4 16k;</div><div class="line">                gzip_http_version 1.0;</div><div class="line">                gzip_comp_level 2;</div><div class="line">                gzip_types       text/plain application/x-javascript text/css application/xml;</div><div class="line">                gzip_vary on;</div><div class="line">                #limit_zone  crawler  $binary_remote_addr  10m;</div><div class="line"></div><div class="line">      upstream  *.123.com  &#123;</div><div class="line">              server   184.82.107.126:80;</div><div class="line">              server   184.82.2.222:80;</div><div class="line"></div><div class="line">      &#125;</div><div class="line"></div><div class="line">      upstream  *.321.com  &#123;</div><div class="line">              server   184.82.107.126:80;</div><div class="line">              server   184.82.2.222:80;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">        server</div><div class="line">        &#123;</div><div class="line">                listen       80;</div><div class="line">                server_name *.123.com ;</div><div class="line">                location / &#123;</div><div class="line">                       proxy_pass         http://*.123.com;</div><div class="line">                       proxy_set_header   Host             $host;</div><div class="line">                       proxy_set_header   X-Real-IP        $remote_addr;</div><div class="line">                       proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;</div><div class="line">              &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">        server</div><div class="line">        &#123;</div><div class="line">                listen       80;</div><div class="line">                server_name *.321.com ;</div><div class="line">                location / &#123;</div><div class="line">                       proxy_pass         http://*.321.com;</div><div class="line">                       proxy_set_header   Host             $host;</div><div class="line">                       proxy_set_header   X-Real-IP        $remote_addr;</div><div class="line">                       proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;</div><div class="line">              &#125;</div><div class="line">                access_log off;</div><div class="line">        &#125;</div><div class="line">    #access_log  /var/log/nginx/access.log  main;</div><div class="line"></div><div class="line">    #sendfile        on;</div><div class="line">    #tcp_nopush     on;</div><div class="line"></div><div class="line">    #keepalive_timeout  65;</div><div class="line"></div><div class="line">    #gzip  on;</div><div class="line"></div><div class="line"><span class="meta">   #</span>include /etc/nginx/conf.d/*.conf;</div></pre></td></tr></table></figure>
       
     </div>
 

@@ -100,7 +100,7 @@
 <meta property="og:url" content="http://toryzen.cn/2013/04/05/Python分析智联-前程无忧Email中应聘人员信息/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
 <meta property="og:description" content="这个脚本是帮我们公司的人力在筛选简历时写的，当时正值校招季节，被拜托实现在Email中提取这些人的职位、姓名、电话、邮箱，一开始准备是在foxmail等软件基础上进行实现，后来发现此方法行不通，后来转变一下思路，直接用Python接回来，然后正则匹配写文件不得了，SO..就有了一下的脚本。 其中，前程无忧的Email是经过Base64编码的，所以需要先解开,然后在进行正则匹配。 脚本是帮人力写的，">
-<meta property="og:updated_time" content="2017-06-19T04:02:50.252Z">
+<meta property="og:updated_time" content="2018-02-12T07:09:00.525Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python分析智联&amp;前程无忧Email中应聘人员信息">
 <meta name="twitter:description" content="这个脚本是帮我们公司的人力在筛选简历时写的，当时正值校招季节，被拜托实现在Email中提取这些人的职位、姓名、电话、邮箱，一开始准备是在foxmail等软件基础上进行实现，后来发现此方法行不通，后来转变一下思路，直接用Python接回来，然后正则匹配写文件不得了，SO..就有了一下的脚本。 其中，前程无忧的Email是经过Base64编码的，所以需要先解开,然后在进行正则匹配。 脚本是帮人力写的，">
@@ -388,88 +388,11 @@
 <p>脚本是帮人力写的，他们也不懂Python,所以最后用py2exe给打了一个exe的包，就让他们看看了，本来想有空再加上一些时间的判断等机制，后来也没再找我，就这样了，估计也就是用了一次…</p>
 <a id="more"></a>
 <p>配置文件</p>
-<p>[python]<br>[info]<br>pop3 = xxxx.xxxx.com<br>email = xxxx@xxxx.com<br>password = xxxxxxxx<br>[/python]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[info]</div><div class="line">pop3 = xxxx.xxxx.com</div><div class="line">email = xxxx@xxxx.com</div><div class="line">password = xxxxxxxx</div></pre></td></tr></table></figure>
 <p>getMail.py</p>
-<p>[python]</p>
-<p>#-<em>- encoding: gbk -</em>-</p>
-<p>#!/usr/bin/python<br>import base64<br>import poplib<br>import re<br>import email<br>import ConfigParser<br>import sys<br>import os<br>reload(sys)<br>sys.setdefaultencoding(‘utf-8’)</p>
-<p>CONFIG = ConfigParser.ConfigParser()<br>CONFIG.read(&quot;conf.ini&quot;)<br>SERVER   = CONFIG.get(‘info’, ‘pop3’)<br>Email    = CONFIG.get(‘info’, ‘email’)<br>Password = CONFIG.get(‘info’, ‘password’)</p>
-<p>emailServer = poplib.POP3(SERVER)<br>emailServer.user(Email)<br>emailServer.pass_(Password)</p>
-<h1 id="获取一些统计信息"><a href="#获取一些统计信息" class="headerlink" title="获取一些统计信息"></a>获取一些统计信息</h1><p>emailMsgNum, emailSize = emailServer.stat()</p>
-<p>for i in range(emailMsgNum):<br>    allpiece = nonallpiece = &quot;&quot;<br>    for piece in emailServer.retr(i+1)[1]:<br>        all_the_text = &quot;&quot;<br>        allpiece += piece+&quot;\n&quot;<br>        nonallpiece += piece</p>
-<pre><code>#取智联招聘
-if (re.match(&apos;^.*?Received: from(.*?).zhaopinmail.com.*?$&apos;, nonallpiece)!= None):
-    try:
-        title =  allpiece.split(&amp;quot;Subject: &amp;quot;)
-        title =  title[1].split(&amp;quot;Date: &amp;quot;)
-        title = email.Header.decode_header(title[0])[0][0].split(&amp;quot;应聘&amp;quot;)
-
-        title =  title[1].split(&amp;quot;-&amp;quot;)
-        #print title
-        #name =  title[2]
-        try:
-            all_the_text +=&amp;quot;&amp;quot;+ title[0]+&amp;quot;,&amp;quot;+title[1]+&amp;quot;,&amp;quot;+title[2]+&amp;quot;,&amp;quot;+title[3]+&amp;quot;,&amp;quot;
-        except:
-            all_the_text +=&amp;quot;&amp;quot;+ title[0]+&amp;quot;,,&amp;quot;+title[1]+&amp;quot;,&amp;quot;+title[2]+&amp;quot;,&amp;quot;
-        mat = re.match(&apos;^.*((1)(3\d|4[5,7]|5[0-3,5-9]|8[0,2,3,6-9])\D*(\d{4})\D*(\d{4})).*$&apos;, nonallpiece)
-        try:
-            cont=  mat.groups()
-            all_the_text += &amp;quot;&amp;quot;+cont[0]+&amp;quot;,&amp;quot;
-        except:
-            all_the_text += &amp;quot;&amp;quot;+&amp;quot;None,&amp;quot;
-        try:
-            mailre = re.match(&apos;^.*?mailto:(.*?)\&apos;.*?$&apos;, nonallpiece)
-            #print nonallpiece
-            cont=  mailre.groups()
-            all_the_text += &amp;quot;&amp;quot;+cont[0]+&amp;quot;\n&amp;quot;
-        except:
-            all_the_text += &amp;quot;&amp;quot;+&amp;quot;None\n&amp;quot;
-
-        file_object = open(&apos;Finnallist.csv&apos;, &apos;a&apos;)
-        file_object.write(all_the_text)
-        file_object.close( )
-        print all_the_text
-    except Exception,e:
-        print &amp;quot;ERROR!&amp;quot;,e
-else:
-    if re.match(&apos;^.*?Received: from(.*?).51job.com.*?$&apos;, nonallpiece)!= None:
-
-        noew =  re.match(&apos;^.*?Content-Transfer-Encoding: base64(.*?)--=_.*?$&apos;, nonallpiece)
-        c1ont =  noew.groups()
-        c51ont = base64.decodestring(c1ont[0])
-        c51ont = &amp;quot;&amp;quot;.join(c51ont.split())
-
-        try:
-            #print base64.decodestring(nonallpiece)
-            #b =
-            title =  allpiece.split(&amp;quot;subject: &amp;quot;)
-            title =  title[1].split(&amp;quot;MIME-Version:&amp;quot;)
-            all_the_text +=&amp;quot;&amp;quot;+ email.Header.decode_header(title[0])[0][0]+&amp;quot;, &amp;quot;
-            #print all_the_text
-            mat = re.match(&apos;^.*((1)(3\d|4[5,7]|5[0-3,5-9]|8[0,2,3,6-9])\D*(\d{4})\D*(\d{4})).*$&apos;, c51ont)
-            try:
-                cont=  mat.groups()
-                all_the_text += &amp;quot;&amp;quot;+cont[0]+&amp;quot;,&amp;quot;
-            except:
-                all_the_text += &amp;quot;&amp;quot;+&amp;quot;None,&amp;quot;
-            try:
-                #print nonallpiece
-                mailre = re.match(&apos;^.*?mailto:(.*?)&amp;quot;.*?$&apos;, c51ont)
-                cont=  mailre.groups()
-                all_the_text += &amp;quot;&amp;quot;+cont[0]+&amp;quot;\n&amp;quot;
-            except:
-                all_the_text += &amp;quot;&amp;quot;+&amp;quot;None\n&amp;quot;
-            file_object = open(&apos;Finnallist.csv&apos;, &apos;a&apos;)
-            file_object.write(all_the_text)
-            file_object.close( )
-            print all_the_text
-        except Exception,e:
-            print &amp;quot;ERROR!&amp;quot;,e
-</code></pre><p>emailServer.quit()</p>
-<p>[/python]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#-*- encoding: gbk -*-</span></div><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"><span class="keyword">import</span> base64</div><div class="line"><span class="keyword">import</span> poplib</div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> email</div><div class="line"><span class="keyword">import</span> ConfigParser</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> os</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</div><div class="line"></div><div class="line">CONFIG = ConfigParser.ConfigParser()</div><div class="line">CONFIG.read(<span class="string">"conf.ini"</span>)</div><div class="line">SERVER   = CONFIG.get(<span class="string">'info'</span>, <span class="string">'pop3'</span>)</div><div class="line">Email    = CONFIG.get(<span class="string">'info'</span>, <span class="string">'email'</span>)</div><div class="line">Password = CONFIG.get(<span class="string">'info'</span>, <span class="string">'password'</span>)</div><div class="line"></div><div class="line">emailServer = poplib.POP3(SERVER)</div><div class="line">emailServer.user(Email)</div><div class="line">emailServer.pass_(Password)</div><div class="line"></div><div class="line"><span class="comment"># 获取一些统计信息</span></div><div class="line">emailMsgNum, emailSize = emailServer.stat()</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(emailMsgNum):</div><div class="line">    allpiece = nonallpiece = <span class="string">""</span></div><div class="line">    <span class="keyword">for</span> piece <span class="keyword">in</span> emailServer.retr(i+<span class="number">1</span>)[<span class="number">1</span>]:</div><div class="line">        all_the_text = <span class="string">""</span></div><div class="line">        allpiece += piece+<span class="string">"\n"</span></div><div class="line">        nonallpiece += piece</div><div class="line">    <span class="comment">#取智联招聘</span></div><div class="line">    <span class="keyword">if</span> (re.match(<span class="string">'^.*?Received: from(.*?).zhaopinmail.com.*?$'</span>, nonallpiece)!= <span class="keyword">None</span>):</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            title =  allpiece.split(<span class="string">"Subject: "</span>)</div><div class="line">            title =  title[<span class="number">1</span>].split(<span class="string">"Date: "</span>)</div><div class="line">            title = email.Header.decode_header(title[<span class="number">0</span>])[<span class="number">0</span>][<span class="number">0</span>].split(<span class="string">"应聘"</span>)</div><div class="line"></div><div class="line">            title =  title[<span class="number">1</span>].split(<span class="string">"-"</span>)</div><div class="line">            <span class="comment">#print title</span></div><div class="line">            <span class="comment">#name =  title[2]</span></div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                all_the_text +=<span class="string">""</span>+ title[<span class="number">0</span>]+<span class="string">","</span>+title[<span class="number">1</span>]+<span class="string">","</span>+title[<span class="number">2</span>]+<span class="string">","</span>+title[<span class="number">3</span>]+<span class="string">","</span></div><div class="line">            <span class="keyword">except</span>:</div><div class="line">                all_the_text +=<span class="string">""</span>+ title[<span class="number">0</span>]+<span class="string">",,"</span>+title[<span class="number">1</span>]+<span class="string">","</span>+title[<span class="number">2</span>]+<span class="string">","</span></div><div class="line">            mat = re.match(<span class="string">'^.*((1)(3\d|4[5,7]|5[0-3,5-9]|8[0,2,3,6-9])\D*(\d&#123;4&#125;)\D*(\d&#123;4&#125;)).*$'</span>, nonallpiece)</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                cont=  mat.groups()</div><div class="line">                all_the_text += <span class="string">""</span>+cont[<span class="number">0</span>]+<span class="string">","</span></div><div class="line">            <span class="keyword">except</span>:</div><div class="line">                all_the_text += <span class="string">""</span>+<span class="string">"None,"</span></div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                mailre = re.match(<span class="string">'^.*?mailto:(.*?)\'.*?$'</span>, nonallpiece)</div><div class="line">                <span class="comment">#print nonallpiece</span></div><div class="line">                cont=  mailre.groups()</div><div class="line">                all_the_text += <span class="string">""</span>+cont[<span class="number">0</span>]+<span class="string">"\n"</span></div><div class="line">            <span class="keyword">except</span>:</div><div class="line">                all_the_text += <span class="string">""</span>+<span class="string">"None\n"</span></div><div class="line"></div><div class="line">            file_object = open(<span class="string">'Finnallist.csv'</span>, <span class="string">'a'</span>)</div><div class="line">            file_object.write(all_the_text)</div><div class="line">            file_object.close( )</div><div class="line">            <span class="keyword">print</span> all_the_text</div><div class="line">        <span class="keyword">except</span> Exception,e:</div><div class="line">            <span class="keyword">print</span> <span class="string">"ERROR!"</span>,e</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">if</span> re.match(<span class="string">'^.*?Received: from(.*?).51job.com.*?$'</span>, nonallpiece)!= <span class="keyword">None</span>:</div><div class="line"></div><div class="line">            noew =  re.match(<span class="string">'^.*?Content-Transfer-Encoding: base64(.*?)--=_.*?$'</span>, nonallpiece)</div><div class="line">            c1ont =  noew.groups()</div><div class="line">            c51ont = base64.decodestring(c1ont[<span class="number">0</span>])</div><div class="line">            c51ont = <span class="string">""</span>.join(c51ont.split())</div><div class="line"></div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                <span class="comment">#print base64.decodestring(nonallpiece)</span></div><div class="line">                <span class="comment">#b =</span></div><div class="line">                title =  allpiece.split(<span class="string">"subject: "</span>)</div><div class="line">                title =  title[<span class="number">1</span>].split(<span class="string">"MIME-Version:"</span>)</div><div class="line">                all_the_text +=<span class="string">""</span>+ email.Header.decode_header(title[<span class="number">0</span>])[<span class="number">0</span>][<span class="number">0</span>]+<span class="string">", "</span></div><div class="line">                <span class="comment">#print all_the_text</span></div><div class="line">                mat = re.match(<span class="string">'^.*((1)(3\d|4[5,7]|5[0-3,5-9]|8[0,2,3,6-9])\D*(\d&#123;4&#125;)\D*(\d&#123;4&#125;)).*$'</span>, c51ont)</div><div class="line">                <span class="keyword">try</span>:</div><div class="line">                    cont=  mat.groups()</div><div class="line">                    all_the_text += <span class="string">""</span>+cont[<span class="number">0</span>]+<span class="string">","</span></div><div class="line">                <span class="keyword">except</span>:</div><div class="line">                    all_the_text += <span class="string">""</span>+<span class="string">"None,"</span></div><div class="line">                <span class="keyword">try</span>:</div><div class="line">                    <span class="comment">#print nonallpiece</span></div><div class="line">                    mailre = re.match(<span class="string">'^.*?mailto:(.*?)".*?$'</span>, c51ont)</div><div class="line">                    cont=  mailre.groups()</div><div class="line">                    all_the_text += <span class="string">""</span>+cont[<span class="number">0</span>]+<span class="string">"\n"</span></div><div class="line">                <span class="keyword">except</span>:</div><div class="line">                    all_the_text += <span class="string">""</span>+<span class="string">"None\n"</span></div><div class="line">                file_object = open(<span class="string">'Finnallist.csv'</span>, <span class="string">'a'</span>)</div><div class="line">                file_object.write(all_the_text)</div><div class="line">                file_object.close( )</div><div class="line">                <span class="keyword">print</span> all_the_text</div><div class="line">            <span class="keyword">except</span> Exception,e:</div><div class="line">                <span class="keyword">print</span> <span class="string">"ERROR!"</span>,e</div><div class="line"></div><div class="line">emailServer.quit()</div></pre></td></tr></table></figure>
 <p>py2exe打包</p>
-<p>[python]<br>from distutils.core import setup<br>import py2exe<br>includes=[&quot;email&quot;, &quot;poplib&quot;]<br>options={&quot;py2exe&quot;:{&quot;includes&quot;:includes,&quot;bundle_files&quot;:1}}<br>setup(options=options,console=[&quot;getMail.py&quot;])<br>[/python]</p>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> distutils.core <span class="keyword">import</span> setup</div><div class="line"><span class="keyword">import</span> py2exe</div><div class="line">includes=[<span class="string">"email"</span>, <span class="string">"poplib"</span>]</div><div class="line">options=&#123;<span class="string">"py2exe"</span>:&#123;<span class="string">"includes"</span>:includes,<span class="string">"bundle_files"</span>:<span class="number">1</span>&#125;&#125;</div><div class="line">setup(options=options,console=[<span class="string">"getMail.py"</span>])</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -577,17 +500,8 @@ else:
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -705,22 +619,6 @@ else:
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#获取一些统计信息"><span class="nav-number">1.</span> <span class="nav-text">获取一些统计信息</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

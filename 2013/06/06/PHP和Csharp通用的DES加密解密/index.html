@@ -97,10 +97,10 @@
 <meta name="keywords" content="C#,PHP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP和C#通用的DES加密解密">
-<meta property="og:url" content="http://toryzen.cn/2013/06/06/PHP和C#通用的DES加密解密/index.html">
+<meta property="og:url" content="http://toryzen.cn/2013/06/06/PHP和Csharp通用的DES加密解密/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
 <meta property="og:description" content="因为一个项目的需要，需要PHP与C#之间的DES加密解密实现，网上一顿找例子，大部分都是坑爹的啊，即使题目上写着能互通的都不行，后来经过自己的一些改进，终于把这个PHP和C#的DES加密解密给调通了，不容易啊，有需要的朋友，可以直接拿来用，绝不坑爹！ 关于DES的原理以后有时间再慢慢的研究，研究完到时候跟大家汇报一下～">
-<meta property="og:updated_time" content="2017-06-23T14:59:23.227Z">
+<meta property="og:updated_time" content="2018-02-12T07:07:49.954Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP和C#通用的DES加密解密">
 <meta name="twitter:description" content="因为一个项目的需要，需要PHP与C#之间的DES加密解密实现，网上一顿找例子，大部分都是坑爹的啊，即使题目上写着能互通的都不行，后来经过自己的一些改进，终于把这个PHP和C#的DES加密解密给调通了，不容易啊，有需要的朋友，可以直接拿来用，绝不坑爹！ 关于DES的原理以后有时间再慢慢的研究，研究完到时候跟大家汇报一下～">
@@ -131,7 +131,7 @@
 
 
 
-  <link rel="canonical" href="http://toryzen.cn/2013/06/06/PHP和C#通用的DES加密解密/"/>
+  <link rel="canonical" href="http://toryzen.cn/2013/06/06/PHP和Csharp通用的DES加密解密/"/>
 
 
 
@@ -286,7 +286,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2013/06/06/PHP和C#通用的DES加密解密/">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2013/06/06/PHP和Csharp通用的DES加密解密/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="toryzen">
@@ -356,9 +356,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2013/06/06/PHP和C#通用的DES加密解密/#comments" itemprop="discussionUrl">
+                <a href="/2013/06/06/PHP和Csharp通用的DES加密解密/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2013/06/06/PHP和C#通用的DES加密解密/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2013/06/06/PHP和Csharp通用的DES加密解密/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -387,122 +387,9 @@
 <p>关于DES的原理以后有时间再慢慢的研究，研究完到时候跟大家汇报一下～</p>
 <a id="more"></a>
 <p>PHP代码：</p>
-<p>[php]<br>class DesCrypt {</p>
-<pre><code>var $key ;
-var $iv ;
-
-function DES($key) {
-    // key长度8例如:1234abcd
-    $this-&amp;gt;key = $key;
-    $this-&amp;gt;iv  = $key;
-}
-
-function encrypt($str) {
-    // 加密，返回大写十六进制字符串
-    $size = mcrypt_get_block_size ( MCRYPT_DES, MCRYPT_MODE_CBC );
-    $str = $this-&amp;gt;pkcs5Pad ( $str, $size );
-    return strtoupper ( bin2hex ( mcrypt_cbc ( MCRYPT_DES, $this-&amp;gt;key, $str, MCRYPT_ENCRYPT, $this-&amp;gt;iv ) ) );
-}
-
-function decrypt($str) {
-    // 解密
-    $strBin = $this-&amp;gt;hex2bin ( strtolower ( $str ) );
-    $str = mcrypt_cbc ( MCRYPT_DES, $this-&amp;gt;key, $strBin, MCRYPT_DECRYPT, $this-&amp;gt;iv );
-    $str = $this-&amp;gt;pkcs5Unpad ( $str );
-    return $str;
-}
-
-function hex2bin($hexData) {
-    $binData = &amp;quot;&amp;quot;;
-    for($i = 0; $i &amp;lt; strlen ( $hexData ); $i += 2) {             $binData .= chr ( hexdec ( substr ( $hexData, $i, 2 ) ) );         }         return $binData;     }     function pkcs5Pad($text, $blocksize) {         $pad = $blocksize - (strlen ( $text ) % $blocksize);         return $text . str_repeat ( chr ( $pad ), $pad );     }     function pkcs5Unpad($text) {         $pad = ord ( $text {strlen ( $text ) - 1} );         if ($pad &amp;gt; strlen ( $text ))
-        return false;
-    if (strspn ( $text, chr ( $pad ), strlen ( $text ) - $pad ) != $pad)
-        return false;
-    return substr ( $text, 0, - 1 * $pad );
-}
-</code></pre><p>}<br>[/php]</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DesCrypt</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">var</span> $key ;</div><div class="line">	<span class="keyword">var</span> $iv ;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">DES</span><span class="params">($key)</span> </span>&#123;</div><div class="line">		<span class="comment">// key长度8例如:1234abcd</span></div><div class="line">		<span class="keyword">$this</span>-&gt;key = $key;</div><div class="line">		<span class="keyword">$this</span>-&gt;iv  = $key;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">encrypt</span><span class="params">($str)</span> </span>&#123;</div><div class="line">		<span class="comment">// 加密，返回大写十六进制字符串</span></div><div class="line">		$size = mcrypt_get_block_size ( MCRYPT_DES, MCRYPT_MODE_CBC );</div><div class="line">		$str = <span class="keyword">$this</span>-&gt;pkcs5Pad ( $str, $size );</div><div class="line">		<span class="keyword">return</span> strtoupper ( bin2hex ( mcrypt_cbc ( MCRYPT_DES, <span class="keyword">$this</span>-&gt;key, $str, MCRYPT_ENCRYPT, <span class="keyword">$this</span>-&gt;iv ) ) );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">decrypt</span><span class="params">($str)</span> </span>&#123;</div><div class="line">		<span class="comment">// 解密</span></div><div class="line">		$strBin = <span class="keyword">$this</span>-&gt;hex2bin ( strtolower ( $str ) );</div><div class="line">		$str = mcrypt_cbc ( MCRYPT_DES, <span class="keyword">$this</span>-&gt;key, $strBin, MCRYPT_DECRYPT, <span class="keyword">$this</span>-&gt;iv );</div><div class="line">		$str = <span class="keyword">$this</span>-&gt;pkcs5Unpad ( $str );</div><div class="line">		<span class="keyword">return</span> $str;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hex2bin</span><span class="params">($hexData)</span> </span>&#123;</div><div class="line">		$binData = <span class="string">""</span>;</div><div class="line">		<span class="keyword">for</span>($i = <span class="number">0</span>; $i &lt; strlen ( $hexData ); $i += <span class="number">2</span>) &#123; 			$binData .= chr ( hexdec ( substr ( $hexData, $i, <span class="number">2</span> ) ) ); 		&#125; 		<span class="keyword">return</span> $binData; 	&#125; 	<span class="function"><span class="keyword">function</span> <span class="title">pkcs5Pad</span><span class="params">($text, $blocksize)</span> </span>&#123; 		$pad = $blocksize - (strlen ( $text ) % $blocksize); 		<span class="keyword">return</span> $text . str_repeat ( chr ( $pad ), $pad ); 	&#125; 	<span class="function"><span class="keyword">function</span> <span class="title">pkcs5Unpad</span><span class="params">($text)</span> </span>&#123; 		$pad = ord ( $text &#123;strlen ( $text ) - <span class="number">1</span>&#125; ); 		<span class="keyword">if</span> ($pad &gt; strlen ( $text ))</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		<span class="keyword">if</span> (strspn ( $text, chr ( $pad ), strlen ( $text ) - $pad ) != $pad)</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		<span class="keyword">return</span> substr ( $text, <span class="number">0</span>, - <span class="number">1</span> * $pad );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>C#代码</p>
-<p>[code lang=”c”]<br>class MYDES<br>    {</p>
-<pre><code>    public static string Encrypt(string source, string _DESKey)
-    {
-
-        byte[] inputByteArray = Encoding.UTF8.GetBytes(source);
-        byte[] k = ASCIIEncoding.ASCII.GetBytes(_DESKey);
-        byte[] result = null;
-        StringBuilder sb = new StringBuilder();
-        string encrypt = &amp;quot;&amp;quot;;
-        using (DES des = new DESCryptoServiceProvider() { Key = k, IV = k })
-        {
-            using (MemoryStream outStream = new MemoryStream())
-            {
-                using (CryptoStream encStream = new CryptoStream(outStream, des.CreateEncryptor(), CryptoStreamMode.Write))
-                {
-                    encStream.Write(inputByteArray, 0, inputByteArray.Length);
-                    encStream.Close();
-                    result = outStream.ToArray();
-                    foreach (byte b in outStream.ToArray())
-                    {
-                        sb.AppendFormat(&amp;quot;{0:X2}&amp;quot;, b);
-                    }
-                    encrypt = sb.ToString();
-                }
-            }
-        }
-
-        //string encrypt;
-        return MYDES.byteToHexStr(result);
-    }
-    public static byte[] strToToHexByte(string hexString)
-    {
-        hexString = hexString.Replace(&amp;quot; &amp;quot;, &amp;quot;&amp;quot;); if ((hexString.Length % 2) != 0) hexString += &amp;quot; &amp;quot;;
-        byte[] returnBytes = new byte[hexString.Length / 2]; for (int i = 0; i &amp;lt; returnBytes.Length; i++)
-            returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
-        return returnBytes;
-    }
-
-    public static string byteToHexStr(byte[] bytes)
-    {
-        string returnStr = &amp;quot;&amp;quot;; if (bytes != null)
-        {
-            for (int i = 0; i &amp;lt; bytes.Length; i++)
-            {
-                returnStr += bytes[i].ToString(&amp;quot;X2&amp;quot;);
-            }
-        }
-        return returnStr;
-    }
-
-    public static string Decrypt(string source, string sKey)
-    {
-        try
-        {
-            byte[] s = MYDES.strToToHexByte(source);
-            byte[] k = ASCIIEncoding.ASCII.GetBytes(sKey);
-            byte[] result = null;
-            using (DES des = new DESCryptoServiceProvider() { Key = k, IV = k })
-            using (MemoryStream inStream = new MemoryStream(s))
-            {
-                using (CryptoStream encStream = new CryptoStream(inStream, des.CreateDecryptor(), CryptoStreamMode.Read))
-                {
-                    List byteList = new List();
-                    int i;
-                    while ((i = encStream.ReadByte()) != -1)
-                    {
-                        byteList.Add((byte)i);
-                    }
-                    result = byteList.ToArray();
-                }
-            }
-            string str = Encoding.UTF8.GetString(result);
-            return str;
-
-        }
-        catch (Exception e) { return e.ToString(); }
-    }
-
-}
-</code></pre><p>[/code]</p>
-
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> <span class="title">MYDES</span></div><div class="line">    &#123;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">Encrypt</span>(<span class="params"><span class="keyword">string</span> source, <span class="keyword">string</span> _DESKey</span>)</span></div><div class="line">        &#123;</div><div class="line"></div><div class="line">            <span class="keyword">byte</span>[] inputByteArray = Encoding.UTF8.GetBytes(source);</div><div class="line">            <span class="keyword">byte</span>[] k = ASCIIEncoding.ASCII.GetBytes(_DESKey);</div><div class="line">            <span class="keyword">byte</span>[] result = <span class="literal">null</span>;</div><div class="line">            StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">            <span class="keyword">string</span> encrypt = <span class="string">""</span>;</div><div class="line">            <span class="keyword">using</span> (DES des = <span class="keyword">new</span> DESCryptoServiceProvider() &#123; Key = k, IV = k &#125;)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">using</span> (MemoryStream outStream = <span class="keyword">new</span> MemoryStream())</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">using</span> (CryptoStream encStream = <span class="keyword">new</span> CryptoStream(outStream, des.CreateEncryptor(), CryptoStreamMode.Write))</div><div class="line">                    &#123;</div><div class="line">                        encStream.Write(inputByteArray, <span class="number">0</span>, inputByteArray.Length);</div><div class="line">                        encStream.Close();</div><div class="line">                        result = outStream.ToArray();</div><div class="line">                        <span class="keyword">foreach</span> (<span class="keyword">byte</span> b <span class="keyword">in</span> outStream.ToArray())</div><div class="line">                        &#123;</div><div class="line">                            sb.AppendFormat(<span class="string">"&#123;0:X2&#125;"</span>, b);</div><div class="line">                        &#125;</div><div class="line">                        encrypt = sb.ToString();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">//string encrypt;</span></div><div class="line">            <span class="keyword">return</span> MYDES.byteToHexStr(result);</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] <span class="title">strToToHexByte</span>(<span class="params"><span class="keyword">string</span> hexString</span>)</span></div><div class="line">        &#123;</div><div class="line">            hexString = hexString.Replace(<span class="string">" "</span>, <span class="string">""</span>); <span class="keyword">if</span> ((hexString.Length % <span class="number">2</span>) != <span class="number">0</span>) hexString += <span class="string">" "</span>;</div><div class="line">            <span class="keyword">byte</span>[] returnBytes = <span class="keyword">new</span> <span class="keyword">byte</span>[hexString.Length / <span class="number">2</span>]; <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; returnBytes.Length; i++)</div><div class="line">                returnBytes[i] = Convert.ToByte(hexString.Substring(i * <span class="number">2</span>, <span class="number">2</span>), <span class="number">16</span>);</div><div class="line">            <span class="keyword">return</span> returnBytes;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">byteToHexStr</span>(<span class="params"><span class="keyword">byte</span>[] bytes</span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">string</span> returnStr = <span class="string">""</span>; <span class="keyword">if</span> (bytes != <span class="literal">null</span>)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.Length; i++)</div><div class="line">                &#123;</div><div class="line">                    returnStr += bytes[i].ToString(<span class="string">"X2"</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> returnStr;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">Decrypt</span>(<span class="params"><span class="keyword">string</span> source, <span class="keyword">string</span> sKey</span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">try</span></div><div class="line">            &#123;</div><div class="line">                <span class="keyword">byte</span>[] s = MYDES.strToToHexByte(source);</div><div class="line">                <span class="keyword">byte</span>[] k = ASCIIEncoding.ASCII.GetBytes(sKey);</div><div class="line">                <span class="keyword">byte</span>[] result = <span class="literal">null</span>;</div><div class="line">                <span class="keyword">using</span> (DES des = <span class="keyword">new</span> DESCryptoServiceProvider() &#123; Key = k, IV = k &#125;)</div><div class="line">                <span class="keyword">using</span> (MemoryStream inStream = <span class="keyword">new</span> MemoryStream(s))</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">using</span> (CryptoStream encStream = <span class="keyword">new</span> CryptoStream(inStream, des.CreateDecryptor(), CryptoStreamMode.Read))</div><div class="line">                    &#123;</div><div class="line">                        List byteList = <span class="keyword">new</span> List();</div><div class="line">                        <span class="keyword">int</span> i;</div><div class="line">                        <span class="keyword">while</span> ((i = encStream.ReadByte()) != <span class="number">-1</span>)</div><div class="line">                        &#123;</div><div class="line">                            byteList.Add((<span class="keyword">byte</span>)i);</div><div class="line">                        &#125;</div><div class="line">                        result = byteList.ToArray();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">string</span> str = Encoding.UTF8.GetString(result);</div><div class="line">                <span class="keyword">return</span> str;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">catch</span> (Exception e) &#123; <span class="keyword">return</span> e.ToString(); &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -875,8 +762,8 @@ function hex2bin($hexData) {
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://toryzen.cn/2013/06/06/PHP和C#通用的DES加密解密/';
-          this.page.identifier = '2013/06/06/PHP和C#通用的DES加密解密/';
+          this.page.url = 'http://toryzen.cn/2013/06/06/PHP和Csharp通用的DES加密解密/';
+          this.page.identifier = '2013/06/06/PHP和Csharp通用的DES加密解密/';
           this.page.title = 'PHP和C#通用的DES加密解密';
         };
         var d = document, s = d.createElement('script');

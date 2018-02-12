@@ -99,7 +99,7 @@
 <meta property="og:url" content="http://toryzen.cn/2014/02/20/osmocomBB-错误-FBS-RESP-result-255/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
 <meta property="og:description" content="在./ccch_scan 执行过程中出现如下错误： 上次弄好了GSM Sniffer以后好久都没有在用，最近在用的时候经常性的报 &amp;lt;000c&amp;gt; l1ctl.c:291 BURST IND: &amp;lt;at&amp;gt; (1428545 = 1077/01/35) (-105 dBm, SNR   3, SACCH)&amp;lt;000c&amp;gt; l1ctl.c:114 FBSB RESP: res">
-<meta property="og:updated_time" content="2017-06-19T04:56:55.500Z">
+<meta property="og:updated_time" content="2018-02-12T06:48:33.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="osmocomBB 错误 FBSB RESP: result=255">
 <meta name="twitter:description" content="在./ccch_scan 执行过程中出现如下错误： 上次弄好了GSM Sniffer以后好久都没有在用，最近在用的时候经常性的报 &amp;lt;000c&amp;gt; l1ctl.c:291 BURST IND: &amp;lt;at&amp;gt; (1428545 = 1077/01/35) (-105 dBm, SNR   3, SACCH)&amp;lt;000c&amp;gt; l1ctl.c:114 FBSB RESP: res">
@@ -387,19 +387,15 @@
 <p>&lt;000c&gt; l1ctl.c:291 BURST IND: &lt;at&gt; (1428545 = 1077/01/35) (-105 dBm, SNR   3, SACCH)<br>&lt;000c&gt; l1ctl.c:114 FBSB RESP: result=255</p>
 <p>这个错误，着实郁闷，网上也找不到相应的资料，为了方便使用也得先来个临时解决方案啊，写了一个Shell脚本，执行抓包程序后将日志输出，然后检测日志的最后一条是不是包含FBSB，如果包含则删掉日志文件，重启抓包。</p>
 <a id="more"></a>
-<p>[shell]</p>
-<p>#!/bin/bash<br><code>rm -rf /home/toryzen/log.txt</code><br><code>ps -aux | grep ccch_scan | awk &#39;{print $2}&#39;|xargs kill -9</code><br><code>/home/toryzen/source/osmocom/osmocom-bb/src/host/layer23/src/misc/ccch_scan -a 27  -i 127.0.0.1 &amp;gt;/home/toryzen/log.txt 2&amp;gt;&amp;amp;1 &amp;amp;</code><br>while true;do<br>    str=$(tail /home/toryzen/log.txt -n 2)<br>    echo $str<br>    strA=&quot;RESP&quot;<br>    echo &quot;$str&quot;|grep -q &quot;$strA&quot;<br>    if [ $? -eq 0 ];then<br>        echo &quot;—RESTART—&quot;<br>        <code>rm -rf /home/toryzen/log.txt</code><br>        <code>ps -aux | grep ccch_scan | awk &#39;{print $2}&#39;|xargs kill -9</code><br>        <code>/home/toryzen/source/osmocom/osmocom-bb/src/host/layer23/src/misc/ccch_scan -a 27  -i 127.0.0.1 &amp;gt;/home/toryzen/log.txt 2&amp;gt;&amp;amp;1 &amp;amp;</code><br>    fi<br>sleep 5<br>echo ‘LOOP’<br>done<br>[/shell]</p>
-<p>暂时先这么凑合用，最后终于在网上看到一个类似问题的的</p>
-<blockquote>
-<p>原因：</p>
-<p>1、信号不好</p>
-<p>2、信号不稳定</p>
-<p>3、编译有问题</p>
-<p>经过网上查找资料，确定暂时以下非官方方法解决，请使用附件中的文件覆盖同名文件，重新编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>!/bin/bash</div><div class="line">`rm -rf /home/toryzen/log.txt`</div><div class="line">`ps -aux | grep ccch_scan | awk '&#123;print $2&#125;'|xargs kill -9`</div><div class="line">`/home/toryzen/source/osmocom/osmocom-bb/src/host/layer23/src/misc/ccch_scan -a 27  -i 127.0.0.1 &amp;gt;/home/toryzen/log.txt 2&amp;gt;&amp;amp;1 &amp;amp;`</div><div class="line">while true;do</div><div class="line">	str=$(tail /home/toryzen/log.txt -n 2)</div><div class="line">	echo $str</div><div class="line">	strA="RESP"</div><div class="line">	echo "$str"|grep -q "$strA"</div><div class="line">	if [ $? -eq 0 ];then</div><div class="line">		echo "---RESTART---"</div><div class="line">		`rm -rf /home/toryzen/log.txt`</div><div class="line">		`ps -aux | grep ccch_scan | awk '&#123;print $2&#125;'|xargs kill -9`</div><div class="line">		`/home/toryzen/source/osmocom/osmocom-bb/src/host/layer23/src/misc/ccch_scan -a 27  -i 127.0.0.1 &amp;gt;/home/toryzen/log.txt 2&amp;gt;&amp;amp;1 &amp;amp;`</div><div class="line">	fi</div><div class="line">sleep 5</div><div class="line">echo 'LOOP'</div><div class="line">done</div></pre></td></tr></table></figure>
+<p>暂时先这么凑合用，最后终于在网上看到一个类似问题的的<br>原因：</p>
+<ul>
+<li>1、信号不好</li>
+<li>2、信号不稳定</li>
+<li>3、编译有问题<br>经过网上查找资料，确定暂时以下非官方方法解决，请使用附件中的文件覆盖同名文件，重新编译</li>
+</ul>
 <p>src/host/layer23/src/misc/app_ccch_scan.<br><a href="/uploads/2014/02/app_ccch_scan.c">app_ccch_scan</a></p>
-</blockquote>
 <p>有空试一下</p>
-<p>&nbsp;</p>
 
       
     </div>

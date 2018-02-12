@@ -100,7 +100,7 @@
 <meta property="og:url" content="http://toryzen.cn/2014/01/21/Python基于UDP的通讯/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
 <meta property="og:description" content="最近准备改造以前的一个项目，这个项目是我从半道接手的，消息发送机制是客户端监听自己的10001端口，然后服务端想发送消息的时候，像客户端的10001端口发送socket信息（基于TCP的），从而实现通讯，这样的机制弊端太多了，公司内部有很严格的ACL策略，为此还专门把服务器设置成与所有机器啊的10001端口胡同，这次仅是准备改造，前期研究了一下技术。 也因为这个项目想要放到外网，所以先前的机制根本">
-<meta property="og:updated_time" content="2017-06-19T04:02:50.253Z">
+<meta property="og:updated_time" content="2018-02-12T06:51:39.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python基于UDP的通讯">
 <meta name="twitter:description" content="最近准备改造以前的一个项目，这个项目是我从半道接手的，消息发送机制是客户端监听自己的10001端口，然后服务端想发送消息的时候，像客户端的10001端口发送socket信息（基于TCP的），从而实现通讯，这样的机制弊端太多了，公司内部有很严格的ACL策略，为此还专门把服务器设置成与所有机器啊的10001端口胡同，这次仅是准备改造，前期研究了一下技术。 也因为这个项目想要放到外网，所以先前的机制根本">
@@ -389,29 +389,10 @@
 <p>So，最终结论，要不然用UDP模拟实现TCP的验证机制，要不然就得用TCP来做，不想用TCP来做其实是不想做TCP的长连接，还是感觉无状态比较靠谱，如果定期发送TCP的心跳包不知道行不行，这个到时候在尝试一下。</p>
 <p>上一下Python的Server 和 Client</p>
 <p>Server.py</p>
-<p>[python]</p>
-<p>#! encoding:utf-8<br>import socket<br>import sys<br>import threading<br>import MySQLdb<br>import sys,time<br>sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br>sock.bind((‘124.193.159.6’, 6500))</p>
-<p>def Input(s):<br>    global adpol,cur<br>    while True:<br>        ipnub = raw_input()<br>        ishave = cur.execute(&quot;select ip,port from perminal_new.cstest where user = ‘&quot;+ipnub+&quot;’ limit 1&quot;)<br>        if(ishave&gt;0):<br>            print &quot;please input contents!&quot;<br>            cont = raw_input()<br>            check =  cur.fetchone()<br>            print check[0],check[1]<br>            s.sendto(cont,(check[0],int(check[1])))</p>
-<p>def Show(s):<br>    global adpol,cur<br>    while True:<br>        try:<br>            data, address = s.recvfrom(1024)<br>            if address not in adpol:<br>                adpol.append(address)<br>            cur.execute(&quot;UPDATE perminal_new.cstest set ip = ‘&quot;+address[0]+&quot;’ ,port = ‘&quot;+str(address[1])+&quot;’ , updatetime = now() where user = &quot;+str(int(data)))</p>
-<pre><code>    #s.sendto(&amp;quot;Check OK![&amp;quot;+time.strftime(&apos;%H:%M:%S&apos;)+&amp;quot;]&amp;quot;,address)
-    s.sendto(&amp;quot;OK&amp;quot;,address)
-except Exception,e:
-    print e
-</code></pre><p>conn = MySQLdb.connect(host=’127.0.0.1’,user=’root’,passwd=’1q2w3e4r’,port=3306)<br>cur=conn.cursor()<br>adpol = []<br>thin = threading.Thread(target = Input, args = (sock,))<br>thin.start()<br>thout = threading.Thread(target = Show, args = (sock,))<br>thout.start()<br>[/python]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#! encoding:utf-8</span></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> sys,time</div><div class="line">sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</div><div class="line">sock.bind((<span class="string">'124.193.159.6'</span>, <span class="number">6500</span>))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Input</span><span class="params">(s)</span>:</span></div><div class="line">    <span class="keyword">global</span> adpol,cur</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        ipnub = raw_input()</div><div class="line">        ishave = cur.execute(<span class="string">"select ip,port from perminal_new.cstest where user = '"</span>+ipnub+<span class="string">"' limit 1"</span>)</div><div class="line">        <span class="keyword">if</span>(ishave&gt;<span class="number">0</span>):</div><div class="line">            <span class="keyword">print</span> <span class="string">"please input contents!"</span></div><div class="line">            cont = raw_input()</div><div class="line">            check =  cur.fetchone()</div><div class="line">            <span class="keyword">print</span> check[<span class="number">0</span>],check[<span class="number">1</span>]</div><div class="line">            s.sendto(cont,(check[<span class="number">0</span>],int(check[<span class="number">1</span>])))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Show</span><span class="params">(s)</span>:</span></div><div class="line">    <span class="keyword">global</span> adpol,cur</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            data, address = s.recvfrom(<span class="number">1024</span>)</div><div class="line">            <span class="keyword">if</span> address <span class="keyword">not</span> <span class="keyword">in</span> adpol:</div><div class="line">                adpol.append(address)</div><div class="line">            cur.execute(<span class="string">"UPDATE perminal_new.cstest set ip = '"</span>+address[<span class="number">0</span>]+<span class="string">"' ,port = '"</span>+str(address[<span class="number">1</span>])+<span class="string">"' , updatetime = now() where user = "</span>+str(int(data)))</div><div class="line">            <span class="comment">#s.sendto("Check OK!["+time.strftime('%H:%M:%S')+"]",address)</span></div><div class="line">            s.sendto(<span class="string">"OK"</span>,address)</div><div class="line">        <span class="keyword">except</span> Exception,e:</div><div class="line">            <span class="keyword">print</span> e</div><div class="line"></div><div class="line">conn = MySQLdb.connect(host=<span class="string">'127.0.0.1'</span>,user=<span class="string">'root'</span>,passwd=<span class="string">'1q2w3e4r'</span>,port=<span class="number">3306</span>)</div><div class="line">cur=conn.cursor()</div><div class="line">adpol = []</div><div class="line">thin = threading.Thread(target = Input, args = (sock,))</div><div class="line">thin.start()</div><div class="line">thout = threading.Thread(target = Show, args = (sock,))</div><div class="line">thout.start()</div></pre></td></tr></table></figure>
 <p>Client.py</p>
-<p>[python]</p>
-<h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>import socket<br>import threading,time</p>
-<p>inString = ‘’<br>outString = ‘’<br>nick = ‘’</p>
-<p>def Input(s):<br>    global nick, outString,ipaddress<br>    while True:</p>
-<pre><code>#outString = raw_input()
-outString = &amp;quot;1&amp;quot;
-s.sendto(outString,ipaddress)
-time.sleep(30)
-</code></pre><p>def Show(s):<br>    global inString<br>    while True:<br>        try:<br>            inString = s.recv(1024)<br>            if not inString:<br>                break<br>            if outString != inString:<br>                print inString<br>        except:<br>            break</p>
-<p>ipaddress = (‘124.193.159.6’, 6500)<br>sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br>sock.connect(ipaddress)</p>
-<p>thin = threading.Thread(target = Input, args = (sock,))<br>thin.start()<br>thout = threading.Thread(target = Show, args = (sock,))<br>thout.start()<br>[/python]</p>
-<p>&nbsp;</p>
-<p>[sql]<br>CREATE TABLE <code>cstest</code> (<br>          <code>user</code> int(11) NOT NULL,<br>          <code>ip</code> varchar(15) NOT NULL,<br>          <code>port</code> int(11) NOT NULL,<br>          <code>updatetime</code> datetime DEFAULT NULL<br>        ) ENGINE=MyISAM DEFAULT CHARSET=utf8<br>[/sql]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">import</span> threading,time</div><div class="line"></div><div class="line">inString = <span class="string">''</span></div><div class="line">outString = <span class="string">''</span></div><div class="line">nick = <span class="string">''</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Input</span><span class="params">(s)</span>:</span></div><div class="line">    <span class="keyword">global</span> nick, outString,ipaddress</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="comment">#outString = raw_input()</span></div><div class="line">        outString = <span class="string">"1"</span></div><div class="line">        s.sendto(outString,ipaddress)</div><div class="line">        time.sleep(<span class="number">30</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Show</span><span class="params">(s)</span>:</span></div><div class="line">    <span class="keyword">global</span> inString</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            inString = s.recv(<span class="number">1024</span>)</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> inString:</div><div class="line">                <span class="keyword">break</span></div><div class="line">            <span class="keyword">if</span> outString != inString:</div><div class="line">                <span class="keyword">print</span> inString</div><div class="line">        <span class="keyword">except</span>:</div><div class="line">            <span class="keyword">break</span></div><div class="line"></div><div class="line">ipaddress = (<span class="string">'124.193.159.6'</span>, <span class="number">6500</span>)</div><div class="line">sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</div><div class="line">sock.connect(ipaddress)</div><div class="line"></div><div class="line">thin = threading.Thread(target = Input, args = (sock,))</div><div class="line">thin.start()</div><div class="line">thout = threading.Thread(target = Show, args = (sock,))</div><div class="line">thout.start()</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`cstest`</span> (</div><div class="line">          <span class="string">`user`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">          <span class="string">`ip`</span> <span class="built_in">varchar</span>(<span class="number">15</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">          <span class="string">`port`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">          <span class="string">`updatetime`</span> datetime <span class="keyword">DEFAULT</span> <span class="literal">NULL</span></div><div class="line">        ) <span class="keyword">ENGINE</span>=MyISAM <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8</div></pre></td></tr></table></figure>
 <p>因为是测试技术用的，所以就代码很多参数写死了，如果自己想测，那就在2次加工一下吧。</p>
 
       
@@ -521,17 +502,8 @@ time.sleep(30)
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -649,22 +621,6 @@ time.sleep(30)
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#coding-utf-8"><span class="nav-number">1.</span> <span class="nav-text">-- coding: utf-8 --</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

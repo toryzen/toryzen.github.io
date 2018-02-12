@@ -100,7 +100,7 @@
 <meta property="og:url" content="http://toryzen.cn/2014/02/11/PHP扩展开发基础/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
 <meta property="og:description" content="说来惭愧，接触PHP这么久了，就从来没有写过扩展，这也与实际生产环境有关，至今为止就没有用到要写扩展的示例，但是，不用咱们也不能不会是吧，这就来稍微实践一下，随便在一台LAMP的服务器上进行尝试一下，这次是个入门，至少知道如何操作，例子是个无参的函数，过几天写一个自定义简易的加密函数，再深入研究一下~ 这里环境是PHP5.3.3的环境，因为要用到ext_skel，服务器上没有留源文件，在官网下载了">
-<meta property="og:updated_time" content="2017-06-23T14:59:32.311Z">
+<meta property="og:updated_time" content="2018-02-12T06:49:43.241Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP扩展开发基础">
 <meta name="twitter:description" content="说来惭愧，接触PHP这么久了，就从来没有写过扩展，这也与实际生产环境有关，至今为止就没有用到要写扩展的示例，但是，不用咱们也不能不会是吧，这就来稍微实践一下，随便在一台LAMP的服务器上进行尝试一下，这次是个入门，至少知道如何操作，例子是个无参的函数，过几天写一个自定义简易的加密函数，再深入研究一下~ 这里环境是PHP5.3.3的环境，因为要用到ext_skel，服务器上没有留源文件，在官网下载了">
@@ -388,14 +388,17 @@
 <p>第一步，进入/home/dev/php-5.3.28/ext，创建文件toryzen.skel 写入：</p>
 <a id="more"></a>
 <p>string toryzen()</p>
-<p>第二步，执行<br>[shell]<br>./ext_skel –extname=toryzen –proto=toryzen.skel<br>[/shell]<br>这样，在ext下就会生成相应的目录，里面就是扩展代码的框架了</p>
-<p>第三步，打开目录下的config.m4 将10、11、12三行最前面的dnl删除掉<br>修改后为：<br>[shell]<br>PHP_ARG_WITH(ccvita, for ccvita support,<br>Make sure that the comment is aligned:<br>[ –with-ccvita Include ccvita support])<br>[/shell]<br>第四步，写逻辑，打开toryzen.c文件</p>
+<p>第二步，执行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ext_skel --extname=toryzen --proto=toryzen.skel</div></pre></td></tr></table></figure></p>
+<p>这样，在ext下就会生成相应的目录，里面就是扩展代码的框架了</p>
+<p>第三步，打开目录下的config.m4 将10、11、12三行最前面的dnl删除掉<br>修改后为：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">PHP_ARG_WITH(ccvita, for ccvita support,</div><div class="line">Make sure that the comment is aligned:</div><div class="line">[ --with-ccvita Include ccvita support])</div></pre></td></tr></table></figure></p>
+<p>第四步，写逻辑，打开toryzen.c文件</p>
 <p>找到toryzen函数，修改为：</p>
-<p>[c]<br>PHP_FUNCTION(toryzen)<br>{<br>    if (zend_parse_parameters_none() == FAILURE) {<br>        return;<br>    }<br>    php_printf(&quot;Hello Toryzen !&quot;)<br>}<br>[/c]</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">PHP_FUNCTION(toryzen)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (zend_parse_parameters_none() == FAILURE) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    php_printf(&amp;quot;Hello Toryzen !&amp;quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>第五步，编译</p>
-<p>[shell]<br>phpize<br>./configure –with-php-config=/usr/bin/php-config<br>make<br>[/shell]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">phpize</div><div class="line">./configure --with-php-config=/usr/bin/php-config</div><div class="line">make</div></pre></td></tr></table></figure>
 <p>在modules目录下就有我们要的.so文件</p>
-<p>第六步：然后加入php.ini中，在文件底部加入：<br>[shell]<br>extension=/home/dev/php-5.3.28/ext/toryzen/modules/toryzen.so<br>[/shell]<br>重启apache,OK完工。</p>
+<p>第六步：然后加入php.ini中，在文件底部加入：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extension=/home/dev/php-5.3.28/ext/toryzen/modules/toryzen.so</div></pre></td></tr></table></figure></p>
+<p>重启apache,OK完工。</p>
 <p>随便写一个test.php 执行 toryzen();试试…</p>
 
       

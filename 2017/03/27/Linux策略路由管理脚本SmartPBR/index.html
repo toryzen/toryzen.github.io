@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="SMARTPBR介绍SmartPBR为一个帮助运维人员快速自动化安装策略路由服务，主要企业使用LINUX网关策略路由组网环境。 ##功能 ##  新增路由线路 切换策略  已测试编译环境Red Hat Enterprise Linux Server release 6.4 (Santiago) 包含组件smartpbr-x.x.x          安装目录        /usr/local/s">
+<meta name="description" content="SMARTPBR介绍SmartPBR为一个帮助运维人员快速自动化安装策略路由服务，主要企业使用LINUX网关策略路由组网环境。 功能 新增路由线路 切换策略  已测试编译环境Red Hat Enterprise Linux Server release 6.4 (Santiago) 包含组件smartpbr-x.x.x          安装目录        /usr/local/smartpb">
 <meta name="keywords" content="linux,策略路由">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux策略路由管理脚本SmartPBR">
 <meta property="og:url" content="http://toryzen.cn/2017/03/27/Linux策略路由管理脚本SmartPBR/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
-<meta property="og:description" content="SMARTPBR介绍SmartPBR为一个帮助运维人员快速自动化安装策略路由服务，主要企业使用LINUX网关策略路由组网环境。 ##功能 ##  新增路由线路 切换策略  已测试编译环境Red Hat Enterprise Linux Server release 6.4 (Santiago) 包含组件smartpbr-x.x.x          安装目录        /usr/local/s">
+<meta property="og:description" content="SMARTPBR介绍SmartPBR为一个帮助运维人员快速自动化安装策略路由服务，主要企业使用LINUX网关策略路由组网环境。 功能 新增路由线路 切换策略  已测试编译环境Red Hat Enterprise Linux Server release 6.4 (Santiago) 包含组件smartpbr-x.x.x          安装目录        /usr/local/smartpb">
 <meta property="og:image" content="http://toryzen.cn/uploads/2017/03/topology.jpg">
-<meta property="og:updated_time" content="2017-06-23T15:34:29.383Z">
+<meta property="og:updated_time" content="2018-02-12T05:25:53.455Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux策略路由管理脚本SmartPBR">
-<meta name="twitter:description" content="SMARTPBR介绍SmartPBR为一个帮助运维人员快速自动化安装策略路由服务，主要企业使用LINUX网关策略路由组网环境。 ##功能 ##  新增路由线路 切换策略  已测试编译环境Red Hat Enterprise Linux Server release 6.4 (Santiago) 包含组件smartpbr-x.x.x          安装目录        /usr/local/s">
+<meta name="twitter:description" content="SMARTPBR介绍SmartPBR为一个帮助运维人员快速自动化安装策略路由服务，主要企业使用LINUX网关策略路由组网环境。 功能 新增路由线路 切换策略  已测试编译环境Red Hat Enterprise Linux Server release 6.4 (Santiago) 包含组件smartpbr-x.x.x          安装目录        /usr/local/smartpb">
 <meta name="twitter:image" content="http://toryzen.cn/uploads/2017/03/topology.jpg">
 
 
@@ -386,19 +386,17 @@
 
       
         <h1 id="SMARTPBR"><a href="#SMARTPBR" class="headerlink" title="SMARTPBR"></a>SMARTPBR</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>SmartPBR为一个帮助运维人员快速自动化安装策略路由服务，主要企业使用LINUX网关策略路由组网环境。</p>
-<p>##功能 ##</p>
-<ul>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
 <li>新增路由线路</li>
 <li>切换策略</li>
 </ul>
 <h2 id="已测试编译环境"><a href="#已测试编译环境" class="headerlink" title="已测试编译环境"></a>已测试编译环境</h2><pre><code>Red Hat Enterprise Linux Server release 6.4 (Santiago)
 </code></pre><h2 id="包含组件"><a href="#包含组件" class="headerlink" title="包含组件"></a>包含组件</h2><pre><code>smartpbr-x.x.x          安装目录        /usr/local/smartpbr        配置文件    /etc/smartpbr
 </code></pre><a id="more"></a>  
-<p>##适用拓扑##<br><img src="/uploads/2017/03/topology.jpg" alt="/uploads/2017/03/topology.jpg"></p>
+<h2 id="适用拓扑"><a href="#适用拓扑" class="headerlink" title="适用拓扑"></a>适用拓扑</h2><p><img src="/uploads/2017/03/topology.jpg" alt="/uploads/2017/03/topology.jpg"></p>
 <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><pre><code>./smartpbr install    #安装smartpbr
 /etc/init.d/smartpbr  #交互交互式脚本
-</code></pre><p>##安装包内容##</p>
-<pre><code>smartvpn_x.x.x
+</code></pre><h2 id="安装包内容"><a href="#安装包内容" class="headerlink" title="安装包内容"></a>安装包内容</h2><pre><code>smartvpn_x.x.x
 │ smartpbr.sh                    #自动化脚本
 │
 └─config                         #配置文件夹
@@ -406,8 +404,7 @@
            └─x.config              #线路配置文件
        route.config                #路由配置文件
        rule.config                 #策略配置文件
-</code></pre><p>##配置文件##</p>
-<p><strong>line/*.config</strong></p>
+</code></pre><h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p><strong>line/*.config</strong></p>
 <p>lt.config</p>
 <pre><code>DEFAULTIP=2.2.2.1
 IP2=2.2.2.2
@@ -693,7 +690,7 @@ WANDEV=eth0
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SMARTPBR"><span class="nav-number">1.</span> <span class="nav-text">SMARTPBR</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已测试编译环境"><span class="nav-number">1.2.</span> <span class="nav-text">已测试编译环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包含组件"><span class="nav-number">1.3.</span> <span class="nav-text">包含组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">1.4.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手动操作"><span class="nav-number">1.5.</span> <span class="nav-text">手动操作</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SMARTPBR"><span class="nav-number">1.</span> <span class="nav-text">SMARTPBR</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">1.2.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已测试编译环境"><span class="nav-number">1.3.</span> <span class="nav-text">已测试编译环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包含组件"><span class="nav-number">1.4.</span> <span class="nav-text">包含组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适用拓扑"><span class="nav-number">1.5.</span> <span class="nav-text">适用拓扑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">1.6.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装包内容"><span class="nav-number">1.7.</span> <span class="nav-text">安装包内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">1.8.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手动操作"><span class="nav-number">1.9.</span> <span class="nav-text">手动操作</span></a></li></ol></li></ol></div>
             
 
           </div>
