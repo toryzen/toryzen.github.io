@@ -116,7 +116,7 @@
 <meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/kibana-show.png">
 <meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/ws.png">
 <meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/ws2.png">
-<meta property="og:updated_time" content="2019-01-31T09:32:13.997Z">
+<meta property="og:updated_time" content="2019-02-01T01:03:22.139Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于kubernetes的持续部署(CD)方案">
 <meta name="twitter:description" content="方案概述本技术方案为基于kubernetes(下文简称K8S)为核心的持续部署(下文简称CD)方案，可以满足开发方的程序级日志查看分析，运维方的快速扩容与日常运维分析，并且可以保证用户的服务体验。并且整套放在可以在资源利用率上进一步提升，在不降低服务可靠性的前提下降低资源使用成本。 使用场景分析本方案适用于以Tomcat为容器的JavaWeb项目的持续部署过程，在K8S方案中，所有的Node节点均">
@@ -401,7 +401,7 @@
 
       
         <h1 id="方案概述"><a href="#方案概述" class="headerlink" title="方案概述"></a>方案概述</h1><p>本技术方案为基于kubernetes(下文简称K8S)为核心的持续部署(下文简称CD)方案，可以满足开发方的程序级日志查看分析，运维方的快速扩容与日常运维分析，并且可以保证用户的服务体验。并且整套放在可以在资源利用率上进一步提升，在不降低服务可靠性的前提下降低资源使用成本。</p>
-<h1 id="使用场景分析"><a href="#使用场景分析" class="headerlink" title="使用场景分析"></a>使用场景分析</h1><p>本方案适用于以Tomcat为容器的JavaWeb项目的持续部署过程，在K8S方案中，所有的Node节点均采用8C16G200G配置，根据业务环境的需求进行节点数量的控制</p>
+<h1 id="使用场景分析"><a href="#使用场景分析" class="headerlink" title="使用场景分析"></a>使用场景分析</h1><p>本方案适用于以Tomcat为容器的JavaWeb项目的持续部署过程，在K8S方案中，所有的Node节点均采用统一配置，根据业务环境的需求进行节点数量的控制</p>
 <h1 id="技术架构与选型"><a href="#技术架构与选型" class="headerlink" title="技术架构与选型"></a>技术架构与选型</h1><p><a href="/uploads/2019/01/k8scd/k8s.png"><img src="/uploads/2019/01/k8scd/k8s.png" alt=""></a></p>
 <a id="more"></a>
 <ul>
@@ -444,7 +444,7 @@
     ├─develop.yaml -> /data/k8s-cd-config/test.gyyx.cn/develop/v1.2.0-92-3fdd00f.yaml
     ├── master
     │   └── v1.2.0-91-746284e.yaml
-└──master.yaml->/data/k8s-cd-config/test.gyyx.cn/master/v1.2.0-91-746284e.yaml
+    └──master.yaml->/data/k8s-cd-config/test.gyyx.cn/master/v1.2.0-91-746284e.yaml
 </pre>
 
 <p>K8s-Master下的data目录下为k8s-cd-config， k8s-cd-config 目录存放各业务的yaml配置，二级目录为域名，三级目录划分master(正式),develop(测试)，目录下以 版本号-构建ID-GITID.yaml 命名文件，时间最后一个即为当前线上的使用配置文件,为了运维方便，在二级目录同级内，生成一个软链连接到最新的正式与测试配置文件。注意，k8s-cd-config仅在其中一台Master中存在</p>
