@@ -1,0 +1,891 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="需求分析,团队管理," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="早在两年前就计划对现在的内网管理系统进行一次全面的升级了，由于种种原因一直在搁置，从年初开始本系统终于有了实质性的进展，本系统的第一期项目也完成了需求、开发并正式落地投入使用，这套系统运用Linux下的rt_table、iproute、iprule、iptables、ipset、tc、netfilter-layer7、dpdk等技术实现支持多出口线路切换、IP分配、限速（白名单）、互通、流量统计等">
+<meta name="keywords" content="需求分析,团队管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Linux策略路由的多线路智能网关系统">
+<meta property="og:url" content="http://toryzen.cn/2019/05/06/基于Linux策略路由的智能网关系统/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="早在两年前就计划对现在的内网管理系统进行一次全面的升级了，由于种种原因一直在搁置，从年初开始本系统终于有了实质性的进展，本系统的第一期项目也完成了需求、开发并正式落地投入使用，这套系统运用Linux下的rt_table、iproute、iprule、iptables、ipset、tc、netfilter-layer7、dpdk等技术实现支持多出口线路切换、IP分配、限速（白名单）、互通、流量统计等">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/usercaes.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/er.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/pdm.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/struct.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/axure/1.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/axure/2.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/axure/3.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/axure/4.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/axure/5.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/axure/6.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/axure/7.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/axure/8.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/line-user.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/ll.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/real/1.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/real/2.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/real/3.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/real/4.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/real/5.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/znwg/real/6.png">
+<meta property="og:updated_time" content="2019-05-06T07:24:22.621Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Linux策略路由的多线路智能网关系统">
+<meta name="twitter:description" content="早在两年前就计划对现在的内网管理系统进行一次全面的升级了，由于种种原因一直在搁置，从年初开始本系统终于有了实质性的进展，本系统的第一期项目也完成了需求、开发并正式落地投入使用，这套系统运用Linux下的rt_table、iproute、iprule、iptables、ipset、tc、netfilter-layer7、dpdk等技术实现支持多出口线路切换、IP分配、限速（白名单）、互通、流量统计等">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2019/05/znwg/usercaes.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2019/05/06/基于Linux策略路由的智能网关系统/"/>
+
+
+
+
+
+  <title>基于Linux策略路由的多线路智能网关系统 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2019/05/06/基于Linux策略路由的智能网关系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于Linux策略路由的多线路智能网关系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-06T23:49:31+08:00">
+                2019-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/作品集/" itemprop="url" rel="index">
+                    <span itemprop="name">作品集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/06/基于Linux策略路由的智能网关系统/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/05/06/基于Linux策略路由的智能网关系统/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>早在两年前就计划对现在的内网管理系统进行一次全面的升级了，由于种种原因一直在搁置，从年初开始本系统终于有了实质性的进展，本系统的第一期项目也完成了需求、开发并正式落地投入使用，这套系统运用Linux下的rt_table、iproute、iprule、iptables、ipset、tc、netfilter-layer7、dpdk等技术实现支持多出口线路切换、IP分配、限速（白名单）、互通、流量统计等一系列功能，并通过SprintBoot+Vue打造的一套Web前端进行可视化管理。下面来讲一下这款产品的设计，这套设计基于前篇文章 系统需求分析管理[指导规范] 设计。</p>
+<a id="more"></a>
+<h1 id="产品设计"><a href="#产品设计" class="headerlink" title="产品设计"></a>产品设计</h1><h2 id="用例图"><a href="#用例图" class="headerlink" title="用例图"></a>用例图</h2><p><a href="/uploads/2019/05/znwg/usercaes.png"><img src="/uploads/2019/05/znwg/usercaes.png" alt=""></a><br>智能网关设计针对5类用户，分别为网络工程师、网管、值班、员工、领导。</p>
+<ul>
+<li>网络工程师：负责系统整体维护；</li>
+<li>网管：使用本系统分配回收员工IP；</li>
+<li>值班：主要使用本系统在线路故障时操作切网；</li>
+<li>员工：可以查看自己的带宽使用情况；</li>
+<li>领导：可以查看自己所负责部门的带宽使用情况以及员工带宽使用情况；</li>
+</ul>
+<h2 id="ER图"><a href="#ER图" class="headerlink" title="ER图"></a>ER图</h2><p><a href="/uploads/2019/05/znwg/er.png"><img src="/uploads/2019/05/znwg/er.png" alt=""></a><br>在逻辑上划分11个实体，其中员工、部门采用OA数据</p>
+<ul>
+<li>主机 ：员工办公电脑或者在办公区的服务器，以IP作为标识</li>
+<li>内网网段：每个网段统一采用24位192.168.0.0的子网，以网段第三位为标识</li>
+<li>出网线路 ：出口公网IP地址，以IP作为标识</li>
+<li>接入商：宽带供应商名称，以名称作为标识</li>
+<li>主机流量：以分钟记录主机使用的流量情况，以时间+主机为标识</li>
+<li>目标地址：目标访问的地址及协议，以协议+地址+端口为标识</li>
+<li>特殊权限：特殊网络权限如QQ权限等，以名称为标识</li>
+<li>限速规则：限速的规则，以名称为标识</li>
+<li>白名单类型：限速的白名单规则，类型为标识</li>
+<li>员工：公司员工，采用OA取数据</li>
+<li>部门：公司组织结构，采用OA取数据</li>
+</ul>
+<h2 id="数据库模型"><a href="#数据库模型" class="headerlink" title="数据库模型"></a>数据库模型</h2><p><a href="/uploads/2019/05/znwg/pdm.png"><img src="/uploads/2019/05/znwg/pdm.png" alt=""></a><br>这里就不做介绍了，基于ER设计的数据库</p>
+<h2 id="产品结构"><a href="#产品结构" class="headerlink" title="产品结构"></a>产品结构</h2><p><a href="/uploads/2019/05/znwg/struct.png"><img src="/uploads/2019/05/znwg/struct.png" alt=""></a><br>1.0版本所实现的功能节点</p>
+<h2 id="产品原型"><a href="#产品原型" class="headerlink" title="产品原型"></a>产品原型</h2><table style="margin-top:-420px;"><br>    <tr><br>        <td><a href="/uploads/2019/05/znwg/axure/1.png"><img src="/uploads/2019/05/znwg/axure/1.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/axure/2.png"><img src="/uploads/2019/05/znwg/axure/2.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/axure/3.png"><img src="/uploads/2019/05/znwg/axure/3.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/axure/4.png"><img src="/uploads/2019/05/znwg/axure/4.png" alt=""></a></td><br>    </tr><br>    <tr><br>        <td><a href="/uploads/2019/05/znwg/axure/5.png"><img src="/uploads/2019/05/znwg/axure/5.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/axure/6.png"><img src="/uploads/2019/05/znwg/axure/6.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/axure/7.png"><img src="/uploads/2019/05/znwg/axure/7.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/axure/8.png"><img src="/uploads/2019/05/znwg/axure/8.png" alt=""></a></td><br>    </tr><br></table>
+
+<h2 id="重点流程"><a href="#重点流程" class="headerlink" title="重点流程"></a>重点流程</h2><table style="margin-top:-150px;"><br>    <tr><br>        <td><a href="/uploads/2019/05/znwg/line-user.png"><img src="/uploads/2019/05/znwg/line-user.png" alt="" title="用户-线路-出口关系"></a></td><br>        <td><a href="/uploads/2019/05/znwg/ll.png"><img src="/uploads/2019/05/znwg/ll.png" alt="" title="流量抓取逻辑"></a></td><br>    </tr><br></table>
+
+<p>真正在做这套系统的时候的重点流程还有很多，以上的两个一个用于让开发成员理解用户，线路，出口的逻辑关系，一个用于了解流量的抓取逻辑。</p>
+<h2 id="系统线上效果"><a href="#系统线上效果" class="headerlink" title="系统线上效果"></a>系统线上效果</h2><table style="margin-top:-350px;"><br>    <tr><br>        <td><a href="/uploads/2019/05/znwg/real/1.png"><img src="/uploads/2019/05/znwg/real/1.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/real/2.png"><img src="/uploads/2019/05/znwg/real/2.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/real/3.png"><img src="/uploads/2019/05/znwg/real/3.png" alt=""></a></td><br>    </tr><br>    <tr><br>        <td><a href="/uploads/2019/05/znwg/real/4.png"><img src="/uploads/2019/05/znwg/real/4.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/real/5.png"><img src="/uploads/2019/05/znwg/real/5.png" alt=""></a></td><br>        <td><a href="/uploads/2019/05/znwg/real/6.png"><img src="/uploads/2019/05/znwg/real/6.png" alt=""></a></td><br>    </tr><br></table>
+
+<p>最后，目前整体1期功能已经上线，2期功能主要是集成WIFI管理，当然说一下为什么这个网关系统要叫智能网络，我们规划要运用算法针对主机进行智能的线路调配，以达到各线路最大化的带宽利用。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/需求分析/" rel="tag"># 需求分析</a>
+          
+            <a href="/tags/团队管理/" rel="tag"># 团队管理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/05/系统需求分析管理[指导规范]/" rel="next" title="系统需求分析管理[指导规范]">
+                <i class="fa fa-chevron-left"></i> 系统需求分析管理[指导规范]
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="toryzen" />
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">86</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/toryzen/" target="_blank" title="Douban">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  Douban
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#产品设计"><span class="nav-number">1.</span> <span class="nav-text">产品设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用例图"><span class="nav-number">1.1.</span> <span class="nav-text">用例图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ER图"><span class="nav-number">1.2.</span> <span class="nav-text">ER图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库模型"><span class="nav-number">1.3.</span> <span class="nav-text">数据库模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产品结构"><span class="nav-number">1.4.</span> <span class="nav-text">产品结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产品原型"><span class="nav-number">1.5.</span> <span class="nav-text">产品原型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重点流程"><span class="nav-number">1.6.</span> <span class="nav-text">重点流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统线上效果"><span class="nav-number">1.7.</span> <span class="nav-text">系统线上效果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://toryzens-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://toryzen.cn/2019/05/06/基于Linux策略路由的智能网关系统/';
+          this.page.identifier = '2019/05/06/基于Linux策略路由的智能网关系统/';
+          this.page.title = '基于Linux策略路由的多线路智能网关系统';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://toryzens-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
