@@ -283,6 +283,157 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/01/21/Python基于UDP的通讯/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/01/21/Python基于UDP的通讯/" itemprop="url">Python基于UDP的通讯</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-01-21T19:11:50+08:00">
+                2014-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/01/21/Python基于UDP的通讯/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/01/21/Python基于UDP的通讯/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近准备改造以前的一个项目，这个项目是我从半道接手的，消息发送机制是客户端监听自己的10001端口，然后服务端想发送消息的时候，像客户端的10001端口发送socket信息（基于TCP的），从而实现通讯，这样的机制弊端太多了，公司内部有很严格的ACL策略，为此还专门把服务器设置成与所有机器啊的10001端口胡同，这次仅是准备改造，前期研究了一下技术。</p>
+<p>也因为这个项目想要放到外网，所以先前的机制根本行不通，所以新机制的一个方案是，基于UDP的通讯，由客户端主动请求服务端，并且定期发送心跳包，为nat下的设备打开通路，服务器监听客户端发来的请求并入库，记录下nat设备上打的洞的IP和端口，在需要发送消息的时候直接回执就行了</p>
+<p>可惜实际测试不容乐观，UDP过NAT设备后的丢包率太严重了，如果不仅过NAT设备，则几乎不会丢包。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2014/01/21/Python基于UDP的通讯/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/01/16/超简易的内存与phpcgi监控/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1638,156 +1789,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2013/10/04/短信狗/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/10/04/短信狗/" itemprop="url">短信狗</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-10-04T18:56:46+08:00">
-                2013-10-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/作品集/" itemprop="url" rel="index">
-                    <span itemprop="name">作品集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/10/04/短信狗/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2013/10/04/短信狗/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这个产品是手机验证码自助交易平台,当时因为在淘宝上发现接受短信验证码的商品卖的非常好，遂产生此产品的想法，做一个短信的中转的中间商，因为这个涉及手机端(Android)的开发，是跟另一个同事合作来做的。</p>
-<div><br><br>#### 平台介绍<br><br></div><br>需求者：<br>需要相应的短信类服务，可在此选择提供此服务的服务者。 通过本平台自助达成交易，每笔交易平台收取30%的服务费用。公正！透明！<br><br>服务者:<br>服务者仅需本平台注册并运行相应的软件，无需其他操作即可获取平台交易费用，本平台全部服务 绝对不会收取您任何的费用(目前仅需收取短信)，但需要占用您极其少量的流量， 若您发现有非流量的扣费情况，我们将10倍的赔偿，每笔交易 您将获取70%的交易费用。<br><div><br><br>#### 流程介绍<br><br><div>需求者发起需求 -&gt; 服务者获取短信并返回给平台 -&gt;平台将短信内容交付需求者</div><br></div><br><div></div><br><div>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2013/10/04/短信狗/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1837,7 +1838,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-count">88</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1948,7 +1949,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
