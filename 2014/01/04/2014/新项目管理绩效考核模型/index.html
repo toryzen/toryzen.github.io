@@ -1,0 +1,812 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="管理,绩效,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="我们公司在今年开始全员上绩效，恰巧我正好负责其中两大块的绩效评定，“项目管理”和“运维工单”，两个系统都是我主导来开发的。 项目管理上的比较早，经过不断修修补补，现在略显臃肿，并且感觉绩效体系也并不是特别的合理，为此，打算重新设计一套绩效体系，旧得就先不提了，如果有时间，再写一篇博客介绍一下，新的绩效体系秉承多劳多得原则，用数学算法把控项目/人员的绩效分数。 好了，这套绩效模型是基于我们新的一套管">
+<meta name="keywords" content="管理,绩效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新项目管理绩效考核模型">
+<meta property="og:url" content="http://toryzen.cn/2014/01/04/2014/新项目管理绩效考核模型/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="我们公司在今年开始全员上绩效，恰巧我正好负责其中两大块的绩效评定，“项目管理”和“运维工单”，两个系统都是我主导来开发的。 项目管理上的比较早，经过不断修修补补，现在略显臃肿，并且感觉绩效体系也并不是特别的合理，为此，打算重新设计一套绩效体系，旧得就先不提了，如果有时间，再写一篇博客介绍一下，新的绩效体系秉承多劳多得原则，用数学算法把控项目/人员的绩效分数。 好了，这套绩效模型是基于我们新的一套管">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/01/jx-724x1024.jpg">
+<meta property="og:updated_time" content="2021-02-12T18:43:14.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="新项目管理绩效考核模型">
+<meta name="twitter:description" content="我们公司在今年开始全员上绩效，恰巧我正好负责其中两大块的绩效评定，“项目管理”和“运维工单”，两个系统都是我主导来开发的。 项目管理上的比较早，经过不断修修补补，现在略显臃肿，并且感觉绩效体系也并不是特别的合理，为此，打算重新设计一套绩效体系，旧得就先不提了，如果有时间，再写一篇博客介绍一下，新的绩效体系秉承多劳多得原则，用数学算法把控项目/人员的绩效分数。 好了，这套绩效模型是基于我们新的一套管">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2014/01/jx-724x1024.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2014/01/04/2014/新项目管理绩效考核模型/">
+
+
+
+
+
+  <title>新项目管理绩效考核模型 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/01/04/2014/新项目管理绩效考核模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">新项目管理绩效考核模型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-01-04T17:43:35+08:00">
+                2014-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/团队管理/" itemprop="url" rel="index">
+                    <span itemprop="name">团队管理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们公司在今年开始全员上绩效，恰巧我正好负责其中两大块的绩效评定，“项目管理”和“运维工单”，两个系统都是我主导来开发的。</p>
+<p>项目管理上的比较早，经过不断修修补补，现在略显臃肿，并且感觉绩效体系也并不是特别的合理，为此，打算重新设计一套绩效体系，旧得就先不提了，如果有时间，再写一篇博客介绍一下，新的绩效体系秉承多劳多得原则，用数学算法把控项目/人员的绩效分数。</p>
+<p>好了，这套绩效模型是基于我们新的一套管理流程的基础上，简单理解就是在阶段开始之前，必须预计阶段完成的时间与人天，OK，先把向副总解释的文档粘出来</p>
+<a id="more"></a>
+<p><img src="/uploads/2014/01/jx-724x1024.jpg" alt title="jx"></p>
+<p>这版绩效体系中，只用到几个概念，人天(可以理解为基本分)，期限时间，完成时间</p>
+<p><strong>成员可以获取：</strong></p>
+<ul>
+<li>任务分</li>
+<li><p>阶段分(成员)<br><strong>管理者可以获取：</strong></p>
+</li>
+<li><p>阶段分(管理)<br>并且每个的公式都不相同</p>
+</li>
+</ul>
+<p><strong>先从3个公式的整体分析，可以这么理解：</strong></p>
+<p><strong>正常情况</strong></p>
+<p>成员可以获得， 一个基本分的100%(分为两块获得，任务分70%+阶段分30% = 100%)</p>
+<p>管理人员可以获得，整个项目得分的20% ((所有阶段分+所有任务分)*100%)</p>
+<p><em>这里所说的场景是不超期，不超出预估分数(人天)的的情况</em></p>
+<p><strong>超期情况</strong></p>
+<p>超期是要扣分，这是一定的，但是扣多少？这个公式中定的是最多50%,及时任务超期再多，他也能获得一个任务的50%的分数，我们使用atan来计算，上述的超期预算表能看出来，超期1天，他将只能获得这个任务的75%的分数，超期超过10天，基本上就只能获得50%了，阶段同理。</p>
+<p><em>这里所说的情况是在无理由状态下，如果有合理理由产生的超期，可以按照TREASN公式乘以相应系数，少扣分。</em></p>
+<p><strong>超人天情况</strong></p>
+<p>超人天的概念也就是预估失误，因为我们在开启一个阶段时，需要预估所值的基本分(即将要花费的人天)，如果超出了这个预期，即为超人天，超出的人天只有在阶段算分时才能体现出来，超出的部分并非全给，会按照RRESAON的事由按比例给分。</p>
+<p>基本上，从整体来说就是这样了，想搞明白三个公式的联系等还需要自己真的去理解一下。</p>
+<p><strong>这个讲完以后我讲一下我们今天讨论遇到的一些问题：</strong></p>
+<p>1、在任务与阶段分，7-3开还是5-5开的比例上，当然最后选的是7-3，上面的文档也是这么写的，选择7-3开的原因还是在于，因为绩效是有周期性的，我们公司是每月10号，当一个比较大的阶段完成时，如果阶段分过高，会影响整体的积极性，所以阶段的比例还是要小，但是为了促进阶段尽快完成，还需要给，所以，选择7-3。</p>
+<p>2、TREASON的事项上，这里的矛盾比较搞笑，我一直坚持有这些大类就够了，剩下的你需要管理者去评判，但是同事不这么任务，他认为需要细化里面的项，比如什么算“需求变动”，什么算“公司活动”，讲了大半天也不能让其认同…感到比较无奈…</p>
+<p>3、当任务或阶段提前完成时，是否应该多家分，同事认为，应该加分，但我不认同。我来说一下我为什么不认同。</p>
+<blockquote>
+<p>举例子，有10个任务1、2、3、4、5、6、7、8、9、10，每个任务各1分，并且这10个任务是2个阶段，12345是阶段一，678910是阶段二，阶段一结束日期是10号。</p>
+<p><strong>同事的模型：</strong></p>
+<p>如果其在10号之前完成了第一阶段，即10号之前完成了任务1,2,3,4,5。此人将获得5+1 = 6 分 (+1只是个例子，就是说将拿到超过5分)</p>
+<p>他的观念，要提高做任务的积极性，促进他快点做完。</p>
+<p><strong>我的模型：</strong></p>
+<p>我则认为，及时在10号之前完成了第一阶段，此人也只能拿到应有的5分，不应该再多拿分，如果想要多拿分，那可以提前去做6,7,8,9,10等任务。</p>
+<p>我的观念，即使你做的再快，你不比别人多做，你还是不会超过别人<br>这里是我们以前进行的一个小型项目的数据示例，人员名称已经隐去，可以看一下，<a href="/uploads/2014/01/项目示例.xlsx">项目示例</a></p>
+</blockquote>
+<p>这次的模型就将这么多吧，估计还需要改动，敬请期待最终方案。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/管理/" rel="tag"># 管理</a>
+          
+            <a href="/tags/绩效/" rel="tag"># 绩效</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/01/04/2014/PHP图形(验证码)识别/" rel="next" title="PHP图形(验证码)识别">
+                <i class="fa fa-chevron-left"></i> PHP图形(验证码)识别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/01/06/2014/项目流程模型与工期预估/" rel="prev" title="项目流程模型与工期预估">
+                项目流程模型与工期预估 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">90</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
