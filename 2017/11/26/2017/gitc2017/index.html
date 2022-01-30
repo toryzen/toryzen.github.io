@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="elves,运维自动化,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="非常有幸作为2017GITC的运维专场演讲嘉宾参与本次GITC，下面是本次演讲的内容。 各位运维同胞们早上好，很高兴来到GITC运维专场跟大家共同交流分享我以及我们团队在运维上的一些认知、经验以及历程，来参加GITC好几年了以往都是在会场下聆听，这次站在讲台上还是有些激动哈，好的，下面就开始我本次的主题《开源运维自动化平台架构实现与运营实践》。 开始之前先做个自我介绍，我目前所供职的公司为光宇游戏">
+<meta name="keywords" content="elves,运维自动化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2017GITC-开源运维自动化平台架构实现与运营实践">
+<meta property="og:url" content="http://toryzen.cn/2017/11/26/2017/gitc2017/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="非常有幸作为2017GITC的运维专场演讲嘉宾参与本次GITC，下面是本次演讲的内容。 各位运维同胞们早上好，很高兴来到GITC运维专场跟大家共同交流分享我以及我们团队在运维上的一些认知、经验以及历程，来参加GITC好几年了以往都是在会场下聆听，这次站在讲台上还是有些激动哈，好的，下面就开始我本次的主题《开源运维自动化平台架构实现与运营实践》。 开始之前先做个自我介绍，我目前所供职的公司为光宇游戏">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-02-12T18:25:52.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2017GITC-开源运维自动化平台架构实现与运营实践">
+<meta name="twitter:description" content="非常有幸作为2017GITC的运维专场演讲嘉宾参与本次GITC，下面是本次演讲的内容。 各位运维同胞们早上好，很高兴来到GITC运维专场跟大家共同交流分享我以及我们团队在运维上的一些认知、经验以及历程，来参加GITC好几年了以往都是在会场下聆听，这次站在讲台上还是有些激动哈，好的，下面就开始我本次的主题《开源运维自动化平台架构实现与运营实践》。 开始之前先做个自我介绍，我目前所供职的公司为光宇游戏">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2017/11/26/2017/gitc2017/">
+
+
+
+
+
+  <title>2017GITC-开源运维自动化平台架构实现与运营实践 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/11/26/2017/gitc2017/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">2017GITC-开源运维自动化平台架构实现与运营实践</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-26T18:17:49+08:00">
+                2017-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>非常有幸作为2017GITC的运维专场演讲嘉宾参与本次GITC，下面是本次演讲的内容。</p>
+<p>各位运维同胞们早上好，很高兴来到GITC运维专场跟大家共同交流分享我以及我们团队在运维上的一些认知、经验以及历程，来参加GITC好几年了以往都是在会场下聆听，这次站在讲台上还是有些激动哈，好的，下面就开始我本次的主题《开源运维自动化平台架构实现与运营实践》。</p>
+<p>开始之前先做个自我介绍，我目前所供职的公司为光宇游戏，是研发、运营、发型一体化的网游公司，我是在2012年加入的光宇游戏，目前负责运维架构、自动化平台、大数据平台的建设及人员管理工作，本次主题主要是分享一下在自动化平台建设方面的一些历程。</p>
+<p>本次主题的议程分为三个部分,第一部分为运维系统平台化建设思考，主要介绍一些光宇在运维自动化过程中的一些历程以及思考的一些问题；第二额部分为ELVES开源运维自动化开发平台，主要介绍光宇在解决平台化建设过程中发布的一款针对开发运维自动化平台的一款开源产品；第三部分为光宇游戏平台化建设运营实践，主要简单介绍光宇在运维自动化平台的几个重点组成部分。</p>
+<a id="more"></a>
+<p>下面开始第一部分光宇运维发展历程应该跟绝大部分同体量级的互联网公司历程基本相似，从06年11年我们一直都处于人肉运维的阶段，使用Excel,终端来管理我们线上的业务，当然随着业务的发展与机器数量的增加，这种运维方式已经无法追上我们业务发展的步伐，后来进入到了系统运维阶段，在这期间，我们开始建立专门的运维研发团队，自研运维系统百花齐放，像远程管理、交换机管理、DNS管理、以及一大堆的业务管理系统，截止到去年我们线上在用的独立运维系统还有超过50款以上，更不用提开发后用过一段时间并下线的，随着这些独立的运维系统越来越多，这些系统在上线后的维护上需要投入大量的成本，16年开始我们基于对目前已有的这些线上系统的分析及思考，通过更科学的方法将系统功能分层，并依托于底层服务系统合并众多的独立运维系统，并开始建设更加统一以及便于维护的运维自动化平台。</p>
+<p>在刚刚讲的从系统化工具运维像自动化平台运维方向过度的过程中，我们进行了很多的思考，第一层思考是针对运维系统与服务器间的交互：对于这些独立的运维自动化系统来讲，他们的自动化过程基本上是可以归纳为对大量分布在各个IDC或者公有云机器上的系统及软件层面的操作，如我们的资产管理系统/配置管理系统在人为数据录入后需要进行真实数据的采集校验，持续集成系统需要进行构建以及分发、启动等等，为了进行这些操作我们几乎每一款运维系统都需要自己建设一个远程的运维通道供自身的系统使用。</p>
+<p>当然现在很多这类的开源实现如Chef，puppet，Ansble，SaltStack，相信大家也都有在用，或者也可以使用Fabric、甚至Paramiko直接进行编程开发，我们以前也是使用类似的技术集成在我们的众多系统中来实现自身业务的运维自动化操作。</p>
+<p>但随着系统的越来越多，我们发现这样做的效率越来越低，每套系统自己建设远程运维通道，且都需要进行可控机器的权限的配置管理，需要维护他们的通信安全，甚至因为我们对网络的严格管理，每个系统都需要单独进行可控机器的网络互通，导致大量人力物力甚至沟通成本的增加.</p>
+<p>第二层思考是针对团队的建设与配合，在光宇我们非常重视运维自动化的产品的开发，最开始运维相关系统都有由运维人员开发的，一般的运维系统都是基于WEB化进行管理的，运维人员去学习这种WEB开发技术还是存在一定门槛的， 我们在10到11年就已经开始建设专门服务于运维产品的开发团队即运维开发团队，目前光宇运维开发团队也已经有20多人的规模，他们具备很强的产品设计及WEB开发技能，这样运维产品的研发工作就交由开发团队去主导，但开发出来的产品运维不愿意用，所以我们一直在摸索改进运维团队，开发团队之间如何进行高效的合作，经过长时间的摸索目前我们的合作模式为项目组形式，由开发团队的开发工程师与运维团队的运维工程师组件相应的产品研发团队开展研发工作，这样他们荣辱与共对于开发出来的系统落地情况有了很好的改观，但是同团队内的沟通及配合同样遇到较大的挑战。</p>
+<p>要实现一款运维产品，运维工程师为需求方，他们最了解运维的痛点以及也了解业务如何实现，但是他们产品感往往不强，且缺少前端实现经验，尤其是对于现在这种前端大爆炸时代，对于他们的学习成本太高，开发工程师的产品感略强，且具备前端技能，但是他们对运维业务并不熟悉，且系统技能欠缺，这样即使他们在同一个项目组内，各自做自己擅长的工作最终整合的时候成本非常之高，往往逻辑开发1天，联调测试3天，甚至更多都有可能。</p>
+<p>基于以上的痛点，下面来进入第二部分，介绍一下在光宇我们提出的解决方案，ELVES运维自动化开发平台，且我们已经在今年7月在GITHUB开源。</p>
+<p>ELVES的定位为开发平台，面向开发，注重以编程实现运维自动化，致力于为运维自动化研发人员提供便捷的编程实现环境，ELVES本身不具备任何业务属性，所有的业务属性都是基于APP形式开发与实现。ELVES在开源前我们做了很多的改造，最主要的一项实现了核心的微服务架构，并且可以按需启动各个组件，所有的组件均可以集群化部署，提升性能与稳定性。</p>
+<p>介绍完ELVES后我们来对标看一下我们所提到的两个问题，第一个问题是运维通道问题，我们使用ELVES建立统一的运维通道，所有运维系统不在允许自建运维通道，所有的远程调用过程统一使用ELVES实现，ELVES上游为各个运维系统，并为运维系统提供一套统一化的RESTful API，下游为操作各个业务机器，以运行在各个机器上的APP实现。且ELVES内部实现安全认证，权限划分，以及多种任务模式等一系列的功能。</p>
+<p>第二个问题在团队合作上，运维人员以Python或其他语言开发ELVES APP实现业务功能，APP可以手动触发运行，也可以自行在Elves-Agent提供的WEB界面上进行可视化的运行，开发工程师对接RESTful接口，每款APP的每个方法均为固定格式的接口，功能实现后运维人员只需要提供给开发人员一份简单的方法文档，开发人员即可将其对应为RESTful接口，进行WEB产品的整合，目前我们的最佳实践是运维人员先进行APP功能的开发，并且将APP当做工具来使用一段时间后再由开发人员实现WEB化的功能，所以前期不需要开发人员介入，后期基本也不需要运维人员在进行开发以及BUG的修复，只需要给开发人员讲清楚业务即可。</p>
+<p>ELVES在解决了上述统一及配合问题的同时，经过对以前各个系统任务的分配，我们实现了三种APP任务执行模式，以同步模式调用的即时任务，调用RESTfulAPI后直接获取返回结果，异步模式的队列任务和计划任务，队列任务允许用户配置各个调用的依赖，提交到ELVES后稍后再使用对应接口获取返回结果，计划任务可以设置类似于cron的精确到s的规则，通过ELVES定期远程调用，基本上这三种模式可以涵盖绝大多是的任务过程。</p>
+<p>下面来说一下ELVES的相关实现的技术部分，先从ELVES的组件聊一下，ELVES整体由三大部分组成，ELVES-Center,ELves-Agent,ELves-App。<br>第一个为ELVES-CENTER为整套系统的核心Server部分，负责整体的任务调用过程，内部涵盖8个组件，这些组件是可以按需进行部署的，整套系统最小化部署为Scueduler和OpenAPi即可完成，提供无权限管理的即时任务，Scheduler为任务调用组件，直接向各elves-agent发送命令，OpenAPI向外提供服务接口，这样一条指令从openapi进入到达scheduler后发送至elves-agent并同步的返回执行结果</p>
+<p>若需要检测Agent的存活状态且支持App的自动更新，可以追加部署HeartBeat组件，HeartBeat组件开启后Elves-Agent会定期向HeartBeat发送自身信息并获取自身应安装的APP信息。</p>
+<p>如需要进行分APP的新增、删除、授权等管理，可以追加部署supervisor组件，这个组件会提供一个WEB界面供用户进行上述信息的管理工作。</p>
+<p>下面的两个组件是我们的两个独立功能组件，一个QUEUE组件一个是CRON组件，Queue组件提供异步的队列任务的实现，用户通过OpenapI设置的队列任务将进入Queue组件，由Queue组件根据用户的设置需求将指令发送到scheduler后到达elves-agent，同样的CRON及实现ELVES中异步计划任务功能。</p>
+<p>下面就是对于被控机可运行APP的授权了，cmdbproxy以非常简单的方式接入自身的cmdb系统，通过配置sql语句查询自身cmdb的方式为elves-center提供分类业务授权信息，这样当cmdb系统发生变化，elves app的授权会同步跟着变化。</p>
+<p>最后一个组件dashbord是为运维人员提供的组件，在这个组件上可以查看ELVES所有组件的运营健康状况，比如某组件启动是否存活，启动了几个实例以及可以查看各组件间消息的传递情况。</p>
+<p>ELVES-Center整体使用JAVA语言开发，所有组件均注册至Zookeeper进行集群管理，Elves-Center间各个组件之间的数据交互采用RabbitMQ作为媒介进行，各组件的信息传递过程使用与OpenStack一致的交互形式，及rpc-call的同步request-resonse和rcp-cast的on way方式。</p>
+<p>下一个部分是ELVES-Agent，ELVES-Agent跑在每台被控机器上，为了部署的方便采用Golang开发，提供Thrift接口供Elves-Center调用，以进程调用的方式调用Elves-APP，每一个Elves-Agent提供一个信息展示及开发模式调试的WEB界面，供信息查看和快速调试开发使用；</p>
+<p>最后一个部分为Elves-App，Elves-App根据目前我们团队的情况目前我们对内提供两种语言的SDK，分别为Python的和Csharp的，每款Elves-App由两部分组成，分别为app-worker和app-processor，app-worker是每款app必须实现的，它运行在被控机上，由Elves-Agent负责触发调用，如果你想基于ELVES构建一个C/S模式的运维系统你可以实现一个app-processor，这样在目标机执行后的结果会直接发送至app-processor，当然这样你需要自己确保Agent机器与部署app-processor机器的权限互通问题。</p>
+<p>组件介绍了，下面我们看一下一个全部组件进行部署后的ELVES架构全貌，包含任务的下发，调用，执行，APP的更新等全过程。</p>
+<p>下面说一下ELVES的过程及在光宇实际业务运营中的现状，ELVES项目的前身为专门实现一个WEB异地容灾产品WEBOPS，经过一个月的简单开发及在网站运维业务组上线了，随后我们即开始了ELVES项目的研究及设计工作，经过多方面的设计与考虑，ELVES 1.0版本在2月进行立项开发，整体周期1个月，在今年5月份的时候随着接入的Agent以及App的增多我们对ELVES进行了一次全新的兼容1.0的重构升级，并在7月在GitHub进行了开源发布，截止到目前ELVES经历了7次更新迭代，并且会继续持续更新，目前光宇的ELVES已经接入超过5000+机器，平均每分钟2000+的App调用，超过10个APP，几乎每个APP都对标一个运维系统，所有的APP加起来更新超过200次。</p>
+<p>最后一部分，我来介绍一下光宇游戏在运维平台化建设上的部分运营实践</p>
+<p>这里我以光宇运维支撑平台下的几个重点的系统及子平台进行部分的介绍与说明，光宇目前的运维支撑平台是依托于ELVES平台建立的，就像刚刚说的，目前已经有超过10款APP对标的运维相关系统，有些系统是原有自建运维通道的基础上改造的，有些系统是直接从无到有基于ELVES开发的，在基础运维系统上，CMDB在光宇内部为CenterApp中心应用系统，本系统接入ELVES主要采集机器的软硬件信息，与人工录入的信息进行比对，并且将中心应用中记录的应用类型信息写入相应机器的指定文件内供运维人员查看使用。监控报警上我们以自研的Radar监控报警系统为核心，接入ELVES后我们实现了部分报警功能的自愈功能，如当硬盘空间报警时我们会根据不同的业务场景进行清理；安全方面我们有基于ELVES研发的Odin入侵检测系统，批量操作方面有Bumblebe命令执行工具以及部分的业务子平台，这些会在后面做一些简单介绍。</p>
+<p>先说一下我们基于ELVES研发的第一款在内部使用率极高的一款工具;Bumblebee命令执行工具，这个工具是一个桌面端程序，支持批量的命令行指令执行，且兼容Window和Linux平台，并且支持运行Daemon进程的启动指令，除此之外我们还基于NC做了反射SHELL供紧急情况使用。为了安全性上考虑。本系统并不是每个客户端直接调用ELVES RESTful API进行命令执行，本系统本身也是CS结构，SERVER端进行权限的分配，以及黑名单指令的限制等一些工作，发送指令也均通过Bumblebee的Server调用ELVES API实现。虽然饶了好几道弯，整个命令的发送和结果回收还是非常快的，200台机器运行简单的指令如ls，pwd等立即返回结果的指令大概只需要5-6s钟的时间既可以完成，顺便说一下，我们这个系统也是开源的。</p>
+<p>再来聊一下我们基于ELVES研发的另一款产品，当我们建立好通道后有了手段可以快速的接入操作所有的机器可以非常快速便捷的开发很多有意思有价值的系统，比如Odin入侵检测系统，原理非常简单，我们通过定期的抓取所有机器的登录日志，进程，数据库连接，重点系统问题，启动项等信息，并根据不同的业务类型设置相应的白名单，当发现异常后进行报警操作，整套系统的开发非常迅速，运维人员开发相应的数据抓取APP，剩下的全部由开发工程师进行业务逻辑实现。</p>
+<p>下一个是我们一个比较重量级的运维自动化子平台，TRON网站运维自动化平台，这个的前身就是我之前提到的WEBOPS系统，也就是ELVES的前身，后来将远程操作独立出来就形成了ELVES，本套平台上面介绍的只是平台的冰山一角，期初建立这套系统的目标是为了我们游戏平台的异地容灾操作的，我们为光宇的游戏平台在异地建立的容灾，且定期的进行切换演戏，切换时依赖于本系统进行集群内机器HOSTS操作，DB主从切换操作，DNS切换操作等一系列的连贯动作，最终实现点击一键即可将所有业务从本地切换到异地。随后我们继续丰富Tron系统的功能，目前像机器初始化、Nginx集群，Tomcat集群，IIS、Squid、Redis、Memecache等服务均可以通过Tron系统进行WEB化界面的操作。整个Tron Elves app内部有超过100个功能，这也是我们在运维团队和开发团队上基于ELVES合作的第一个项目也是非常成功的一个项目。</p>
+<p>最后一个要介绍的项目使我们目前正在进行中的一个项目，Wizard混合云管理平台，在这个上面我们基于ELVES进行我们KVM的管理操作，单机的Iptables管理工作，以及接入多家公有云的API实现机器相关的所有操作。</p>
+<p>好的，这就是我本次的分享内容，欢迎大家关于我们团队的Github，上面有更多的我们团队开源的项目，也欢迎大家关注我们的开发者头条，虽然文章目前较少但是我们追求每个都是精品哈。当然下面是我的一个个人的信息，非常欢迎与大家在运维、开发等相关技术方面进行交流，谢谢。</p>
+<h2 id="PPT"><a href="#PPT" class="headerlink" title="PPT"></a>PPT</h2><iframe src="/uploads/2017/11/2017GITC.pdf" frameborder="0" scrolling="no" width="100%" height="550"></iframe>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/elves/" rel="tag"># elves</a>
+          
+            <a href="/tags/运维自动化/" rel="tag"># 运维自动化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/03/2017/新一代CC防火墙-SHIELD2-0/" rel="next" title="新一代CC防火墙(SHIELD2.0)">
+                <i class="fa fa-chevron-left"></i> 新一代CC防火墙(SHIELD2.0)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/27/2018/敏捷迭代管理-2018版指导规范/" rel="prev" title="敏捷迭代管理[2018版指导规范]">
+                敏捷迭代管理[2018版指导规范] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">91</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PPT"><span class="nav-number">1.</span> <span class="nav-text">PPT</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

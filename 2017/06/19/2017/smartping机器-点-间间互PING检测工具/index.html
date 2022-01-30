@@ -1,0 +1,876 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="golang,ping,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="SMARTPING介绍SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能 功能 机器间互PING，单向PING，绘图 绘制互PING间机器的拓扑及报警功能  设计思虑本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态，并API接">
+<meta name="keywords" content="golang,ping">
+<meta property="og:type" content="article">
+<meta property="og:title" content="smartping机器(点)间间互PING检测工具">
+<meta property="og:url" content="http://toryzen.cn/2017/06/19/2017/smartping机器-点-间间互PING检测工具/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="SMARTPING介绍SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能 功能 机器间互PING，单向PING，绘图 绘制互PING间机器的拓扑及报警功能  设计思虑本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态，并API接">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/06/smartping_index.jpg">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/06/smartping_topology.jpg">
+<meta property="og:updated_time" content="2021-02-12T18:25:52.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="smartping机器(点)间间互PING检测工具">
+<meta name="twitter:description" content="SMARTPING介绍SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能 功能 机器间互PING，单向PING，绘图 绘制互PING间机器的拓扑及报警功能  设计思虑本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态，并API接">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2017/06/smartping_index.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2017/06/19/2017/smartping机器-点-间间互PING检测工具/">
+
+
+
+
+
+  <title>smartping机器(点)间间互PING检测工具 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/06/19/2017/smartping机器-点-间间互PING检测工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">smartping机器(点)间间互PING检测工具</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T15:31:08+08:00">
+                2017-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/作品集/" itemprop="url" rel="index">
+                    <span itemprop="name">作品集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="SMARTPING"><a href="#SMARTPING" class="headerlink" title="SMARTPING"></a>SMARTPING</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能</p>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
+<li>机器间互PING，单向PING，绘图</li>
+<li>绘制互PING间机器的拓扑及报警功能</li>
+</ul>
+<h2 id="设计思虑"><a href="#设计思虑" class="headerlink" title="设计思虑"></a>设计思虑</h2><p>本系统设计为无中心化原则，所有的数据均存储自身点中，默认数据循环保留1个月时间，由自身点的数据绘制 出PING包 的状态，由各其他点的数据绘制 进PING包 的状态，并API接口获取其他点数据绘制整体PING拓扑图，拓扑图中存在报警功能，报警规则为Thdchecksec秒钟内发现大于等于Thdoccnum次延迟超过Thdavgdelay毫秒或丢包率大于Thdloss%即报警，若设置报警声音则会同时有Alertsound声音提醒。<a id="more"></a></p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><pre><code>{
+  &quot;Name&quot;: &quot;Localhost&quot;,
+  &quot;Ip&quot;: &quot;127.0.0.1&quot;,
+
+  &quot;_comment_thd&quot;:&quot;Thdchecksec,Thdoccnum,Thdloss,Thdavgdelay参数为设置报警规则，分别对应检测周期，丢包率，平均延迟，发生次数&quot;,
+  &quot;Thdchecksec&quot; : 900,&quot;Thdloss&quot; : 30,&quot;Thdavgdelay&quot; : 200,&quot;Thdoccnum&quot; : 1,
+
+  &quot;_comment_topo&quot;:&quot;Alertsound,Tline,Tsymbolsize,Topotimeout参数为设置拓扑报警时使用，分别对应报警声音，连线宽度，图形大小，拓扑间调用超时时间&quot;,
+  &quot;Alertsound&quot; : &quot;http://mp3.13400.com:99/1917/001204170042283.mp3&quot;,&quot;Tline&quot;:&quot;1&quot;,&quot;Tsymbolsize&quot;:&quot;70&quot;,&quot;Topotimeout&quot;:&quot;5&quot;,
+
+  &quot;Targets&quot;: [
+    {
+      &quot;Name&quot;: &quot;本机&quot;,&quot;Addr&quot;: &quot;127.0.0.1&quot;,&quot;Interval&quot;: &quot;5&quot;,&quot;Type&quot;:&quot;CS&quot;
+    },
+    {
+      &quot;Name&quot;: &quot;NOPING&quot;,&quot;Addr&quot;: &quot;93.46.8.89&quot;,&quot;Interval&quot;: &quot;5&quot;,&quot;Type&quot;:&quot;CS&quot;
+    },
+
+    {
+      &quot;Name&quot;: &quot;IP_10_0_0_51&quot;,&quot;Addr&quot;: &quot;10.0.0.51&quot;,&quot;Interval&quot;: &quot;5&quot;,&quot;Type&quot;:&quot;CS&quot;
+    },
+    {
+      &quot;_comment&quot;:&quot;报警规则（Thdchecksec,Thdoccnum,Thdloss,Thdavgdelay）可以单独设置，单独设置的规则优先&quot;,
+      &quot;Name&quot;: &quot;IP_10_0_15_1&quot;,&quot;Addr&quot;: &quot;10.0.15.1&quot;,&quot;Interval&quot;: &quot;5&quot;,&quot;Type&quot;:&quot;CS&quot;,&quot;Thdchecksec&quot; : 30,&quot;Thdoccnum&quot; : 1,&quot;Thdloss&quot; : 50,&quot;Thdavgdelay&quot; : 200
+    }
+    {more...}
+  ]
+}
+</code></pre><p><strong>注意：</strong></p>
+<ul>
+<li>目标机器列表(Targets)中也需要包含本机的信息，否在在拓扑图中将不显示本机</li>
+<li>PING检测包数需要小于60，目前绘图是一分钟一个点，若高于60将出现断点</li>
+<li>目标机器模式,Client代表只接受PING包，不会发送PING包，CS及既发PING包也收PING包，拓扑图中体现为单项连线或双向连线</li>
+<li>若不设置Targets内的报警周期，检测次数，丢包率，平均延迟将采用基础配置</li>
+</ul>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>数据库中存储PING的日志数据，默认循环保留一个月数据，最多（31<em>24</em>60<em>n=44640</em>N条）</p>
+<pre><code>CREATE TABLE pinglog (
+    logtime   VARCHAR (8),
+    ip        VARCHAR (15),
+    name      VARCHAR (15),
+    maxdelay  VARCHAR (3),
+    mindelay  VARCHAR (3),
+    avgdelay  VARCHAR (3),
+    sendpk    VARCHAR (2),
+    revcpk    VARCHAR (2),
+    losspk    VARCHAR (3),
+    lastcheck VARCHAR (16),
+    PRIMARY KEY (
+        logtime,
+        ip
+    )
+);
+CREATE INDEX pk_n_t ON pinglog (
+    name,
+    lastcheck
+);
+CREATE INDEX pk_i_t ON pinglog (
+    ip,
+    lastcheck
+);
+</code></pre><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p><strong>运行</strong></p>
+<p>nohup ./idcping &gt;/dev/null 2&gt;&amp;1 &amp;</p>
+<p><strong>访问</strong></p>
+<p><a href="http://ip:8899" target="_blank" rel="noopener">http://ip:8899</a></p>
+<p><strong>首页示例：</strong></p>
+<p><img src="/uploads/2017/06/smartping_index.jpg" alt="index.jpg"></p>
+<p>绿色面积使用左侧坐标轴代表平均延迟，红色面积使用右侧坐标轴代表丢包率</p>
+<p><strong>拓扑示例：</strong></p>
+<p><img src="/uploads/2017/06/smartping_topology.jpg" alt="topology.jpg"></p>
+<p>圆形代表一个点，绿色表示正常，红色表示当前查看拓扑图所在的点到此点不通，连线中绿色代表正常，红色代表异常，黄色代表未知(无法取到数据)</p>
+<h2 id="GITHUB"><a href="#GITHUB" class="headerlink" title="GITHUB"></a>GITHUB</h2><p><a href="https://github.com/gy-games/smartping" target="_blank" rel="noopener">https://github.com/gy-games/smartping</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/golang/" rel="tag"># golang</a>
+          
+            <a href="/tags/ping/" rel="tag"># ping</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/17/2017/即将开源发布-自动化运维开发平台-ELVES/" rel="next" title="即将开源发布:自动化运维开发平台-ELVES">
+                <i class="fa fa-chevron-left"></i> 即将开源发布:自动化运维开发平台-ELVES
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/23/2017/运维故障处理微信工具/" rel="prev" title="运维故障处理微信工具">
+                运维故障处理微信工具 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">91</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SMARTPING"><span class="nav-number">1.</span> <span class="nav-text">SMARTPING</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">1.2.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计思虑"><span class="nav-number">1.3.</span> <span class="nav-text">设计思虑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">1.4.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">1.5.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.6.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GITHUB"><span class="nav-number">1.7.</span> <span class="nav-text">GITHUB</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

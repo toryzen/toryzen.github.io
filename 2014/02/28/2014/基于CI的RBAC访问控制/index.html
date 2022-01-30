@@ -1,0 +1,795 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="PHP,ci,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="公司内部一直是在用ThinkPHP,最近偶然间接触CI,感觉不错,公司内部使用ThinkPHP用了他们官方示例的RBAC,最近花时间根据CI的一些特性以及ThinkPHP RBAC的基本理念,用CI实现了一套,说是RBAC,其实不只是权限控制,导航菜单的定制以及RBAC的后台页面化管理都已经初步完工了,下面就来看看最初版本。 整个RBAC基本上就是RBAC0的模型，甚至比他更简单，用到的CI钩子-">
+<meta name="keywords" content="PHP,ci">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于CI的RBAC访问控制">
+<meta property="og:url" content="http://toryzen.cn/2014/02/28/2014/基于CI的RBAC访问控制/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="公司内部一直是在用ThinkPHP,最近偶然间接触CI,感觉不错,公司内部使用ThinkPHP用了他们官方示例的RBAC,最近花时间根据CI的一些特性以及ThinkPHP RBAC的基本理念,用CI实现了一套,说是RBAC,其实不只是权限控制,导航菜单的定制以及RBAC的后台页面化管理都已经初步完工了,下面就来看看最初版本。 整个RBAC基本上就是RBAC0的模型，甚至比他更简单，用到的CI钩子-">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/02/RTX截图未命名-300x166.jpg">
+<meta property="og:updated_time" content="2021-02-12T18:25:52.064Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于CI的RBAC访问控制">
+<meta name="twitter:description" content="公司内部一直是在用ThinkPHP,最近偶然间接触CI,感觉不错,公司内部使用ThinkPHP用了他们官方示例的RBAC,最近花时间根据CI的一些特性以及ThinkPHP RBAC的基本理念,用CI实现了一套,说是RBAC,其实不只是权限控制,导航菜单的定制以及RBAC的后台页面化管理都已经初步完工了,下面就来看看最初版本。 整个RBAC基本上就是RBAC0的模型，甚至比他更简单，用到的CI钩子-">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2014/02/RTX截图未命名-300x166.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2014/02/28/2014/基于CI的RBAC访问控制/">
+
+
+
+
+
+  <title>基于CI的RBAC访问控制 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/02/28/2014/基于CI的RBAC访问控制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于CI的RBAC访问控制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-02-28T10:02:48+08:00">
+                2014-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>公司内部一直是在用ThinkPHP,最近偶然间接触CI,感觉不错,公司内部使用ThinkPHP用了他们官方示例的RBAC,最近花时间根据CI的一些特性以及ThinkPHP RBAC的基本理念,用CI实现了一套,说是RBAC,其实不只是权限控制,导航菜单的定制以及RBAC的后台页面化管理都已经初步完工了,下面就来看看最初版本。</p>
+<p>整个RBAC基本上就是RBAC0的模型，甚至比他更简单，用到的CI钩子-扩展框架的核心。</p>
+<p>先看一下RBAC的配置文件,这基本上就是这个的辅助功能了。关于rbac_manage_menu_hidden，rbac_manage_node_hidden这是在使用think的rbac时感觉别扭的地方，RBAC的管理也是根据自身的这套架构来控制的，但是根本没人去再对其进行操作，每次显示在后台特别别扭，所以这里增加两个参数，可以使不想显示在后台的管理节点以及菜单显示。</p>
+<a id="more"></a>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$config[<span class="string">'rbac_auth_on'</span>]	             = <span class="keyword">TRUE</span>;			<span class="comment">//是否开启认证</span></span><br><span class="line">$config[<span class="string">'rbac_auth_type'</span>]	     = <span class="string">'2'</span>;			<span class="comment">//认证方式1,登录认证;2,实时认证</span></span><br><span class="line">$config[<span class="string">'rbac_auth_key'</span>]	     = <span class="string">'MyAuth'</span>;		<span class="comment">//SESSION标记</span></span><br><span class="line">$config[<span class="string">'rbac_auth_gateway'</span>]         = <span class="string">'Index/login'</span>;    	<span class="comment">//默认认证网关</span></span><br><span class="line">$config[<span class="string">'rbac_default_index'</span>]        = <span class="string">'manage/Role/index'</span>;     <span class="comment">//成功登录默认跳转模块</span></span><br><span class="line">$config[<span class="string">'rbac_manage_menu_hidden'</span>]   = <span class="keyword">array</span>(<span class="string">'后台管理'</span>);		<span class="comment">//后台管理导航中不显示的菜单</span></span><br><span class="line">$config[<span class="string">'rbac_manage_node_hidden'</span>]   = <span class="keyword">array</span>(<span class="string">'manage'</span>);		<span class="comment">//后台管理节点中不显示的菜单</span></span><br><span class="line">$config[<span class="string">'rbac_notauth_dirc'</span>]         = <span class="keyword">array</span>(<span class="string">''</span>);	     	<span class="comment">//默认无需认证目录array("public","manage")</span></span><br></pre></td></tr></table></figure>
+<p>下面小讲一下代码和原理</p>
+<p>config/hooks.php增加</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$hook[<span class="string">'post_controller_constructor'</span>] = <span class="keyword">array</span>(</span><br><span class="line">		<span class="string">'class'</span>    =&gt; <span class="string">'Rbac'</span>,</span><br><span class="line">		<span class="string">'function'</span> =&gt; <span class="string">'aoto_verify'</span>,</span><br><span class="line">		<span class="string">'filename'</span> =&gt; <span class="string">'rbac_hook.php'</span>,</span><br><span class="line">		<span class="string">'filepath'</span> =&gt; <span class="string">'hooks'</span>,</span><br><span class="line">		<span class="string">'params'</span>   =&gt; <span class="string">''</span>,</span><br><span class="line">);</span><br><span class="line">$hook[<span class="string">'display_override'</span>] = <span class="keyword">array</span>(</span><br><span class="line">		<span class="string">'class'</span>    =&gt; <span class="string">'Rbac'</span>,</span><br><span class="line">		<span class="string">'function'</span> =&gt; <span class="string">'view_override'</span>,</span><br><span class="line">		<span class="string">'filename'</span> =&gt; <span class="string">'rbac_hook.php'</span>,</span><br><span class="line">		<span class="string">'filepath'</span> =&gt; <span class="string">'hooks'</span>,</span><br><span class="line">		<span class="string">'params'</span>   =&gt; <span class="string">''</span>,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">$hook[<span class="string">'pre_system'</span>] = <span class="keyword">array</span>(</span><br><span class="line">		<span class="string">'class'</span>    =&gt; <span class="string">''</span>,</span><br><span class="line">		<span class="string">'function'</span> =&gt; <span class="string">'session_start'</span>,</span><br><span class="line">		<span class="string">'filename'</span> =&gt; <span class="string">''</span>,</span><br><span class="line">		<span class="string">'filepath'</span> =&gt; <span class="string">''</span>,</span><br><span class="line">		<span class="string">'params'</span>   =&gt; <span class="string">''</span>,</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>post_controller_constructor在你的控制器实例化之后,任何方法调用之前调用权限检测，display_override这个主要是方便显示用的，关于最后的pre_system调用的session_start,整个验证过程都要用到session,而我实在是没有找到好地方调用，只能放在这里了，不知道ci是不是有啥参数之类的能直接开启？</p>
+<p>下面是关于aoto_verify的验证的方法，与ThinkPHP是类似的，Think是继承Action自己写的一个Action,以后所有的方法都再集成，既然有了CI的钩子，就不需要那么费劲了，ThinkPHP验证的是分组/模块/方法，在CI中验证的是目录/控制器/方法。为了更方便的取到上面的数据，使用CI的get_instance获取超级对象，然后调用$ci_obj-&gt;router就可以了。</p>
+<p>aoto_verify()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">aoto_verify</span><span class="params">()</span></span>&#123;</span><br><span class="line">    $ci_obj = &amp;amp;get_instance();</span><br><span class="line">    <span class="comment">//目录</span></span><br><span class="line">    $directory = substr($ci_obj-&gt;router-&gt;fetch_directory(),<span class="number">0</span>,<span class="number">-1</span>);</span><br><span class="line">    <span class="comment">//控制器</span></span><br><span class="line">    $controller = $ci_obj-&gt;router-&gt;fetch_class();</span><br><span class="line">    <span class="comment">//方法</span></span><br><span class="line">    $function = $ci_obj-&gt;router-&gt;fetch_method();</span><br><span class="line">    <span class="comment">//echo "(".$directory."/".$controller."/".$function.")";</span></span><br><span class="line">    <span class="keyword">if</span>($directory!=<span class="string">""</span>)&#123;<span class="comment">//当非主目录</span></span><br><span class="line">        <span class="keyword">if</span>($ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_on'</span>))&#123;<span class="comment">//开启认证</span></span><br><span class="line">            <span class="keyword">if</span>(!in_array($directory,$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_notauth_dirc'</span>)))&#123;<span class="comment">//需要验证的目录</span></span><br><span class="line">                <span class="comment">//验证是否登录</span></span><br><span class="line">                <span class="keyword">if</span>(!<span class="keyword">isset</span>($_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"INFO"</span>][<span class="string">"id"</span>]))&#123;</span><br><span class="line">                    error_redirct($ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_gateway'</span>),<span class="string">"请先登录！"</span>);</span><br><span class="line">                    <span class="keyword">die</span>();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>($ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_type'</span>)==<span class="number">2</span>)&#123;<span class="comment">//若为实时认证</span></span><br><span class="line">                    $ci_obj-&gt;load-&gt;model(<span class="string">"rbac_model"</span>);</span><br><span class="line">                    <span class="comment">//检测用户状态</span></span><br><span class="line">                    $STATUS = $ci_obj-&gt;rbac_model-&gt;check_user_by_id($_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"INFO"</span>][<span class="string">"id"</span>]);</span><br><span class="line">                    <span class="keyword">if</span>($STATUS==<span class="keyword">FALSE</span>)&#123;</span><br><span class="line">                        error_redirct(<span class="keyword">$this</span>-&gt;config-&gt;item(<span class="string">'rbac_auth_gateway'</span>),$STATUS);</span><br><span class="line">                        <span class="keyword">die</span>();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">//ACL重新赋权</span></span><br><span class="line">                    $ci_obj-&gt;rbac_model-&gt;get_acl($_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"INFO"</span>][<span class="string">"id"</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//验证ACL权限</span></span><br><span class="line">                <span class="keyword">if</span>(@!$_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"ACL"</span>][$directory][$controller][$function])&#123;</span><br><span class="line">                    error_redirct(<span class="string">""</span>,<span class="string">"无权访问此节点！("</span>.$directory.<span class="string">"/"</span>.$controller.<span class="string">"/"</span>.$function.<span class="string">")"</span>);</span><br><span class="line">                    <span class="keyword">die</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//已登录且有权限,获取左侧菜单</span></span><br><span class="line">        <span class="keyword">if</span>($ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_type'</span>)==<span class="number">2</span>)&#123;<span class="comment">//若为实时认证</span></span><br><span class="line">            $ci_obj-&gt;get_menu = <span class="keyword">$this</span>-&gt;get_menu();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">isset</span>($_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"MENU"</span>]))&#123;</span><br><span class="line">                $ci_obj-&gt;get_menu = $_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"MENU"</span>];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                $_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"MENU"</span>] = <span class="keyword">$this</span>-&gt;get_menu();</span><br><span class="line">                $ci_obj-&gt;get_menu = $_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"MENU"</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//默认重写View开</span></span><br><span class="line">        $ci_obj-&gt;view_override = <span class="keyword">TRUE</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PS：在这里只对controllers中的二级目录做了权限控制，一级没有。在上述方法后，还有一句$this-&gt;get_menu()，这里是获取左侧的导航菜单数据。</p>
+<p>get_menu()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">$ci_obj = &amp;amp;get_instance();</span><br><span class="line">$ci_obj-&gt;load-&gt;database();</span><br><span class="line">$query = $ci_obj-&gt;db-&gt;query(<span class="string">"SELECT rm.id,rm.title,rm.node_id,rm.p_id,rn.dirc,rn.cont,rn.func FROM rbac_menu rm left join rbac_node rn on rm.node_id = rn.id WHERE rm.status = 1 AND rm.p_id is NULL ORDER BY sort asc"</span>);</span><br><span class="line">$menu_data = $query-&gt;result();</span><br><span class="line">$i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span>(count($menu_data)&gt;<span class="number">0</span>)&#123;</span><br><span class="line">    $id_list = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">foreach</span>($menu_data <span class="keyword">as</span> $vo)&#123;</span><br><span class="line">        <span class="keyword">if</span>($i==<span class="number">2</span>)&#123;</span><br><span class="line">            $vo-&gt;p_p_id = $Tmp_menu[<span class="number">1</span>][$vo-&gt;p_id]-&gt;p_id;</span><br><span class="line">        &#125;</span><br><span class="line">        $Tmp_menu[$i][$vo-&gt;id] = $vo;</span><br><span class="line">        $id_list .= $vo-&gt;id.<span class="string">","</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    $id_list = substr($id_list,<span class="number">0</span>,<span class="number">-1</span>);</span><br><span class="line">    $query = $ci_obj-&gt;db-&gt;query(<span class="string">"SELECT rm.id,rm.title,rm.node_id,rm.p_id,rn.dirc,rn.cont,rn.func FROM rbac_menu rm left join rbac_node rn on rm.node_id = rn.id WHERE rm.status = 1 AND rm.p_id in ("</span>.$id_list.<span class="string">") ORDER BY sort asc"</span>);</span><br><span class="line">    $menu_data = $query-&gt;result();</span><br><span class="line">    $i++;</span><br><span class="line">&#125;</span><br><span class="line">$j = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//按权限进行展示</span></span><br><span class="line"><span class="keyword">foreach</span>($Tmp_menu <span class="keyword">as</span> $vo)&#123;</span><br><span class="line">    <span class="keyword">foreach</span>($vo <span class="keyword">as</span> $cvo)&#123;</span><br><span class="line">        <span class="keyword">if</span>(@$_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"ACL"</span>][$cvo-&gt;dirc][$cvo-&gt;cont][$cvo-&gt;func]||!$cvo-&gt;node_id)&#123;</span><br><span class="line">            <span class="keyword">if</span>($j==<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(@$_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"ACL"</span>][$cvo-&gt;dirc][$cvo-&gt;cont][$cvo-&gt;func])&#123;</span><br><span class="line">                    $menu[$cvo-&gt;id][<span class="string">"shown"</span>] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                $menu[$cvo-&gt;id][<span class="string">"self"</span>] = <span class="keyword">array</span>(<span class="string">"title"</span>=&gt;$cvo-&gt;title,<span class="string">"uri"</span>=&gt;$cvo-&gt;dirc?$cvo-&gt;dirc.<span class="string">"/"</span>.$cvo-&gt;cont.<span class="string">"/"</span>.$cvo-&gt;func:$cvo-&gt;cont.<span class="string">"/"</span>.$cvo-&gt;func);</span><br><span class="line"></span><br><span class="line">            &#125;<span class="keyword">elseif</span>($j==<span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(@$_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"ACL"</span>][$cvo-&gt;dirc][$cvo-&gt;cont][$cvo-&gt;func])&#123;</span><br><span class="line">                    $menu[$cvo-&gt;p_id][<span class="string">"shown"</span>] = <span class="number">1</span>;</span><br><span class="line">                    $menu[$cvo-&gt;p_id][<span class="string">"child"</span>][$cvo-&gt;id][<span class="string">"shown"</span>] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                $menu[$cvo-&gt;p_id][<span class="string">"child"</span>][$cvo-&gt;id][<span class="string">"self"</span>] = <span class="keyword">array</span>(<span class="string">"title"</span>=&gt;$cvo-&gt;title,<span class="string">"uri"</span>=&gt;$cvo-&gt;dirc?$cvo-&gt;dirc.<span class="string">"/"</span>.$cvo-&gt;cont.<span class="string">"/"</span>.$cvo-&gt;func:$cvo-&gt;cont.<span class="string">"/"</span>.$cvo-&gt;func);</span><br><span class="line"></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(@$_SESSION[$ci_obj-&gt;config-&gt;item(<span class="string">'rbac_auth_key'</span>)][<span class="string">"ACL"</span>][$cvo-&gt;dirc][$cvo-&gt;cont][$cvo-&gt;func])&#123;</span><br><span class="line">                    $menu[$cvo-&gt;p_p_id][<span class="string">"shown"</span>] = <span class="number">1</span>;</span><br><span class="line">                    $menu[$cvo-&gt;p_p_id][<span class="string">"child"</span>][$cvo-&gt;p_id][<span class="string">"shown"</span>] = <span class="number">1</span>;</span><br><span class="line">                    $menu[$cvo-&gt;p_p_id][<span class="string">"child"</span>][$cvo-&gt;p_id][<span class="string">"child"</span>][$cvo-&gt;id][<span class="string">"shown"</span>] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                $menu[$cvo-&gt;p_p_id][<span class="string">"child"</span>][$cvo-&gt;p_id][<span class="string">"child"</span>][$cvo-&gt;id][<span class="string">"self"</span>] = <span class="keyword">array</span>(<span class="string">"title"</span>=&gt;$cvo-&gt;title,<span class="string">"uri"</span>=&gt;$cvo-&gt;dirc?$cvo-&gt;dirc.<span class="string">"/"</span>.$cvo-&gt;cont.<span class="string">"/"</span>.$cvo-&gt;func:$cvo-&gt;cont.<span class="string">"/"</span>.$cvo-&gt;func);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    $j++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> $menu;</span><br></pre></td></tr></table></figure>
+<p>关于这个方法其实就是数组的拼接以及是否显示的验证。</p>
+<p>关于数据库，一共5张表，4张表实现权限的控制，1张表主要是左侧的菜单,各表之间的关系还是比较明了简洁的</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`rbac_auth`</span> (</span><br><span class="line">  <span class="string">`node_id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'节点ID'</span>,</span><br><span class="line">  <span class="string">`role_id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'角色ID'</span>,</span><br><span class="line">  <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`nid_rid`</span> (<span class="string">`node_id`</span>,<span class="string">`role_id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 <span class="keyword">COMMENT</span>=<span class="string">'角色与节点对应表'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`rbac_menu`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`title`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'导航名称'</span>,</span><br><span class="line">  <span class="string">`node_id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'节点ID'</span>,</span><br><span class="line">  <span class="string">`p_id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'导航父id'</span>,</span><br><span class="line">  <span class="string">`sort`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span> <span class="keyword">COMMENT</span> <span class="string">'排序'</span>,</span><br><span class="line">  <span class="string">`status`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="string">'1'</span> <span class="keyword">COMMENT</span> <span class="string">'状态(1:正常,0:停用)'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM  <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 <span class="keyword">COMMENT</span>=<span class="string">'菜单表'</span> AUTO_INCREMENT=<span class="number">20</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`rbac_node`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`dirc`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'目录'</span>,</span><br><span class="line">  <span class="string">`cont`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'控制器'</span>,</span><br><span class="line">  <span class="string">`func`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'方法'</span>,</span><br><span class="line">  <span class="string">`memo`</span> <span class="built_in">varchar</span>(<span class="number">25</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'备注'</span>,</span><br><span class="line">  <span class="string">`status`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'1'</span> <span class="keyword">COMMENT</span> <span class="string">'状态(1:正常,0:停用)'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>),</span><br><span class="line">  <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`d_c_f`</span> (<span class="string">`dirc`</span>,<span class="string">`cont`</span>,<span class="string">`func`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM  <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 <span class="keyword">COMMENT</span>=<span class="string">'节点表'</span> AUTO_INCREMENT=<span class="number">24</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`rbac_role`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`rolename`</span> <span class="built_in">varchar</span>(<span class="number">25</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'角色名'</span>,</span><br><span class="line">  <span class="string">`status`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'1'</span> <span class="keyword">COMMENT</span> <span class="string">'状态(1:正常,0停用)'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>),</span><br><span class="line">  <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`rolename`</span> (<span class="string">`rolename`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM  <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 <span class="keyword">COMMENT</span>=<span class="string">'角色表'</span> AUTO_INCREMENT=<span class="number">4</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`rbac_user`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`username`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'用户名'</span>,</span><br><span class="line">  <span class="string">`password`</span> <span class="built_in">varchar</span>(<span class="number">32</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'密码'</span>,</span><br><span class="line">  <span class="string">`nickname`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'昵称'</span>,</span><br><span class="line">  <span class="string">`email`</span> <span class="built_in">varchar</span>(<span class="number">25</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'Email'</span>,</span><br><span class="line">  <span class="string">`role_id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'角色ID'</span>,</span><br><span class="line">  <span class="string">`status`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'1'</span> <span class="keyword">COMMENT</span> <span class="string">'状态(1:正常,0:停用)'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>),</span><br><span class="line">  <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`username`</span> (<span class="string">`username`</span>),</span><br><span class="line">  <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`email`</span> (<span class="string">`email`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM  <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 <span class="keyword">COMMENT</span>=<span class="string">'用户表'</span> AUTO_INCREMENT=<span class="number">6</span> ;</span><br></pre></td></tr></table></figure>
+<p>OK，CI刚刚接触，可能有些地方使用不当，这个在后期在进行改版。 PS这里我用的CI版本为2.1.4</p>
+<p>样式使用的bootstrap3.0,</p>
+<p><a href="/uploads/2014/02/RTX截图未命名.jpg"><img src="/uploads/2014/02/RTX截图未命名-300x166.jpg" alt title="RTX截图未命名"></a></p>
+<p>GITHUB:<a href="https://github.com/toryzen/CI_RBAC" target="_blank" rel="noopener">https://github.com/toryzen/CI_RBAC</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/ci/" rel="tag"># ci</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/02/20/2014/osmocomBB-错误-FBS-RESP-result-255/" rel="next" title="osmocomBB 错误 FBSB RESP: result=255">
+                <i class="fa fa-chevron-left"></i> osmocomBB 错误 FBSB RESP: result=255
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/03/01/2014/个人专版PHP MVC框架(TZN Framework)/" rel="prev" title="个人专版PHP MVC框架(TZN Framework)">
+                个人专版PHP MVC框架(TZN Framework) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">91</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

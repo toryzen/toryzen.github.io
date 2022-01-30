@@ -1,0 +1,1181 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="项目管理,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="从实习到正式入职到现在已经2年，去年提为组长手下开始带人带领项目，可能是因为进入的是一个主要为运维为主的团队(我们开发组在其中占了1/4)，对于开发类的规范非常的模糊不清，2年了也没有大的改观，从来到现在已经做过几版的项目管理系统(其中还死掉了一版)，但那些基本上都是写任务管理系统，最近根据整体的开发流程与我们的现状，花了几天时间重新梳理的整个流程，大体上也通过了领导的评审，并且现在有部分开发类项">
+<meta name="keywords" content="项目管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发类项目实施规范指导">
+<meta property="og:url" content="http://toryzen.cn/2014/03/21/2014/开发类项目实施规范指导/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="从实习到正式入职到现在已经2年，去年提为组长手下开始带人带领项目，可能是因为进入的是一个主要为运维为主的团队(我们开发组在其中占了1/4)，对于开发类的规范非常的模糊不清，2年了也没有大的改观，从来到现在已经做过几版的项目管理系统(其中还死掉了一版)，但那些基本上都是写任务管理系统，最近根据整体的开发流程与我们的现状，花了几天时间重新梳理的整个流程，大体上也通过了领导的评审，并且现在有部分开发类项">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/03/1.jpg">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/03/2.jpg">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/03/3.jpg">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/03/4.jpg">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/03/5-1024x222.jpg">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/03/6.jpg">
+<meta property="og:updated_time" content="2021-02-12T18:25:52.064Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="开发类项目实施规范指导">
+<meta name="twitter:description" content="从实习到正式入职到现在已经2年，去年提为组长手下开始带人带领项目，可能是因为进入的是一个主要为运维为主的团队(我们开发组在其中占了1/4)，对于开发类的规范非常的模糊不清，2年了也没有大的改观，从来到现在已经做过几版的项目管理系统(其中还死掉了一版)，但那些基本上都是写任务管理系统，最近根据整体的开发流程与我们的现状，花了几天时间重新梳理的整个流程，大体上也通过了领导的评审，并且现在有部分开发类项">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2014/03/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2014/03/21/2014/开发类项目实施规范指导/">
+
+
+
+
+
+  <title>开发类项目实施规范指导 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/03/21/2014/开发类项目实施规范指导/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">开发类项目实施规范指导</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-03-21T14:44:25+08:00">
+                2014-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/团队管理/" itemprop="url" rel="index">
+                    <span itemprop="name">团队管理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从实习到正式入职到现在已经2年，去年提为组长手下开始带人带领项目，可能是因为进入的是一个主要为运维为主的团队(我们开发组在其中占了1/4)，对于开发类的规范非常的模糊不清，2年了也没有大的改观，从来到现在已经做过几版的项目管理系统(其中还死掉了一版)，但那些基本上都是写任务管理系统，最近根据整体的开发流程与我们的现状，花了几天时间重新梳理的整个流程，大体上也通过了领导的评审，并且现在有部分开发类项目在用了，这里分享一下。</p>
+<p>其实这我在这里制定了2套规范，一套是立项前明确开发计划，一套是立项后明确开发计划，其实我更倾向于后者，前者是应领导要求更加符合现在的实际，坏处就是在立项前就需要有大量的工作。</p>
+<p>这里我主要讲一下立项后明确开发计划的模型</p>
+<p>这里我就基本上按整体的章节顺序来讲</p>
+<h1 id="1-使用范围"><a href="#1-使用范围" class="headerlink" title="1.   使用范围"></a>1.   使用范围</h1><p>开发类项目</p>
+<h1 id="2-流程规范"><a href="#2-流程规范" class="headerlink" title="2.   流程规范"></a>2.   流程规范</h1><p><a href="/uploads/2014/03/1.jpg"><img src="/uploads/2014/03/1.jpg" alt title="1"><a id="more"></a></a></p>
+<h2 id="2-1立项流程"><a href="#2-1立项流程" class="headerlink" title="2.1立项流程"></a>2.1立项流程</h2><p><a href="/uploads/2014/03/2.jpg"><img src="/uploads/2014/03/2.jpg" alt title="2"></a></p>
+<table width="568" border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="139"><br><br><strong>输入</strong><br><br></td><br><td valign="top" width="66"><br><br><strong>流程</strong><br><br></td><br><td valign="top" width="134"><br><br><strong>输出</strong><br><br></td><br><td valign="top" width="229"><br><br><strong>参与者</strong><br><br></td><br></tr><br><tr><br><td width="139">l  用户需求</td><br><td width="66"><br><br>沟通<br><br></td><br><td width="134">l  立项报告(初稿)</td><br><td width="229">项目负责人、需求分析人员、开发人员</td><br></tr><br><tr><br><td width="139">l  立项报告(初稿)</td><br><td width="66"><br><br>立项计划会<br><br></td><br><td width="134">l  立项报告</td><br><td width="229">高管、部门经理、需求方、项目负责人、需求分析人员、开发人员、QA人员</td><br></tr><br></tbody><br></table>
+
+<hr>
+<h2 id="2-2需求分析流程"><a href="#2-2需求分析流程" class="headerlink" title="2.2需求分析流程"></a>2.2需求分析流程</h2><p><a href="/uploads/2014/03/3.jpg"><img src="/uploads/2014/03/3.jpg" alt title="3"></a></p>
+<table width="568" border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="177"><br><br><strong>输入</strong><br><br></td><br><td valign="top" width="47"><br><br><strong>流程</strong><br><br></td><br><td valign="top" width="151"><br><br><strong>输出</strong><br><br></td><br><td valign="top" width="192"><br><br><strong>参与者</strong><br><br></td><br></tr><br><tr><br><td width="177">l  用户需求</td><br><td width="47"><br><br>沟通<br><br></td><br><td width="151">l  需求规格说明书(草稿)l  系统功能说明书(草稿)</td><br><td width="192">项目负责人，需求分析人员，开发人员</td><br></tr><br><tr><br><td width="177">l  需求规格说明书(草稿)l  系统功能说明书(草稿)</td><br><td width="47"><br><br>评审会议<br><br></td><br><td width="151">l  需求规格说明书l  系统功能说明书</td><br><td width="192">项目负责人，需求分析人员，需求方</td><br></tr><br></tbody><br></table>
+
+<h2 id="2-3系统设计流程"><a href="#2-3系统设计流程" class="headerlink" title="2.3系统设计流程"></a>2.3系统设计流程</h2><p><a href="/uploads/2014/03/4.jpg"><img src="/uploads/2014/03/4.jpg" alt title="4"></a></p>
+<table width="568" border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="177"><br><br><strong>输入</strong><br><br></td><br><td valign="top" width="47"><br><br><strong>流程</strong><br><br></td><br><td valign="top" width="132"><br><br><strong>输出</strong><br><br></td><br><td valign="top" width="211"><br><br><strong>参与者</strong><br><br></td><br></tr><br><tr><br><td width="177">l  需求规格说明书l  系统功能说明书</td><br><td width="47"><br><br>沟通<br><br></td><br><td width="132">l  系统详细设计(草稿)</td><br><td width="211">项目负责人，开发人员</td><br></tr><br><tr><br><td width="177">l  系统详细设计(草稿）</td><br><td width="47"><br><br>评审会议<br><br></td><br><td width="132">l  系统详细设计</td><br><td width="211">项目负责人，开发人员</td><br></tr><br><tr><br><td width="177">l  前置需求分析</td><br><td width="47"><br><br>沟通<br><br></td><br><td width="132">l  需求规格说明书(草稿)</td><br><td width="211">项目负责人，需求分析人员，开发人员</td><br></tr><br></tbody><br></table>
+
+<h2 id="2-4迭代开发流程"><a href="#2-4迭代开发流程" class="headerlink" title="2.4迭代开发流程"></a>2.4迭代开发流程</h2><p><a href="/uploads/2014/03/5.jpg"><img src="/uploads/2014/03/5-1024x222.jpg" alt title="5"></a></p>
+<table width="568" border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="130"><br><br><strong>输入</strong><br><br></td><br><td valign="top" width="95"><br><br><strong>流程</strong><br><br></td><br><td valign="top" width="123"><br><br><strong>输出</strong><br><br></td><br><td valign="top" width="221"><br><br><strong>参与者</strong><br><br></td><br></tr><br><tr><br><td width="130">l  需求规格说明书/系统功能说明书</td><br><td width="95"><br><br>项目计划<br><br></td><br><td width="123">l  项目计划</td><br><td width="221">项目负责人，QA人员，需求方，开发人员</td><br></tr><br><tr><br><td width="130">l  项目计划</td><br><td width="95"><br><br>迭代计划会<br><br></td><br><td width="123">l  迭代计划</td><br><td width="221">项目负责人，开发人员</td><br></tr><br><tr><br><td width="130">l  迭代计划</td><br><td width="95"><br><br>每日站会<br><br>代码开发<br><br></td><br><td width="123">l  迭代计划[更新]l  燃尽图</td><br><td width="221">项目负责人，开发人员</td><br></tr><br><tr><br><td width="130">l  测试计划l  测试用例</td><br><td width="95"><br><br>测试<br><br></td><br><td width="123">l  测试报告</td><br><td width="221">项目负责人，开发人员，QA人员</td><br></tr><br><tr><br><td width="130">l  测试报告</td><br><td width="95"><br><br>使用测试<br><br></td><br><td width="123">l  问题列表&amp;改进建议</td><br><td width="221">项目负责人，需求方</td><br></tr><br></tbody><br></table>
+
+<h2 id="2-5项目结束流程"><a href="#2-5项目结束流程" class="headerlink" title="2.5项目结束流程"></a>2.5项目结束流程</h2><p><a href="/uploads/2014/03/6.jpg"><img src="/uploads/2014/03/6.jpg" alt title="6"></a></p>
+<table width="568" border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td valign="top" width="152"><br><br><strong>输入</strong><br><br></td><br><td valign="top" width="57"><br><br><strong>流程</strong><br><br></td><br><td valign="top" width="131"><br><br><strong>输出</strong><br><br></td><br><td valign="top" width="229"><br><br><strong>参与者</strong><br><br></td><br></tr><br><tr><br><td width="152">l  项目成果文档</td><br><td width="57"><br><br>项目总结会<br><br></td><br><td width="131">l  结项确认</td><br><td width="229">高管、部门经理、需求方、项目负责人、需求分析人员、开发人员、QA人员</td><br></tr><br></tbody><br></table>
+
+<h1 id="3-会议规范"><a href="#3-会议规范" class="headerlink" title="3.   会议规范"></a>3.   会议规范</h1><p><strong>规则：</strong>会议结束后需将会议记录以邮件形式发送给所有参与者，并要求回复邮件进行确认。</p>
+<h2 id="3-1立项报告会"><a href="#3-1立项报告会" class="headerlink" title="3.1立项报告会"></a>3.1立项报告会</h2><p><strong>会议内容：</strong></p>
+<ol>
+<li>项目意义：讲述为什么要做这个项目。</li>
+<li>需求确认：确定项目的基本需求，包括功能，性能，输入，输出，安全以及该项目的特有需求。</li>
+<li>项目规划：根据项目确定需求接口人,测试接口人,项目负责人。</li>
+<li>信息确认：主要确定谁负责最后线上环境的资源申请，谁主要负责项目的开发。</li>
+<li>公司领导审批意见(主要涉及：1、价值 2、成本3、风险)<br><strong>与会人员：</strong></li>
+</ol>
+<p>高管, 部门经理, 需求方,项目负责人,需求分析人员,开发人员, QA人员</p>
+<p><strong>建议时长：</strong></p>
+<p>1小时内</p>
+<p><strong>建议时间：</strong></p>
+<p><strong>         </strong>随时</p>
+<h2 id="3-2迭代计划会"><a href="#3-2迭代计划会" class="headerlink" title="3.2迭代计划会"></a>3.2迭代计划会</h2><p><strong>会议内容：</strong></p>
+<ol>
+<li>根据立项计划书计划列表细化本次迭代需要完成的细节工作</li>
+<li>评估各工作的人天与花费时间</li>
+<li>根据任务的紧要程度对任务进行排序并根据人天与花费时间确定任务工作日期<br><strong>与会人员：</strong></li>
+</ol>
+<p>项目负责人,  开发人员, 需求方(建议)</p>
+<p><strong>建议时长：</strong></p>
+<p>0.5小时内</p>
+<p><strong>建议时间：</strong></p>
+<p>每周五</p>
+<h2 id="3-3每日站会"><a href="#3-3每日站会" class="headerlink" title="3.3每日站会"></a>3.3每日站会</h2><p><strong>会议内容：</strong></p>
+<ol>
+<li>回顾昨天已完成的工作</li>
+<li>讲述昨天工作中遇到的问题</li>
+<li>简述今天需要完成的工作<br><strong>与会人员：</strong></li>
+</ol>
+<p>项目负责人,  开发人员</p>
+<p><strong>建议时长：</strong></p>
+<p><strong>         </strong>10分钟内</p>
+<p><strong>建议时间：</strong></p>
+<p>每天上午9:30</p>
+<h2 id="3-4迭代评审会"><a href="#3-4迭代评审会" class="headerlink" title="3.4迭代评审会"></a>3.4迭代评审会</h2><p><strong>会议内容：</strong></p>
+<ol>
+<li>确定迭代中完成的工作/未完成的工作</li>
+<li>开发过程中遇到的问题</li>
+<li>细节展示本次迭代所做的产品</li>
+<li>收集需求方对本次迭代产品的建议</li>
+<li>回顾本次迭代所遇到的问题，当初评估的准确性<br><strong>与会人员：</strong></li>
+</ol>
+<p>项目负责人, 开发人员,QA人员,需求方</p>
+<p><strong>建议时长：</strong></p>
+<p><strong>         </strong>根据每次迭代时间长度而定，2周迭代建议1小时内，以此类推</p>
+<p><strong>建议时间：</strong></p>
+<p>随时</p>
+<h2 id="3-5项目总结会"><a href="#3-5项目总结会" class="headerlink" title="3.5项目总结会"></a>3.5项目总结会</h2><p><strong>会议内容：</strong></p>
+<ol>
+<li>展示整体成型产品</li>
+<li>回顾本次项目所遇到的问题，当初评估的准确性</li>
+<li>收集各方对本项目的建议以及后期走向<br><strong>与会人员：</strong></li>
+</ol>
+<p>高管, 部门经理,需求方, 项目负责人,需求分析人员,开发人员,QA人员</p>
+<p><strong>建议时长：</strong></p>
+<p>1小时内</p>
+<p><strong>建议时间：</strong></p>
+<p>随时</p>
+<h1 id="4-文档规范"><a href="#4-文档规范" class="headerlink" title="4.   文档规范"></a>4.   文档规范</h1><table width="593" border="1" cellspacing="0" cellpadding="0"><br><tbody><br><tr><br><td width="64"><strong>编号</strong></td><br><td width="132"><br><br><strong>成果名称</strong><br><br></td><br><td width="189"><br><br><strong>模板</strong><br><br></td><br><td width="208"><br><br><strong>必须</strong><br><br></td><br></tr><br><tr><br><td width="64"><br><br>1<br><br></td><br><td width="132">立项报告</td><br><td width="189"><br><br>●<br><br></td><br><td width="208"><br><br>●<br><br></td><br></tr><br><tr><br><td width="64"><br><br>2<br><br></td><br><td width="132">需求规格说明书</td><br><td width="189"><br><br>●<br><br></td><br><td width="208"><br><br>×<br><br></td><br></tr><br><tr><br><td width="64"><br><br>3<br><br></td><br><td width="132">开发计划</td><br><td width="189"><br><br>●<br><br></td><br><td width="208"><br><br>●<br><br></td><br></tr><br><tr><br><td width="64"><br><br>3<br><br></td><br><td width="132">系统详细设计</td><br><td width="189"><br><br>●<br><br></td><br><td width="208"><br><br>×<br><br></td><br></tr><br><tr><br><td width="64"><br><br>4<br><br></td><br><td width="132">测试计划</td><br><td width="189"><br><br>●<br><br></td><br><td width="208"><br><br>×<br><br></td><br></tr><br><tr><br><td width="64"><br><br>5<br><br></td><br><td width="132">测试用例</td><br><td width="189"><br><br>●<br><br></td><br><td width="208"><br><br>×<br><br></td><br></tr><br><tr><br><td width="64"><br><br>6<br><br></td><br><td width="132">迭代计划表</td><br><td width="189"><br><br>●<br><br></td><br><td width="208"><br><br>●<br><br></td><br></tr><br><tr><br><td width="64"><br><br>7<br><br></td><br><td width="132">项目甘特图</td><br><td width="189"><br><br>●<br><br></td><br><td width="208"><br><br>●<br><br></td><br></tr><br></tbody><br></table>
+
+<h1 id="5-职能规范"><a href="#5-职能规范" class="headerlink" title="5.   职能规范"></a>5.   职能规范</h1><p><table width="574" border="1" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td width="102"><strong>人员</strong></td></p>
+<td width="57">
+
+<p><strong>类型</strong></p>
+<p></p></td><p></p>
+<td width="142">
+
+<p><strong>事项</strong></p>
+<p></p></td><p></p>
+<td width="47">
+
+<p><strong>必须</strong></p>
+<p></p></td><p></p>
+<td width="95">
+
+<p><strong>辅助</strong></p>
+<p></p></td><p></p>
+<td width="132">
+
+<p><strong>说明</strong></p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td rowspan="9" width="102">
+
+<p>项目负责人</p>
+<p></p></td><p></p>
+<td rowspan="3" width="57">
+
+<p>流程</p>
+<p></p></td><p></p>
+<td width="142">
+
+<p>立项</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<p><td width="95">需求分析人员</td></p>
+<td width="132">
+
+<p>需求分析人员为项目负责人与需求方搭建桥梁,传达信息。</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td width="142">
+
+<p>迭代开发</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<p><td width="95">敏捷负责人QA人员</td></p>
+<td width="132">
+
+<p>敏捷负责人负责敏捷事项;协助项目负责人审阅任务拆分合理性</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td width="142">
+
+<p>项目结束</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<p><td rowspan="2" width="57">文档</td></p>
+<td width="142">
+
+<p>《立项报告》</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<td width="142">
+
+<p>《开发计划》</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<p><td rowspan="4" width="57">会议</td></p>
+<td width="142">
+
+<p>立项报告会</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<td width="142">
+
+<p>迭代计划会</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>×</p>
+<p></p></td><p></p>
+<td width="95">
+
+<p>敏捷负责人</p>
+<p></p></td><p></p>
+<td width="132">
+
+<p>敏捷负责人召开，项目负责人主持；敏捷负责人负责任务的拆分合理性</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td width="142">
+
+<p>迭代评审会</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>×</p>
+<p></p></td><p></p>
+<td width="95">
+
+<p>敏捷负责人</p>
+<p></p></td><p></p>
+<td width="132">
+
+<p>敏捷负责人召开，项目负责人主持</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td width="142">
+
+<p>项目总结会</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<td rowspan="3" width="102">
+
+<p>需求分析人员</p>
+<p></p></td><p></p>
+<p><td width="57">流程</td></p>
+<td width="142">
+
+<p>需求分析</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>×</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<p><td rowspan="2" width="57">文档</td></p>
+<td width="142">
+
+<p>《需求规格说明书》</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>×</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<td width="142">
+
+<p>《系统功能说明书》</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>×</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<td rowspan="3" width="102">
+
+<p>敏捷负责人</p>
+<p></p></td><p></p>
+<p><td rowspan="2" width="57">文档</td></p>
+<td width="142">
+
+<p>《迭代计划表》</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<td width="95">
+
+<p>项目负责人</p>
+<p></p></td><p></p>
+<td width="132">
+
+<p>根据迭代计划会内容，整理当次计划表；更新燃尽图</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td width="142">
+
+<p>《项目甘特图》</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<td width="95">
+
+<p>项目负责人</p>
+<p></p></td><p></p>
+<td width="132">
+
+<p>根据立项计划绘制甘特图；更新甘特图</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<p><td width="57">会议</td></p>
+<td width="142">
+
+<p>每日站会</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<td rowspan="2" width="102">
+
+<p>QA人员</p>
+<p></p></td><p></p>
+<p><td rowspan="2" width="57">文档</td></p>
+<td width="142">
+
+<p>《测试计划》</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>×</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<td width="142">
+
+<p>《测试用例》</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>×</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br></p>
+<p><tr></tr></p>
+<td rowspan="2" width="102">
+
+<p>开发人员</p>
+<p></p></td><p></p>
+<p><td width="57">流程</td></p>
+<td width="142">
+
+<p>系统设计</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>×</p>
+<p></p></td><p></p>
+<p><td width="95">需求分析人员项目负责人</td></p>
+<p><td width="132">需求分析人员讲解项目需求项目负责人负责整体架构的评审</td><br></p>
+<p><tr></tr></p>
+<p><td width="57">文档</td></p>
+<td width="142">
+
+<p>《详细设计》</p>
+<p></p></td><p></p>
+<td width="47">
+
+<p>●</p>
+<p></p></td><p></p>
+<p><td width="95"></td></p>
+<p><td width="132"></td><br><br><br><br>规范文档暂时只有Demo。没有空模板，待整理完毕后再补上。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目管理/" rel="tag"># 项目管理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/03/07/2014/一次悲剧的网站负载过高(被攻击)的经历/" rel="next" title="记一次悲剧的网站负载过高(被攻击?)的经历">
+                <i class="fa fa-chevron-left"></i> 记一次悲剧的网站负载过高(被攻击?)的经历
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/03/27/2014/规范化流程开发实践-敏捷任务管理模块/" rel="prev" title="规范化流程开发实践-敏捷任务管理模块">
+                规范化流程开发实践-敏捷任务管理模块 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">91</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-使用范围"><span class="nav-number">1.</span> <span class="nav-text">1.   使用范围</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-流程规范"><span class="nav-number">2.</span> <span class="nav-text">2.   流程规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1立项流程"><span class="nav-number">2.1.</span> <span class="nav-text">2.1立项流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2需求分析流程"><span class="nav-number">2.2.</span> <span class="nav-text">2.2需求分析流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3系统设计流程"><span class="nav-number">2.3.</span> <span class="nav-text">2.3系统设计流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4迭代开发流程"><span class="nav-number">2.4.</span> <span class="nav-text">2.4迭代开发流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5项目结束流程"><span class="nav-number">2.5.</span> <span class="nav-text">2.5项目结束流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-会议规范"><span class="nav-number">3.</span> <span class="nav-text">3.   会议规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1立项报告会"><span class="nav-number">3.1.</span> <span class="nav-text">3.1立项报告会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2迭代计划会"><span class="nav-number">3.2.</span> <span class="nav-text">3.2迭代计划会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3每日站会"><span class="nav-number">3.3.</span> <span class="nav-text">3.3每日站会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4迭代评审会"><span class="nav-number">3.4.</span> <span class="nav-text">3.4迭代评审会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5项目总结会"><span class="nav-number">3.5.</span> <span class="nav-text">3.5项目总结会</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-文档规范"><span class="nav-number">4.</span> <span class="nav-text">4.   文档规范</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-职能规范"><span class="nav-number">5.</span> <span class="nav-text">5.   职能规范</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
