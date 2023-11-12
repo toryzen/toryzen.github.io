@@ -1,0 +1,837 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="RSA,DES,SpringBoot,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="PandoraBox | 私密信息传递工具             基于非对称加密(RSA)的私密信息传递工具，数据由本地客户端进行加密、解密操作，密文通过网络进行传输，确保信息的安全性！         – Browse Website –      系统介绍PandoraBox 由Server与Client两部分组成，Server使用Java SpringBoot编写，数据存储">
+<meta name="keywords" content="RSA,DES,SpringBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="私密信息传递工具PandoraBox">
+<meta property="og:url" content="http://toryzen.cn/2018/02/06/2018/私密信息传递工具Pandora/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="PandoraBox | 私密信息传递工具             基于非对称加密(RSA)的私密信息传递工具，数据由本地客户端进行加密、解密操作，密文通过网络进行传输，确保信息的安全性！         – Browse Website –      系统介绍PandoraBox 由Server与Client两部分组成，Server使用Java SpringBoot编写，数据存储">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2018/01/pandora-3rd/icon.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2018/01/pandora-3rd/arch.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2018/01/pandora-3rd/pdm.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2018/01/pandora-3rd/step1.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2018/01/pandora-3rd/step2.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2018/01/pandora-3rd/step3.png">
+<meta property="og:updated_time" content="2022-12-26T10:49:58.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="私密信息传递工具PandoraBox">
+<meta name="twitter:description" content="PandoraBox | 私密信息传递工具             基于非对称加密(RSA)的私密信息传递工具，数据由本地客户端进行加密、解密操作，密文通过网络进行传输，确保信息的安全性！         – Browse Website –      系统介绍PandoraBox 由Server与Client两部分组成，Server使用Java SpringBoot编写，数据存储">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2018/01/pandora-3rd/icon.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2018/02/06/2018/私密信息传递工具Pandora/">
+
+
+
+
+
+  <title>私密信息传递工具PandoraBox | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2018/02/06/2018/私密信息传递工具Pandora/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">私密信息传递工具PandoraBox</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T18:32:42+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/作品集/" itemprop="url" rel="index">
+                    <span itemprop="name">作品集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div align="center"><br>    <img src="/uploads/2018/01/pandora-3rd/icon.png" style="padding:0;margin-top:-60px;"><br>    <h3 align="center" style="padding:0;margin:-10px 0 -10px 0 ">PandoraBox | 私密信息传递工具</h3><br>    <div align="center" style="padding:0;margin-top:-40px;"><br>         基于非对称加密(RSA)的私密信息传递工具，数据由本地客户端进行加密、解密操作，密文通过网络进行传输，确保信息的安全性！<br>         <a href="https://github.com/gy-games/pandorabox" target="_blank" rel="noopener"><strong>– Browse Website –</strong></a><br>    </div><br></div>
+
+<h1 id="系统介绍"><a href="#系统介绍" class="headerlink" title="系统介绍"></a>系统介绍</h1><p>PandoraBox 由Server与Client两部分组成，Server使用Java SpringBoot编写，数据存储为Mysql，欢迎页面使用iview编写；Client使用C#编写，数据存储为sqlite，Client使用inno setup打包为安装包。且为了方便快速的信息发送，Server的数据结构内需要维护一套用户验证体系与用户组织结构，目前PandoraBox仅可发送文本信息。</p>
+<a id="more"></a>
+<h1 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h1><p><img src="/uploads/2018/01/pandora-3rd/arch.png" alt="arch.png"></p>
+<ul>
+<li>PandoraBox Client本地初始化时生成RSA公钥、私钥，公钥上传至PandoraBox Server，私钥通过设置的本地密码进行DES加密</li>
+<li>用户发送私密信息时，PandoraBox Client向PandoraBox Server请求获取接收者公钥，并将信息使用此公钥进行加密后发送至网络</li>
+<li>用户接收私密信息时，PandoraBox Client向PandoraBox Server请求获取密文，通过本地密码解密自己的RSA私钥，并通过此私钥进行密文的解密工作</li>
+</ul>
+<h1 id="如何构建并部署PandoraBox"><a href="#如何构建并部署PandoraBox" class="headerlink" title="如何构建并部署PandoraBox"></a>如何构建并部署PandoraBox</h1><h2 id="PandoraBox-Client"><a href="#PandoraBox-Client" class="headerlink" title="PandoraBox Client"></a>PandoraBox Client</h2><h3 id="STEP-1-：-更新PandoraBox-Client程序的Server端地址"><a href="#STEP-1-：-更新PandoraBox-Client程序的Server端地址" class="headerlink" title="STEP 1 ： 更新PandoraBox Client程序的Server端地址"></a>STEP 1 ： 更新PandoraBox Client程序的Server端地址</h3><p>打开Client工程，更新Client程序的App.config中 <add key="host" value="http://pandorabox.gyyx.cn"></add> 中的“pandora.gyyx.cn”为自己部署的Server地址，重新构建Client程序,Client端编译时注意选择Release，使用InnoSetup打包时将读取Release的文件列表</p>
+<h3 id="STEP-2-：-使用-Client-Setup-build-setup-iss-重新打包安装包"><a href="#STEP-2-：-使用-Client-Setup-build-setup-iss-重新打包安装包" class="headerlink" title="STEP 2 ：  使用./Client/Setup/build_setup.iss 重新打包安装包"></a>STEP 2 ：  使用./Client/Setup/build_setup.iss 重新打包安装包</h3><p>InnoSetup打包为安装包时，安装包将放入.\server\src\main\resources\static\software内，供Web下载，使用InnoSetup打包完成后再进行Server端的打包工作，为访问WEB主页时可进行客户端的下载</p>
+<h2 id="PandoraBox-Server"><a href="#PandoraBox-Server" class="headerlink" title="PandoraBox Server"></a>PandoraBox Server</h2><h3 id="STEP-1-：-初始化数据库并初始化人员组织结构"><a href="#STEP-1-：-初始化数据库并初始化人员组织结构" class="headerlink" title="STEP 1 ： 初始化数据库并初始化人员组织结构"></a>STEP 1 ： 初始化数据库并初始化人员组织结构</h3><p>且为了方便快速的信息发送，Server的数据结构内需要维护一套用户验证体系与用户组织结构，组织结构可以通过两种方式初始化，1、直接填充数据库，2、实现Pandora Server端的预留接口</p>
+<h4 id="方法1：直接填充数据库"><a href="#方法1：直接填充数据库" class="headerlink" title="方法1：直接填充数据库"></a>方法1：直接填充数据库</h4><p>Pandora的数据库结构非常简单，只有三张表,用户可以直接将数据导入部门表与用户表即可。用户表密码使用MD5加密（也可留空）</p>
+<p><img src="/uploads/2018/01/pandora-3rd/pdm.png" alt="pdm.png"></p>
+<h4 id="方法2：实现PandoraBox-Server端的预留方法"><a href="#方法2：实现PandoraBox-Server端的预留方法" class="headerlink" title="方法2：实现PandoraBox Server端的预留方法"></a>方法2：实现PandoraBox Server端的预留方法</h4><p>在 <strong>cn.gyyx.pandora.thirdparty</strong> 下预留了几个方法：</p>
+<ul>
+<li>Boolean thridAuth(String username,String passwd) 第三方接口用户认证 ：可以在此实现基于自身OA或认证系统的认证，当用户表内密码留空时，将调用此方法进行权限认证</li>
+<li>void saveUserList() 保存员工列表 ： 可在此实现写入用户表的方法</li>
+<li>void saveDeptList(String pdid) 保存部门列表：可在此实现写入组织结构列表的方法</li>
+<li>void updateOffwork() 更新员工状态 ：可在此实现更新用户状态方法</li>
+</ul>
+<p>目前定时器设置的每天2点执行一次，可根据情况修改run方法注解</p>
+<h3 id="STEP-2-：打包部署"><a href="#STEP-2-：打包部署" class="headerlink" title="STEP 2 ：打包部署"></a>STEP 2 ：打包部署</h3><p>注意打包前一定要先编译Client否则访问主页将无法下载Client安装包（编译完后地址为.\server\src\main\resources\static\software\PandoraBox.exe），将打完的Jar包 java -jar 启动即可</p>
+<h1 id="如何使用PandoraBox收发信息"><a href="#如何使用PandoraBox收发信息" class="headerlink" title="如何使用PandoraBox收发信息"></a>如何使用PandoraBox收发信息</h1><h2 id="STEP-1-：-初始化生成密钥"><a href="#STEP-1-：-初始化生成密钥" class="headerlink" title="STEP 1 ： 初始化生成密钥"></a>STEP 1 ： 初始化生成密钥</h2><p><img src="/uploads/2018/01/pandora-3rd/step1.png" alt="step1.png"></p>
+<h2 id="STEP-2-：-绑定帐号"><a href="#STEP-2-：-绑定帐号" class="headerlink" title="STEP 2 ： 绑定帐号"></a>STEP 2 ： 绑定帐号</h2><p><img src="/uploads/2018/01/pandora-3rd/step2.png" alt="step2.png"></p>
+<h2 id="STEP-3-：-收发信息"><a href="#STEP-3-：-收发信息" class="headerlink" title="STEP 3 ： 收发信息"></a>STEP 3 ： 收发信息</h2><p><img src="/uploads/2018/01/pandora-3rd/step3.png" alt="step3.png"></p>
+<h1 id="其他事项"><a href="#其他事项" class="headerlink" title="其他事项"></a>其他事项</h1><ul>
+<li>私密信息发送后，用户仅可收取一次，收取后会将密文存入本地，每次点击时解密</li>
+<li>若需要重定义web主页的内容，可以编辑.\server\fe工程后 npm run build （注意删掉.\server\src\main\resources\static以前的内容）</li>
+</ul>
+<p><strong>开源地址：<a href="https://github.com/gy-games/pandorabox" target="_blank" rel="noopener">https://github.com/gy-games/pandorabox</a></strong></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RSA/" rel="tag"># RSA</a>
+          
+            <a href="/tags/DES/" rel="tag"># DES</a>
+          
+            <a href="/tags/SpringBoot/" rel="tag"># SpringBoot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/27/2018/敏捷迭代管理-2018版指导规范/" rel="next" title="敏捷迭代管理[2018版指导规范]">
+                <i class="fa fa-chevron-left"></i> 敏捷迭代管理[2018版指导规范]
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/11/2018/2017大总结,2018大畅想/" rel="prev" title="2017大总结,2018大畅想...">
+                2017大总结,2018大畅想... <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">PandoraBox | 私密信息传递工具</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#系统介绍"><span class="nav-number"></span> <span class="nav-text">系统介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计思路"><span class="nav-number"></span> <span class="nav-text">设计思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何构建并部署PandoraBox"><span class="nav-number"></span> <span class="nav-text">如何构建并部署PandoraBox</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PandoraBox-Client"><span class="nav-number"></span> <span class="nav-text">PandoraBox Client</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#STEP-1-：-更新PandoraBox-Client程序的Server端地址"><span class="nav-number">1.</span> <span class="nav-text">STEP 1 ： 更新PandoraBox Client程序的Server端地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STEP-2-：-使用-Client-Setup-build-setup-iss-重新打包安装包"><span class="nav-number">2.</span> <span class="nav-text">STEP 2 ：  使用./Client/Setup/build_setup.iss 重新打包安装包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PandoraBox-Server"><span class="nav-number"></span> <span class="nav-text">PandoraBox Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#STEP-1-：-初始化数据库并初始化人员组织结构"><span class="nav-number">1.</span> <span class="nav-text">STEP 1 ： 初始化数据库并初始化人员组织结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法1：直接填充数据库"><span class="nav-number">1.1.</span> <span class="nav-text">方法1：直接填充数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法2：实现PandoraBox-Server端的预留方法"><span class="nav-number">1.2.</span> <span class="nav-text">方法2：实现PandoraBox Server端的预留方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STEP-2-：打包部署"><span class="nav-number">2.</span> <span class="nav-text">STEP 2 ：打包部署</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何使用PandoraBox收发信息"><span class="nav-number"></span> <span class="nav-text">如何使用PandoraBox收发信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-1-：-初始化生成密钥"><span class="nav-number"></span> <span class="nav-text">STEP 1 ： 初始化生成密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-2-：-绑定帐号"><span class="nav-number"></span> <span class="nav-text">STEP 2 ： 绑定帐号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-3-：-收发信息"><span class="nav-number"></span> <span class="nav-text">STEP 3 ： 收发信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他事项"><span class="nav-number"></span> <span class="nav-text">其他事项</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

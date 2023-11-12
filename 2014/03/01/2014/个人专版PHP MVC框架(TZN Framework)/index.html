@@ -1,0 +1,792 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="PHP,ci,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="一直都在用别人的框架，虽说知道原理，但是没有实际去尝试写一个看看，下午没事看了一下CI的源码，确实短小精悍，萌生了自己尝试一下的念头，花了几个小时谢了一个超级简单的MVC框架，实现了基本的MVC，没有路由分发，没有安全验证，没有考虑扩展性，只支持Mysql等等等等，后期哥好好规划给整牛逼了，目前是0.0.1,嘿~ 核心一共4个文件 Bootstrap.php Controller.php Mode">
+<meta name="keywords" content="PHP,ci">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个人专版PHP MVC框架(TZN Framework)">
+<meta property="og:url" content="http://toryzen.cn/2014/03/01/2014/个人专版PHP MVC框架(TZN Framework)/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="一直都在用别人的框架，虽说知道原理，但是没有实际去尝试写一个看看，下午没事看了一下CI的源码，确实短小精悍，萌生了自己尝试一下的念头，花了几个小时谢了一个超级简单的MVC框架，实现了基本的MVC，没有路由分发，没有安全验证，没有考虑扩展性，只支持Mysql等等等等，后期哥好好规划给整牛逼了，目前是0.0.1,嘿~ 核心一共4个文件 Bootstrap.php Controller.php Mode">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-12-26T10:49:58.300Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="个人专版PHP MVC框架(TZN Framework)">
+<meta name="twitter:description" content="一直都在用别人的框架，虽说知道原理，但是没有实际去尝试写一个看看，下午没事看了一下CI的源码，确实短小精悍，萌生了自己尝试一下的念头，花了几个小时谢了一个超级简单的MVC框架，实现了基本的MVC，没有路由分发，没有安全验证，没有考虑扩展性，只支持Mysql等等等等，后期哥好好规划给整牛逼了，目前是0.0.1,嘿~ 核心一共4个文件 Bootstrap.php Controller.php Mode">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2014/03/01/2014/个人专版PHP MVC框架(TZN Framework)/">
+
+
+
+
+
+  <title>个人专版PHP MVC框架(TZN Framework) | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/03/01/2014/个人专版PHP MVC框架(TZN Framework)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">个人专版PHP MVC框架(TZN Framework)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-03-01T19:08:34+08:00">
+                2014-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一直都在用别人的框架，虽说知道原理，但是没有实际去尝试写一个看看，下午没事看了一下CI的源码，确实短小精悍，萌生了自己尝试一下的念头，花了几个小时谢了一个超级简单的MVC框架，实现了基本的MVC，没有路由分发，没有安全验证，没有考虑扩展性，只支持Mysql等等等等，后期哥好好规划给整牛逼了，目前是0.0.1,嘿~</p>
+<p>核心一共4个文件</p>
+<p>Bootstrap.php</p>
+<p>Controller.php</p>
+<p>Model.php</p>
+<p>View.php</p>
+<p>先发上来让大家瞅瞅~</p>
+<a id="more"></a>
+<p>index.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$app    = <span class="string">"app"</span>;</span><br><span class="line">$system = <span class="string">"system"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(is_dir($app))&#123;</span><br><span class="line">    $app = realpath($app).<span class="string">"\\"</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"app path not found !"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(is_dir($system))&#123;</span><br><span class="line">    $system = realpath($system).<span class="string">"\\"</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"system path not found !"</span>);</span><br><span class="line">&#125;</span><br><span class="line">$app    = str_replace(<span class="string">"\\"</span>,<span class="string">"/"</span>,$app);</span><br><span class="line">$system = str_replace(<span class="string">"\\"</span>,<span class="string">"/"</span>,$system);</span><br><span class="line">define(<span class="string">"APP"</span>,$app);</span><br><span class="line">define(<span class="string">"SYSTEM"</span>,$system );</span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> SYSTEM.<span class="string">"Bootstrap.php"</span>;</span><br></pre></td></tr></table></figure>
+<p>Bootstrap.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( ! defined(<span class="string">'SYSTEM'</span>)) <span class="keyword">exit</span>(<span class="string">'Go away!'</span>); </span><br><span class="line">define(<span class="string">"CORE"</span>,<span class="string">"TZNPHP"</span>); define(<span class="string">"VERSION"</span>,<span class="string">"0.0.1"</span>); </span><br><span class="line"><span class="keyword">require</span>(SYSTEM.<span class="string">"Controller.php"</span>); </span><br><span class="line"><span class="keyword">require</span>(SYSTEM.<span class="string">"View.php"</span>); </span><br><span class="line"><span class="keyword">require</span>(SYSTEM.<span class="string">"Model.php"</span>); </span><br><span class="line">$class  = <span class="keyword">isset</span>($_GET[<span class="string">'c'</span>])?$_GET[<span class="string">'c'</span>]:<span class="string">"Index"</span>; </span><br><span class="line">$method = <span class="keyword">isset</span>($_GET[<span class="string">'m'</span>])?$_GET[<span class="string">'m'</span>]:<span class="string">"index"</span>; </span><br><span class="line"><span class="keyword">if</span>(file_exists(APP.<span class="string">"config.php"</span>))&#123;     </span><br><span class="line">    <span class="keyword">require</span>(APP.<span class="string">"config.php"</span>); </span><br><span class="line">&#125;<span class="keyword">else</span>&#123;     </span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"Config file not found !"</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">if</span>(file_exists(APP.<span class="string">"controllers/"</span>.$class.<span class="string">".php"</span>))&#123;     </span><br><span class="line">    <span class="keyword">include</span>(APP.<span class="string">"controllers/"</span>.$class.<span class="string">".php"</span>);     </span><br><span class="line">    <span class="keyword">if</span>(class_exists($class))&#123;         </span><br><span class="line">        $VEW = <span class="keyword">new</span> V();         </span><br><span class="line">        $C = <span class="keyword">new</span> $class();         </span><br><span class="line">        <span class="keyword">if</span>(method_exists($C,$method))&#123;             </span><br><span class="line">            <span class="keyword">if</span>($class!=<span class="string">"Index"</span> <span class="keyword">OR</span> $method!=<span class="string">"index"</span>)&#123;                 </span><br><span class="line">                $C---&gt;$method();</span><br><span class="line">            &#125;</span><br><span class="line">            $VEW-&gt;output();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">exit</span>(<span class="string">"Method not found !"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">exit</span>(<span class="string">"Class not found !"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"Class file not found !"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($C-&gt;conn))&#123;</span><br><span class="line">    $C-&gt;conn-&gt;close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mysql_driver</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $config,$db;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($db))&#123;<span class="keyword">return</span> $db;&#125;</span><br><span class="line">    $db = <span class="keyword">new</span> mysqli($config[<span class="string">'db'</span>][<span class="string">'hostname'</span>],$config[<span class="string">'db'</span>][<span class="string">'username'</span>],$config[<span class="string">'db'</span>][<span class="string">'password'</span>],$config[<span class="string">'db'</span>][<span class="string">'database'</span>]);</span><br><span class="line">    $db-&gt;set_charset($config[<span class="string">'db'</span>][<span class="string">'char_set'</span>]);</span><br><span class="line">    <span class="keyword">return</span> $db;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据库的连接暂时写到这里了，以后但拉出来数据库的驱动目录</p>
+<p>Controller.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( ! defined(<span class="string">'SYSTEM'</span>)) <span class="keyword">exit</span>(<span class="string">'Go away!'</span>); </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;     </span><br><span class="line">    <span class="keyword">public</span> $conn;     </span><br><span class="line">    <span class="keyword">public</span> $Models;     </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">view</span><span class="params">($filename,$data_array)</span></span>&#123;         </span><br><span class="line">        <span class="keyword">global</span> $VEW;         </span><br><span class="line">        $file_path = APP.<span class="string">"/views/"</span>.$filename.<span class="string">".html"</span>;         </span><br><span class="line">        <span class="keyword">if</span>(file_exists($file_path))&#123;             </span><br><span class="line">            ob_start();             </span><br><span class="line">            <span class="keyword">if</span>(is_array($data_array))&#123;                 </span><br><span class="line">                <span class="keyword">foreach</span>($data_array <span class="keyword">as</span> $key=--&gt;$value)&#123;</span><br><span class="line">                    $$key = $value;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">include</span>($file_path);</span><br><span class="line">            $VEW-&gt;contents = ob_get_contents();</span><br><span class="line">            @ob_end_clean();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">exit</span>(<span class="string">"View file not found ! "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">model</span><span class="params">($filename)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;Models[$filename]))&#123;<span class="keyword">return</span> <span class="keyword">$this</span>-&gt;Models[$filename];  &#125;</span><br><span class="line">        $file_path = APP.<span class="string">"/models/"</span>.$filename.<span class="string">".php"</span>;</span><br><span class="line">        <span class="keyword">if</span>(file_exists($file_path))&#123;</span><br><span class="line">            $class_name = $filename.<span class="string">"_model"</span>;</span><br><span class="line">            <span class="keyword">include</span>($file_path);</span><br><span class="line">            <span class="keyword">if</span>(class_exists($class_name))&#123;</span><br><span class="line">                <span class="keyword">$this</span>-&gt;conn = &amp;amp;mysql_driver();</span><br><span class="line">                <span class="keyword">$this</span>-&gt;Models[$filename] = <span class="keyword">new</span> $class_name(<span class="keyword">$this</span>-&gt;conn);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;Models[$filename];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">exit</span>(<span class="string">"Model class not found ! "</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">exit</span>(<span class="string">"Model file not found ! "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Model.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;!--?php  <span class="keyword">if</span> ( ! defined(<span class="string">'SYSTEM'</span>)) <span class="keyword">exit</span>(<span class="string">'Go away!'</span>); <span class="class"><span class="keyword">class</span> <span class="title">M</span> </span>&#123;     <span class="keyword">public</span> $conn;     <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($conn)</span></span>&#123;         <span class="keyword">$this</span>---&gt;conn = $conn;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">query</span><span class="params">($sql)</span></span>&#123;</span><br><span class="line">        $query = <span class="keyword">$this</span>-&gt;conn-&gt;query($sql);</span><br><span class="line">        <span class="keyword">return</span> $query;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">fetch_one</span><span class="params">($sql)</span></span>&#123;</span><br><span class="line">        $query = <span class="keyword">$this</span>-&gt;conn-&gt;query($sql);</span><br><span class="line">        $result = $query-&gt;fetch_array();</span><br><span class="line">        <span class="keyword">return</span> $result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">fetch_all</span><span class="params">($sql)</span></span>&#123;</span><br><span class="line">        $query = <span class="keyword">$this</span>-&gt;conn-&gt;query($sql);</span><br><span class="line">        <span class="keyword">while</span>($row = $query-&gt;fetch_array())&#123;</span><br><span class="line">            $result[] = $row;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>View.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;!--?php  <span class="keyword">if</span> ( ! defined(<span class="string">'SYSTEM'</span>)) <span class="keyword">exit</span>(<span class="string">'Go away!'</span>); <span class="class"><span class="keyword">class</span> <span class="title">V</span></span>&#123;     <span class="keyword">public</span> $contents;     <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">output</span><span class="params">()</span></span>&#123;         <span class="keyword">echo</span> <span class="keyword">$this</span>---&gt;contents;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>View学CI，先是输出到缓冲区，再给打印出来，以后也加个Hook功能。一开始还准备像CI一样，实现get_instance,写完发现咱功能太少还用不到,随删除之~以后增加了用得到的地方在给上了~</p>
+<p>GITHUB:<a href="https://github.com/toryzen/TZNPHP" target="_blank" rel="noopener">https://github.com/toryzen/TZNPHP</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/ci/" rel="tag"># ci</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/02/28/2014/基于CI的RBAC访问控制/" rel="next" title="基于CI的RBAC访问控制">
+                <i class="fa fa-chevron-left"></i> 基于CI的RBAC访问控制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/03/05/2014/PHP字典序法获得排列组合/" rel="prev" title="PHP字典序法获得排列组合">
+                PHP字典序法获得排列组合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

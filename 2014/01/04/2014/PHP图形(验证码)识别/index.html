@@ -1,0 +1,786 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="PHP,图形识别,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="因为一个项目的需要，需要验证码的识别，以前并没有接触过，后来研究了一下，做了个简单的PHP脚本(文章中的仅是做了简单整理,不是很严谨)，基本上满足了现在的需要，来分享一下，适合于基础选手。 验证码是这样的没有背景色，并且只有在深色的背景下才能看清，一共只有4个数字。 看了部分资料知道了思路，就很好办了。 1、图形按坐标转换为0,1 2、去除干扰(这个图片里没有) 3、切割 4、对比(主要是字典强大">
+<meta name="keywords" content="PHP,图形识别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP图形(验证码)识别">
+<meta property="og:url" content="http://toryzen.cn/2014/01/04/2014/PHP图形(验证码)识别/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="因为一个项目的需要，需要验证码的识别，以前并没有接触过，后来研究了一下，做了个简单的PHP脚本(文章中的仅是做了简单整理,不是很严谨)，基本上满足了现在的需要，来分享一下，适合于基础选手。 验证码是这样的没有背景色，并且只有在深色的背景下才能看清，一共只有4个数字。 看了部分资料知道了思路，就很好办了。 1、图形按坐标转换为0,1 2、去除干扰(这个图片里没有) 3、切割 4、对比(主要是字典强大">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/01/code.gif">
+<meta property="og:image" content="http://torblog.sinaapp.com/wp-includes/js/tinymce/plugins/wordpress/img/trans.gif">
+<meta property="og:image" content="http://toryzen.cn/uploads/2014/01/RTX截图未命名-158x300.jpg">
+<meta property="og:updated_time" content="2022-12-26T10:49:58.299Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP图形(验证码)识别">
+<meta name="twitter:description" content="因为一个项目的需要，需要验证码的识别，以前并没有接触过，后来研究了一下，做了个简单的PHP脚本(文章中的仅是做了简单整理,不是很严谨)，基本上满足了现在的需要，来分享一下，适合于基础选手。 验证码是这样的没有背景色，并且只有在深色的背景下才能看清，一共只有4个数字。 看了部分资料知道了思路，就很好办了。 1、图形按坐标转换为0,1 2、去除干扰(这个图片里没有) 3、切割 4、对比(主要是字典强大">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2014/01/code.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2014/01/04/2014/PHP图形(验证码)识别/">
+
+
+
+
+
+  <title>PHP图形(验证码)识别 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2014/01/04/2014/PHP图形(验证码)识别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP图形(验证码)识别</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-01-04T15:53:19+08:00">
+                2014-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>因为一个项目的需要，需要验证码的识别，以前并没有接触过，后来研究了一下，做了个简单的PHP脚本(文章中的仅是做了简单整理,不是很严谨)，基本上满足了现在的需要，来分享一下，适合于基础选手。</p>
+<p>验证码是这样的<a href="/uploads/2014/01/code.gif"><img src="/uploads/2014/01/code.gif" alt title="code"></a>没有背景色，并且只有在深色的背景下才能看清，一共只有4个数字。</p>
+<p>看了部分资料知道了思路，就很好办了。</p>
+<p>1、图形按坐标转换为0,1</p>
+<p>2、去除干扰(这个图片里没有)</p>
+<p>3、切割</p>
+<p>4、对比(主要是字典强大,用到的主要函数就是similar_text)</p>
+<p>有了这四步就可以开工了。<br><a id="more"></a><img src="http://torblog.sinaapp.com/wp-includes/js/tinymce/plugins/wordpress/img/trans.gif" alt title="更多..."></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> $keyvalues;</span><br><span class="line"><span class="keyword">public</span> $hexarray = <span class="keyword">array</span>();</span><br><span class="line"><span class="keyword">public</span> $pwidth;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;<span class="number">256</span>;$i++)&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;hexarray[$i] = dechex($i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;keyvalues = <span class="keyword">array</span>(</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">0</span>,<span class="string">'001110001100100100001010000101000010100001010000101100100011100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">0</span>,<span class="string">'111000010010000000100000010000001000000100000010010010001110000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">0</span>,<span class="string">'011100011001001000010100001010000101000010100001011001000111000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">0</span>,<span class="string">'111000100100000010000010000010000010000010100100111000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">1</span>,<span class="string">'000010000011000010100000010000001000000100000010000001000000100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">1</span>,<span class="string">'000001000011000101000001000001000001000001000001000001'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">1</span>,<span class="string">'100000100000110000101000000110000011000001100000110000010000001'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">1</span>,<span class="string">'001000001100001010001001000100100010010001001000100100010010000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">2</span>,<span class="string">'011110000001100000010000001000001000011000011000001000001111110'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">2</span>,<span class="string">'011110000000110000000100000001000000100000110000011000000100000011111100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">2</span>,<span class="string">'011110000011000001000001000010001100011000010000111111'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">2</span>,<span class="string">'001111000011001100110000100000000100000001100000001000000010000000100000001000000011000000111111100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">3</span>,<span class="string">'011100010001000000100001100000011000000100000010010010000111000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">3</span>,<span class="string">'001110001000100000010000110000001100000010000001001001000011100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">3</span>,<span class="string">'000111000100010000001000011000000110000001000000100100100001110'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">3</span>,<span class="string">'111000000100000100011000001100000100000100001000111000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">3</span>,<span class="string">'011100001000100100001001001100010001100100001001000010011001000101110000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">4</span>,<span class="string">'000010000011000010100001010001001001000100111111000001000000100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">4</span>,<span class="string">'000010000110001010001010010010100010111111000010000010'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">5</span>,<span class="string">'011111001000000100000111110010001100000010000001011001100111100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">5</span>,<span class="string">'000111100010000001000001111100100010000000000000000110010001111'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">5</span>,<span class="string">'011111010000010000111110100011000001000001110011011110'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>,<span class="string">'000001100010000100000100000011111101000001100001001001000010000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>,<span class="string">'000111000100110100000010111001100110100001010000101100100011110'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>,<span class="string">'011100010011000000000011100010011000000100000010010010001111000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>,<span class="string">'0001110000110010011000110100000001011100011000110100000101000001010000010010001000011100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">7</span>,<span class="string">'111111100000010000010000010000010000001000001000001000001000000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">7</span>,<span class="string">'011111100000100000010000010000001000000100000100000010000001000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">7</span>,<span class="string">'111111000010000010000100000100000100001000001000001000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">8</span>,<span class="string">'011110010000101000010011110011001101000010100001011001100111100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">9</span>,<span class="string">'001110001100100100001010000101100110011101000000101000100011100'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">9</span>,<span class="string">'0111100011000100100001101000001010000010110001100111101000000010100001101100110001111000'</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">9</span>,<span class="string">'001111000011000100010000110010000010010000010011000110001111010000000010010000110011001100001111000'</span>),</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取图片</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getImage</span><span class="params">($url)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!$url)<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    $dot = explode(<span class="string">"."</span>,$url);</span><br><span class="line">    <span class="keyword">if</span>($dot[count($dot)<span class="number">-1</span>]==<span class="string">"gif"</span>)&#123;</span><br><span class="line">        $img = imagecreatefromgif($url);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>($dot[count($dot)<span class="number">-1</span>]==<span class="string">"png"</span>)&#123;</span><br><span class="line">        $img = imagecreatefrompng($url);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>($dot[count($dot)<span class="number">-1</span>]==<span class="string">"jpg"</span>)&#123;</span><br><span class="line">        $img = imagecreatefromjpeg($url);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        $img  = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $img;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//转为01</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">imgTobin</span><span class="params">($image)</span></span>&#123;</span><br><span class="line">    $data = <span class="keyword">array</span>();</span><br><span class="line">    <span class="keyword">for</span>($y = <span class="number">0</span>; $y &lt; imagesy($image); $y++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>($x = <span class="number">0</span>; $x &lt; imagesx($image); $x++)</span><br><span class="line">        &#123;</span><br><span class="line">            $colors_reg = imagecolorsforindex($image, imagecolorat($image, $x, $y));</span><br><span class="line">            <span class="keyword">if</span>( <span class="keyword">$this</span>-&gt;hexarray[ $colors_reg[<span class="string">'red'</span>] ].<span class="keyword">$this</span>-&gt;hexarray[ $colors_reg[<span class="string">'green'</span>] ].<span class="keyword">$this</span>-&gt;hexarray[ $colors_reg[<span class="string">'blue'</span>] ]==<span class="string">'abacad'</span>)&#123;</span><br><span class="line">                $data[$y][$x]=<span class="number">0</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;hexarray[ $colors_reg[<span class="string">'red'</span>] ].<span class="keyword">$this</span>-&gt;hexarray[ $colors_reg[<span class="string">'green'</span>] ].<span class="keyword">$this</span>-&gt;hexarray[ $colors_reg[<span class="string">'blue'</span>] ]&gt;<span class="string">"969696"</span>)&#123;</span><br><span class="line">                    $data[$y][$x]=<span class="number">1</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    $data[$y][$x]=<span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取区域</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getArea</span><span class="params">($data)</span></span>&#123;</span><br><span class="line">    <span class="keyword">foreach</span>($data <span class="keyword">as</span>  $lkey =&gt; $line)&#123;</span><br><span class="line">        <span class="keyword">foreach</span>($line <span class="keyword">as</span> $fkey =&gt; $filed)&#123;</span><br><span class="line">            <span class="keyword">if</span>($line[$fkey<span class="number">-1</span>]!=$line[$fkey])&#123;</span><br><span class="line">                $sprx[] = <span class="string">"$fkey"</span>;</span><br><span class="line">                $spry[] = <span class="string">"$lkey"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sort($sprx);</span><br><span class="line">    sort($spry);</span><br><span class="line">    $sqare[<span class="string">'min'</span>][<span class="string">'x'</span>] = $sprx[<span class="number">0</span>];</span><br><span class="line">    $sqare[<span class="string">'min'</span>][<span class="string">'y'</span>] = $spry[<span class="number">0</span>];</span><br><span class="line">    $sqare[<span class="string">'max'</span>][<span class="string">'x'</span>] = $sprx[count($sprx)<span class="number">-1</span>];</span><br><span class="line">    $sqare[<span class="string">'max'</span>][<span class="string">'y'</span>] = $spry[count($spry)<span class="number">-1</span>];</span><br><span class="line">    <span class="keyword">$this</span>-&gt;pwidth = ($sqare[<span class="string">'max'</span>][<span class="string">'x'</span>]-$sqare[<span class="string">'min'</span>][<span class="string">'x'</span>])/<span class="number">4</span>;</span><br><span class="line">    $xx = <span class="number">0</span>;</span><br><span class="line">    $yy = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">foreach</span>($data <span class="keyword">as</span>  $lkey =&gt; $line)&#123;</span><br><span class="line">        <span class="keyword">foreach</span>($line <span class="keyword">as</span> $fkey =&gt; $filed)&#123;</span><br><span class="line">            <span class="keyword">if</span>($fkey&gt;=$sqare[<span class="string">'min'</span>][<span class="string">'x'</span>]&amp;amp;&amp;amp;$lkey&gt;=$sqare[<span class="string">'min'</span>][<span class="string">'y'</span>]&amp;amp;&amp;amp;$fkey&lt;=$sqare[<span class="string">'max'</span>][<span class="string">'x'</span>]&amp;amp;&amp;amp;$lkey&lt;=$sqare[<span class="string">'max'</span>][<span class="string">'y'</span>])&#123;</span><br><span class="line">                $ndata[$yy][$xx]=$line[$fkey];</span><br><span class="line">                $xx++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>($lkey&gt;=$sqare[<span class="string">'min'</span>][<span class="string">'y'</span>]&amp;amp;&amp;amp;$lkey&lt;=$sqare[<span class="string">'max'</span>][<span class="string">'y'</span>])&#123;</span><br><span class="line">            $yy++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $ndata;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//切割</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">pExplode</span><span class="params">($ndata)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;<span class="number">4</span>;$i++)&#123;</span><br><span class="line">        $x = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">foreach</span>($ndata <span class="keyword">as</span>  $lkey =&gt; $line)&#123;</span><br><span class="line">            <span class="keyword">foreach</span>($line <span class="keyword">as</span> $fkey =&gt; $filed)&#123;</span><br><span class="line">                <span class="keyword">if</span>($x&gt;=<span class="keyword">$this</span>-&gt;pwidth*$i&amp;amp;&amp;amp;$x&lt;<span class="keyword">$this</span>-&gt;pwidth*($i+<span class="number">1</span>))&#123;</span><br><span class="line">                    $word[$i].= $line[$fkey];</span><br><span class="line">                &#125;</span><br><span class="line">                $x++;</span><br><span class="line">            &#125;</span><br><span class="line">            $x = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $word;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//对比</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getNum</span><span class="params">($word)</span></span>&#123;</span><br><span class="line">    $i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">foreach</span>($word <span class="keyword">as</span> $numString)</span><br><span class="line">    &#123;</span><br><span class="line">        $num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">foreach</span>(<span class="keyword">$this</span>-&gt;keyvalues <span class="keyword">as</span> $value)</span><br><span class="line">        &#123;</span><br><span class="line">            $percent=<span class="number">0.0</span>;</span><br><span class="line">            similar_text($value[<span class="number">1</span>], $numString,$percent);</span><br><span class="line">            $n[$i][<span class="string">'percent'</span>] = intval($percent);</span><br><span class="line">            $n[$i][<span class="string">'key'</span>] = $value[<span class="number">0</span>];</span><br><span class="line">            $i++;</span><br><span class="line">        &#125;</span><br><span class="line">        $percent = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">foreach</span>($n <span class="keyword">as</span> $v)&#123;</span><br><span class="line">            <span class="keyword">if</span>($v[<span class="string">'percent'</span>]&gt;$percent)&#123;</span><br><span class="line">                $percent = $v[<span class="string">'percent'</span>];</span><br><span class="line">                $num = $v[<span class="string">'key'</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">unset</span>($n);</span><br><span class="line">        $result.=$num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>  $result;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$code = <span class="keyword">new</span> code();</span><br><span class="line">$img = $code-&gt;getImage(<span class="string">"1.gif"</span>);</span><br><span class="line"><span class="keyword">if</span>($img)&#123;</span><br><span class="line">$bin = $code-&gt;imgTobin($img);</span><br><span class="line"><span class="keyword">foreach</span>($bin <span class="keyword">as</span>  $lkey =&gt; $line)&#123;</span><br><span class="line">    <span class="keyword">foreach</span>($line <span class="keyword">as</span> $fkey =&gt; $filed)&#123;</span><br><span class="line">        <span class="keyword">echo</span> $line[$fkey]==<span class="number">1</span>?$line[$fkey]:<span class="string">"0"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line"><span class="keyword">if</span>($bin)&#123;</span><br><span class="line">    $are = $code-&gt;getArea($bin);</span><br><span class="line">    <span class="keyword">if</span>($are)&#123;</span><br><span class="line">        <span class="keyword">foreach</span>($are <span class="keyword">as</span>  $lkey =&gt; $line)&#123;</span><br><span class="line">            <span class="keyword">foreach</span>($line <span class="keyword">as</span> $fkey =&gt; $filed)&#123;</span><br><span class="line">                <span class="keyword">echo</span> $line[$fkey]==<span class="number">1</span>?$line[$fkey]:<span class="string">"0"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">        <span class="keyword">foreach</span>($are <span class="keyword">as</span>  $lkey =&gt; $line)&#123;</span><br><span class="line">            <span class="keyword">foreach</span>($line <span class="keyword">as</span> $fkey =&gt; $filed)&#123;</span><br><span class="line">                <span class="keyword">echo</span> $line[$fkey]==<span class="number">1</span>?$line[$fkey]:<span class="string">" "</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">        $exp = $code-&gt;pExplode($are);</span><br><span class="line">        <span class="keyword">if</span>($exp)&#123;</span><br><span class="line">            $num = $code-&gt;getNum($exp);</span><br><span class="line">            <span class="keyword">echo</span> $num;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"Explode area error!"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"get area error!"</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"get bin error!"</span> ;</span><br><span class="line">&#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"img type error!"</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后的效果<br><a href="/uploads/2014/01/RTX截图未命名.jpg"><img src="/uploads/2014/01/RTX截图未命名-158x300.jpg" alt title="RTX截图未命名"></a></p>
+<p>这个脚本只是为了满足我的这个验证码写的，如果需要验证其他的，还需要在图形01转换，和切割上做点文章，经过几天的字典填充，现在识别率还不错。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/图形识别/" rel="tag"># 图形识别</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/01/01/2014/个人终端 － 多平台消息通知/" rel="next" title="个人终端 － 多平台消息通知">
+                <i class="fa fa-chevron-left"></i> 个人终端 － 多平台消息通知
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/01/04/2014/新项目管理绩效考核模型/" rel="prev" title="新项目管理绩效考核模型">
+                新项目管理绩效考核模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

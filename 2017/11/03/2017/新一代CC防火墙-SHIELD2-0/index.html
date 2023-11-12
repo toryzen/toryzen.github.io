@@ -1,0 +1,840 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="strom,流式分析,java,kafka,flume,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="社区CC防火墙是公司对外提供服务的WEB站点的一层防护屏障，可以过滤访问请求，识别出攻击者，并与之屏蔽，保证WEB站点安全稳定的运行，新一代的CC防火墙产品是前一代的基础上在架构及功能上的一次重大革新  新算法的应用，可缓解、抵御所有web站点遭到CC的攻击强度。 整合不同部门的防火墙类产品，降低开发成本，增强用户体验。 针对攻击IP的访问行为进行特征分析，增加分析维度  Architecture">
+<meta name="keywords" content="strom,流式分析,java,kafka,flume">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新一代CC防火墙(SHIELD2.0)">
+<meta property="og:url" content="http://toryzen.cn/2017/11/03/2017/新一代CC防火墙-SHIELD2-0/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="社区CC防火墙是公司对外提供服务的WEB站点的一层防护屏障，可以过滤访问请求，识别出攻击者，并与之屏蔽，保证WEB站点安全稳定的运行，新一代的CC防火墙产品是前一代的基础上在架构及功能上的一次重大革新  新算法的应用，可缓解、抵御所有web站点遭到CC的攻击强度。 整合不同部门的防火墙类产品，降低开发成本，增强用户体验。 针对攻击IP的访问行为进行特征分析，增加分析维度  Architecture">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/11/shield2.0.jpg">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/11/shield-pdm.jpg">
+<meta property="og:updated_time" content="2022-12-26T10:49:58.303Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="新一代CC防火墙(SHIELD2.0)">
+<meta name="twitter:description" content="社区CC防火墙是公司对外提供服务的WEB站点的一层防护屏障，可以过滤访问请求，识别出攻击者，并与之屏蔽，保证WEB站点安全稳定的运行，新一代的CC防火墙产品是前一代的基础上在架构及功能上的一次重大革新  新算法的应用，可缓解、抵御所有web站点遭到CC的攻击强度。 整合不同部门的防火墙类产品，降低开发成本，增强用户体验。 针对攻击IP的访问行为进行特征分析，增加分析维度  Architecture">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2017/11/shield2.0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2017/11/03/2017/新一代CC防火墙-SHIELD2-0/">
+
+
+
+
+
+  <title>新一代CC防火墙(SHIELD2.0) | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/11/03/2017/新一代CC防火墙-SHIELD2-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">新一代CC防火墙(SHIELD2.0)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T20:01:24+08:00">
+                2017-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>社区CC防火墙是公司对外提供服务的WEB站点的一层防护屏障，可以过滤访问请求，识别出攻击者，并与之屏蔽，保证WEB站点安全稳定的运行，新一代的CC防火墙产品是前一代的基础上在架构及功能上的一次重大革新</p>
+<ul>
+<li>新算法的应用，可缓解、抵御所有web站点遭到CC的攻击强度。</li>
+<li>整合不同部门的防火墙类产品，降低开发成本，增强用户体验。</li>
+<li>针对攻击IP的访问行为进行特征分析，增加分析维度</li>
+</ul>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p><a href="/uploads/2017/11/shield2.0.jpg"><img src="/uploads/2017/11/shield2.0.jpg" alt title="shield2"></a></p>
+<a id="more"></a>
+<h1 id="公共服务"><a href="#公共服务" class="headerlink" title="公共服务"></a>公共服务</h1><ul>
+<li>Flume : Sheild日志收集组件，进行原始日志的收集</li>
+<li>Kafka：Sheild整体数据总线，维护多组件的数据交互</li>
+<li>Strom : 流式数据分析组件，进行算法运算与数据统计</li>
+<li>Zookeeper : 内存型分布式的配置文件存储</li>
+<li>Mysql : 持久化数据存储</li>
+</ul>
+<h1 id="SHEILD组件"><a href="#SHEILD组件" class="headerlink" title="SHEILD组件"></a>SHEILD组件</h1><ul>
+<li>Shield Guard      :  WEB项目，提供被封停的IP展示页面，支持在此界面上输入验证码信息后进行解封</li>
+<li>Shield Agent      :  提供接收来自于Shield Analyzer的封停IP数据，进行IP封停；提供被封停的IP跳转</li>
+<li>Shield Analyzer   :  提供原始访问日志分析，并根据规则进行封停通知操作</li>
+<li>Shield Logger     :  Shield日志组件，存储Shield内分析数据</li>
+<li>Shield FE         :  Shield WEB化管理前端</li>
+</ul>
+<h1 id="组件设计"><a href="#组件设计" class="headerlink" title="组件设计"></a>组件设计</h1><h2 id="Shield-Guard"><a href="#Shield-Guard" class="headerlink" title="Shield Guard"></a>Shield Guard</h2><p>Sheild guard 根据GET型参数确定所属项目，抓取当前用户访问的IP地址信息（此IP信息不允许用户自行修改），并采用多种随机验证码验证形式，当用户成功输入验证码后将根据所属的项目将解封信息推送至Kafka的对应Topic中。</p>
+<h2 id="Shield-Agent"><a href="#Shield-Agent" class="headerlink" title="Shield Agent"></a>Shield Agent</h2><p>1、Shield Agent默认消费kafka数据进行解封与封停操作（若封停则将来自于此IP的所有数据包重定向到自身服务端口）。<br>安装初始化：<br>    1、初始化ipset与iptables组件<br>        将ipset内存在的ip的访问http端口（默认为80，可以更换）SNAT至本机的shield Agent Block Port<br>    2、开启自身端口跳转99888，用户访问99888端口则默认跳转至Shield Guard页面<br>2、Sheild Agent 提供当前信息查询接口：<br>    封停IP数量<br>封停IP列表</p>
+<p><strong>重点配置文件：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ProjectUUID = 16位随机码                : 进行URL跳转时使用</span><br><span class="line">BlockType    = all/self                       : 进行封停操作时是全封停还是真对发送至自身的数据进行封停</span><br><span class="line">AgentIP        = 127.0.0.1                   : agent ip 地址，此IP地址将注册至zookeeper</span><br><span class="line">BlockPort      = 99988                        : agent提供跳转服务的IP地址</span><br><span class="line">ThriftPort       = 100010                     :RPC服务端口</span><br></pre></td></tr></table></figure></p>
+<p><strong>ZK结构</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Tree:</span><br><span class="line">    Sheild</span><br><span class="line">        ProjectName</span><br><span class="line">            config(永久节点)</span><br><span class="line">            agent_list</span><br><span class="line">                Ip1(永久节点)</span><br><span class="line">                    &#123;</span><br><span class="line">                        &quot;agentname&quot;:&quot;HP&quot;,</span><br><span class="line">                        &quot;blockcnt&quot;:&quot;&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                    online(临时节点)</span><br><span class="line">ip2(永久节点)</span><br></pre></td></tr></table></figure></p>
+<h2 id="Shield-Analyzer"><a href="#Shield-Analyzer" class="headerlink" title="Shield Analyzer"></a>Shield Analyzer</h2><p>分析程序，程序首次启动将从mysql读取数据写入ZK。<br>KafkaSpout : 消费Kafka原始数据(Topic:sheild-data)，为确保时间有序，只采用一个<br>LogFormartBolt : KafkaSpout将数据按照项目发送至此Bolt，此Bolt采用多个，进行数据的格式化处理，转换为JAVA对象<br>IpanalysisBolt : Formart后将数据按照AgentIP-UserIP规则随机分发至此Bolt进行规则判断<br>BlockBolt : Ipanalysis判断需要封停后将数据发送至此Bolt，此Bolt将需要封停的IP数据推送至Kafka中(topic:对应项目)。</p>
+<p>其中IpanalysisBolt 与 BlockBolt 设置定时器进行数据分析，将数据分析结果推送至Kafka(topic:sheild-log)</p>
+<p><strong>zk结构</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">Tree:</span><br><span class="line">    Sheild</span><br><span class="line">        ProjectName</span><br><span class="line">            config(永久节点)</span><br><span class="line">                &#123;</span><br><span class="line">                   &quot;uuid&quot;:&quot;xxxxx&quot;,</span><br><span class="line">                   &quot;pname&quot;:&quot;SQ&quot;,</span><br><span class="line">                   &quot;readpass&quot;:&quot;Md5&quot;,</span><br><span class="line">                    &quot;writepass&quot;:&quot;MD5&quot;</span><br><span class="line">                    &quot;startcnt&quot;: &quot;100&quot;,</span><br><span class="line">                    &quot;threshold_sec&quot;: &quot;20&quot;,</span><br><span class="line">                    &quot;rulelevel&quot;: &quot;3&quot;,</span><br><span class="line">                    &quot;blockflag&quot;: &quot;false&quot;</span><br><span class="line">                    &quot;block_second&quot;: &quot;864000&quot;,</span><br><span class="line">                &#125;</span><br><span class="line">            white_list</span><br><span class="line">                Ip</span><br><span class="line">                    &#123;</span><br><span class="line">                            &quot;127.0.0.1&quot;:&quot;memo&quot;,</span><br><span class="line">                            &quot;125.93.148.63:&quot;memo&quot;</span><br><span class="line">                       &#125;</span><br><span class="line">                Apiip</span><br><span class="line">                    &#123;</span><br><span class="line">                        &quot;http://111&quot;:&#123;</span><br><span class="line">                            &quot;memo&quot;:&quot;&quot;,</span><br><span class="line">                            &quot;tickt&quot;:&quot;&quot;,</span><br><span class="line">                            &quot;catchflag&quot;:&quot;&quot;,</span><br><span class="line">                            &quot;catchtime&quot;:&quot;&quot;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                Url</span><br><span class="line">                     [</span><br><span class="line">                            &quot;http://iplisturl&quot;:&quot;memo&quot;</span><br><span class="line">                      ]</span><br><span class="line">            special_rule</span><br><span class="line">                Spurl:</span><br><span class="line">                    &quot;reg.gyyx.cn/Login/Async&quot;: &#123;</span><br><span class="line">                                &quot;startcnt&quot;: &quot;100&quot;,</span><br><span class="line">                                &quot;rulelevel&quot;: &quot;3&quot;,</span><br><span class="line">                                &quot;blockflag&quot;: &quot;true&quot;,</span><br><span class="line">                                &quot;threshold_sec&quot;: &quot;100&quot;,</span><br><span class="line">                                &quot;block_second&quot;: &quot;864000&quot;</span><br><span class="line">                            &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>数据库模型</strong></p>
+<p><a href="/uploads/2017/11/shield-pdm.jpg"><img src="/uploads/2017/11/shield-pdm.jpg" alt title="shield2"></a></p>
+<h2 id="Shield-Logger"><a href="#Shield-Logger" class="headerlink" title="Shield Logger"></a>Shield Logger</h2><p>消费kafka数据（topic:sheild-log）进行数据的分析入库，并对外提供RESUTFUL API供外部数据调用</p>
+<h2 id="Shield-FE"><a href="#Shield-FE" class="headerlink" title="Shield FE"></a>Shield FE</h2><p>shield前端管理界面</p>
+<hr>
+<p>本版本为技术设计草稿，预计开发工期2017-11-06至2017-11-20，团队成员 1名PO，1名TO，3名DEV。期待产品上线！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/strom/" rel="tag"># strom</a>
+          
+            <a href="/tags/流式分析/" rel="tag"># 流式分析</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/kafka/" rel="tag"># kafka</a>
+          
+            <a href="/tags/flume/" rel="tag"># flume</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/24/2017/混合云(专线)网络方案/" rel="next" title="混合云(专线)网络方案">
+                <i class="fa fa-chevron-left"></i> 混合云(专线)网络方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/26/2017/gitc2017/" rel="prev" title="2017GITC-开源运维自动化平台架构实现与运营实践">
+                2017GITC-开源运维自动化平台架构实现与运营实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">1.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#公共服务"><span class="nav-number">2.</span> <span class="nav-text">公共服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SHEILD组件"><span class="nav-number">3.</span> <span class="nav-text">SHEILD组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件设计"><span class="nav-number">4.</span> <span class="nav-text">组件设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Shield-Guard"><span class="nav-number">4.1.</span> <span class="nav-text">Shield Guard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shield-Agent"><span class="nav-number">4.2.</span> <span class="nav-text">Shield Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shield-Analyzer"><span class="nav-number">4.3.</span> <span class="nav-text">Shield Analyzer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shield-Logger"><span class="nav-number">4.4.</span> <span class="nav-text">Shield Logger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shield-FE"><span class="nav-number">4.5.</span> <span class="nav-text">Shield FE</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

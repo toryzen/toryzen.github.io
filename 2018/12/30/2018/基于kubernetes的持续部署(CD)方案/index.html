@@ -1,0 +1,984 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="docker,k8s,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="方案概述本技术方案为基于kubernetes(下文简称K8S)为核心的持续部署(下文简称CD)方案，可以满足开发方的程序级日志查看分析，运维方的快速扩容与日常运维分析，并且可以保证用户的服务体验。并且整套放在可以在资源利用率上进一步提升，在不降低服务可靠性的前提下降低资源使用成本。 使用场景分析本方案适用于以Tomcat为容器的JavaWeb项目的持续部署过程，在K8S方案中，所有的Node节点均">
+<meta name="keywords" content="docker,k8s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于kubernetes的持续部署(CD)方案">
+<meta property="og:url" content="http://toryzen.cn/2018/12/30/2018/基于kubernetes的持续部署(CD)方案/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="方案概述本技术方案为基于kubernetes(下文简称K8S)为核心的持续部署(下文简称CD)方案，可以满足开发方的程序级日志查看分析，运维方的快速扩容与日常运维分析，并且可以保证用户的服务体验。并且整套放在可以在资源利用率上进一步提升，在不降低服务可靠性的前提下降低资源使用成本。 使用场景分析本方案适用于以Tomcat为容器的JavaWeb项目的持续部署过程，在K8S方案中，所有的Node节点均">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/k8s.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/k8s-dep.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/k8s-net.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/k8s-nodeport.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/cd.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/harbor-group.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/harbor-img.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/jks-group.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/jks-cd.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/jks-backup.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/gitlab-group.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/gitlab-b.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/kibana-cfg.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/kibana-show.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/ws.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/01/k8scd/ws2.png">
+<meta property="og:updated_time" content="2022-12-26T10:49:58.303Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于kubernetes的持续部署(CD)方案">
+<meta name="twitter:description" content="方案概述本技术方案为基于kubernetes(下文简称K8S)为核心的持续部署(下文简称CD)方案，可以满足开发方的程序级日志查看分析，运维方的快速扩容与日常运维分析，并且可以保证用户的服务体验。并且整套放在可以在资源利用率上进一步提升，在不降低服务可靠性的前提下降低资源使用成本。 使用场景分析本方案适用于以Tomcat为容器的JavaWeb项目的持续部署过程，在K8S方案中，所有的Node节点均">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2019/01/k8scd/k8s.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2018/12/30/2018/基于kubernetes的持续部署(CD)方案/">
+
+
+
+
+
+  <title>基于kubernetes的持续部署(CD)方案 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2018/12/30/2018/基于kubernetes的持续部署(CD)方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于kubernetes的持续部署(CD)方案</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-30T15:41:07+08:00">
+                2018-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="方案概述"><a href="#方案概述" class="headerlink" title="方案概述"></a>方案概述</h1><p>本技术方案为基于kubernetes(下文简称K8S)为核心的持续部署(下文简称CD)方案，可以满足开发方的程序级日志查看分析，运维方的快速扩容与日常运维分析，并且可以保证用户的服务体验。并且整套放在可以在资源利用率上进一步提升，在不降低服务可靠性的前提下降低资源使用成本。</p>
+<h1 id="使用场景分析"><a href="#使用场景分析" class="headerlink" title="使用场景分析"></a>使用场景分析</h1><p>本方案适用于以Tomcat为容器的JavaWeb项目的持续部署过程，在K8S方案中，所有的Node节点均采用统一配置，根据业务环境的需求进行节点数量的控制</p>
+<h1 id="技术架构与选型"><a href="#技术架构与选型" class="headerlink" title="技术架构与选型"></a>技术架构与选型</h1><p><a href="/uploads/2019/01/k8scd/k8s.png"><img src="/uploads/2019/01/k8scd/k8s.png" alt></a></p>
+<a id="more"></a>
+<ul>
+<li>Kubernetes：一个开源的，用于管理云平台中多个主机上的容器化的应用，Kubernetes的目标是让部署容器化的应用简单并且高效, Kubernetes提供了应用部署，规划，更新，维护的一种机制。</li>
+<li>Nginx：一款轻量级的Web 服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。</li>
+<li>Harbor：Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器，通过添加一些企业必需的功能特性，例如安全、标识和管理等，扩展了开源Docker Distribution。</li>
+<li>Jenkins：一个开源软件项目，是基于Java开发的一种持续集成工具，用于监控持续重复的工作，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。</li>
+<li>Filebeats：是一个日志文件托运工具，在你的服务器上安装客户端后，filebeat会监控日志目录或者指定的日志文件，追踪读取这些文件（追踪文件的变化，不停的读），并且转发这些信息到elasticsearch或者logstarsh中存放。</li>
+<li>Elasticsearch：是一个基于Lucene构建的开源、分布式、RESTful接口的全文搜索引擎。</li>
+<li>Kibana是一个开源的分析和可视化平台，设计用于和Elasticsearch一起工作来搜索，查看，并和存储在Elasticsearch索引中的数据进行交互</li>
+<li>Gitlab自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目(这里的Gitlab并不涉及到开发的CI方案，主要为运维的CD方案)</li>
+<li>Weave Scope  Docker 和 Kubernetes 可视化监控工具。Scope 提供了至上而下的集群基础设施和应用的完整视图，用户可以轻松对分布式的容器化应用进行实时监控和问题诊断。</li>
+</ul>
+<h1 id="K8S集群部署模式：Stacked-etcd-topology"><a href="#K8S集群部署模式：Stacked-etcd-topology" class="headerlink" title="K8S集群部署模式：Stacked etcd topology"></a>K8S集群部署模式：Stacked etcd topology</h1><p>K8s的安装使用kubeadm安装为高可用集群，并选用Stacked etcd topology 模式<br><a href="/uploads/2019/01/k8scd/k8s-dep.png"><img src="/uploads/2019/01/k8scd/k8s-dep.png" alt></a></p>
+<p>详情参考<a href="https://kubernetes.io/docs/setup/independent/high-availability/" target="_blank" rel="noopener">https://kubernetes.io/docs/setup/independent/high-availability/</a></p>
+<p><strong>K8S生态技术选型：网络层面选型Weave </strong><br>容器网络解决方案。weave 创建的虚拟网络可以将部署在多个主机上的容器连接起来。对容器来说，weave 就像一个巨大的以太网交换机，所有容器都被接入这个交换机，容器可以直接通信，无需 NAT 和端口映射。<br> <a href="/uploads/2019/01/k8scd/k8s-net.png"><img src="/uploads/2019/01/k8scd/k8s-net.png" alt></a></p>
+<p>原理详解：<a href="http://dockone.io/article/262" target="_blank" rel="noopener">http://dockone.io/article/262</a></p>
+<h1 id="K8S生态技术选型：对外服务选型Nodeport"><a href="#K8S生态技术选型：对外服务选型Nodeport" class="headerlink" title="K8S生态技术选型：对外服务选型Nodeport"></a>K8S生态技术选型：对外服务选型Nodeport</h1><p>K8s目前支持nodeport、loadbanlace、ingress三种对外提供服务的模式，其中loadbanlace需要云平台的支持，阿里云提供了解决方案，但腾讯云未找到，ingress技术为新出技术。整体评估采用nodeport方式更为灵活，每个服务一个唯一的对外IP地址，并且使用Nginx进行负载均衡（采用Nginx主要为日志分析）。<br> <a href="/uploads/2019/01/k8scd/k8s-nodeport.png"><img src="/uploads/2019/01/k8scd/k8s-nodeport.png" alt></a></p>
+<p> 介绍与使用方法：<a href="https://kubernetes.io/docs/concepts/services-networking/service/#nodeport" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/services-networking/service/#nodeport</a></p>
+<h1 id="持续部署过程"><a href="#持续部署过程" class="headerlink" title="持续部署过程"></a>持续部署过程</h1><p> <a href="/uploads/2019/01/k8scd/cd.png"><img src="/uploads/2019/01/k8scd/cd.png" alt></a></p>
+<ul>
+<li>Jenkins构建时，需要传入程序版本号，构建类型（发布还是删除），程序类型（测试还是正式）。</li>
+<li>CD的全过程由位于Jenkins上的脚本执行<ul>
+<li>开发部将对应版本的ROOT.war传入jenkins指定目录</li>
+<li>下拉配置（包含config，hosts，dockerfile，k8syaml等等）</li>
+<li>由dockerfile生成docker容器，并将root.war,hosts与配置文件内置入容器中</li>
+<li>将docker容器打包并推送入registry</li>
+<li>通过kubectl通过k8syaml更新/生成新的服务</li>
+</ul>
+</li>
+</ul>
+<h1 id="各组件业务配置"><a href="#各组件业务配置" class="headerlink" title="各组件业务配置"></a>各组件业务配置</h1><h2 id="K8S业务配置"><a href="#K8S业务配置" class="headerlink" title="K8S业务配置"></a>K8S业务配置</h2><h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><p>在业务上，K8S默认配置两套Namespace，分别为master存放正式环境，develop配置测试环境。</p>
+<h3 id="对外端口"><a href="#对外端口" class="headerlink" title="对外端口"></a>对外端口</h3><p>正式环境WEB端口以32001开始，测试环境以31001开始，且一一对应</p>
+<h3 id="Master数据目录"><a href="#Master数据目录" class="headerlink" title="Master数据目录"></a>Master数据目录</h3><pre>
+/data
+└── k8s-cd-config
+└── test.gyyx.cn
+    ├── develop
+    │   └── v1.2.0-92-3fdd00f.yaml
+    ├─develop.yaml -> /data/k8s-cd-config/test.gyyx.cn/develop/v1.2.0-92-3fdd00f.yaml
+    ├── master
+    │   └── v1.2.0-91-746284e.yaml
+    └──master.yaml->/data/k8s-cd-config/test.gyyx.cn/master/v1.2.0-91-746284e.yaml
+</pre>
+
+<p>K8s-Master下的data目录下为k8s-cd-config， k8s-cd-config 目录存放各业务的yaml配置，二级目录为域名，三级目录划分master(正式),develop(测试)，目录下以 版本号-构建ID-GITID.yaml 命名文件，时间最后一个即为当前线上的使用配置文件,为了运维方便，在二级目录同级内，生成一个软链连接到最新的正式与测试配置文件。注意，k8s-cd-config仅在其中一台Master中存在</p>
+<h3 id="Node数据目录"><a href="#Node数据目录" class="headerlink" title="Node数据目录"></a>Node数据目录</h3><pre>
+/data
+├── filebeat
+├── dockerlibs
+└── nodelogs
+    ├── develop
+    │   ├── accesslogs
+    │   │   └── test.gyyx.cn
+    │   │       └── test-gyyx-cn-76d9d8d5b5-hdnql
+    │   │           └── localhost_access_log.2018-12-24.txt
+    │   ├── devlogs
+    │   │   └── test.gyyx.cn
+    │   │       └── test-gyyx-cn-76d9d8d5b5-hdnql
+    │   │           └── interface.datareport.wyx.cn
+    │   │               ├── error.log
+    │   │               ├── info.log
+    │   │               └── trace.log
+    │   └── tomcatlogs
+    │       └── test.gyyx.cn
+    │           └── test-gyyx-cn-76d9d8d5b5-hdnql
+    │               ├── catalina.2018-12-24.log
+    │               ├── host-manager.2018-12-24.log
+    │               ├── localhost.2018-12-24.log
+    │               └── manager.2018-12-24.log
+    └── master
+        ├── accesslogs
+        │   └── test.gyyx.cn
+        │       └── test-gyyx-cn-895cc5994-sx7gk
+        │           └── localhost_access_log.2018-12-24.txt
+        ├── devlogs
+        │   └── test.gyyx.cn
+        │       └── test-gyyx-cn-895cc5994-sx7gk
+        └── tomcatlogs
+            └── test.gyyx.cn
+                └── test-gyyx-cn-895cc5994-sx7gk
+                    ├── catalina.2018-12-24.log
+                    ├── host-manager.2018-12-24.log
+                    ├── localhost.2018-12-24.log
+                    └── manager.2018-12-24.log
+</pre>
+
+<p>节点下的/data一级目录下分filebeat、dockerlibs、nodelogs，其中dockerlibs存放docker相关数据，nodelogs目录通过volume的方式挂载入k8s的pod， nodelogs下分develop与master目录，区分正式环境与测试环境，每个master与develop下分为accesslogs、devlogs、tomcatlogs分别存放访问日志，开发部日志，tomcat日志，日志目录下为项目（域名），域名下为POD名称目录。</p>
+<p><strong>注意事项： </strong><br>节点加入集群后，一定要下载手工下载kubernetes-dashboard-amd64镜像，防止dashboard所在节点挂掉以后dashboard无法在其他节点启动</p>
+<h2 id="Harbor业务配置"><a href="#Harbor业务配置" class="headerlink" title="Harbor业务配置"></a>Harbor业务配置</h2><h3 id="业务分组"><a href="#业务分组" class="headerlink" title="业务分组"></a>业务分组</h3><p>Harbor重定义其registry的存储路径直接使用docker-compose安装。template 存放基础进项，各域名分组存放业务镜像<br> <a href="/uploads/2019/01/k8scd/harbor-group.png"><img src="/uploads/2019/01/k8scd/harbor-group.png" alt></a></p>
+<h3 id="镜像命名"><a href="#镜像命名" class="headerlink" title="镜像命名"></a>镜像命名</h3><p>分组下镜像以站点域名:版本号-类型-CDGITLAB为名称，并基于版本号确定不同的站点版本<br> <a href="/uploads/2019/01/k8scd/harbor-img.png"><img src="/uploads/2019/01/k8scd/harbor-img.png" alt></a></p>
+<h3 id="数据目录"><a href="#数据目录" class="headerlink" title="数据目录"></a>数据目录</h3><p>Harbor数据目录统一存放在/data下</p>
+<h3 id="备份策略"><a href="#备份策略" class="headerlink" title="备份策略"></a>备份策略</h3><p>Harbor默认不设置备份，对于业务镜像无需进行备份，每次进行构建即可，对于模板类镜像，在Jenkins机器上均可以找到，若Harbor出现问题，则直接重建，并将Jenkins上的模板镜像进行重新push。<br><strong>注意：为了业务的稳定性，Harbor由独立的服务运行（基于Docker），并不运行在K8S内。 </strong></p>
+<h2 id="Jenkins业务配置"><a href="#Jenkins业务配置" class="headerlink" title="Jenkins业务配置"></a>Jenkins业务配置</h2><h3 id="数据目录-1"><a href="#数据目录-1" class="headerlink" title="数据目录"></a>数据目录</h3><pre>
+.
+├── dockerlibs
+├── thinbackups
+└── gitlab-files
+│  └── gyyx.cn
+│      └── test.gyyx.cn
+└── jks-cd-config
+    └── test.gyyx.cn
+        └── v1.2.0
+            ├── develop
+            │   └── 101_138a37a
+            │       ├── …
+            │       └── v1.2.0-101-138a37a.yaml
+            ├── master
+            │   └── 102_4f228a7
+            │       ├── …
+            │       └── v1.2.0-102-4f228a7.yaml
+            └── ROOT.war
+</pre>
+
+<p>Jenkins下的data目录分为dockerlibs、thinbackups、gitlab-files 、jks-cd-config<br>Dockerlibs存放docker相关文件，thinbackups存放每日的Jenkins备份，gitlab-files存放构建Gitlab的文件（运维可以在此操作pull,push），jks-cd-config为jks构建目录</p>
+<p>Jenkins机使用/data/jks-cd-config目录存放构建内容，二级目录为域名，三级目录为版本号（以开发部版本号为准），三级目录下存放ROOT.war，四级目录为构建ID_GITID，目录下存放构建的原始数据。</p>
+<p>节点每天进行images清理工作</p>
+<h3 id="业务分组-1"><a href="#业务分组-1" class="headerlink" title="业务分组"></a>业务分组</h3><p>Jenkins的分组分为template与各domain，template存放模板，domain以域名的形式存放正式项目：<br><a href="/uploads/2019/01/k8scd/jks-group.png"><img src="/uploads/2019/01/k8scd/jks-group.png" alt></a></p>
+<p>新项目由运维手工创建，后续的秩序构建过程由开发部调用API完成。</p>
+<h3 id="构建参数"><a href="#构建参数" class="headerlink" title="构建参数"></a>构建参数</h3><p>Jenkins构建时，需要传递三参数，1：程序版本号，2：类型：apply与delete，3：正式环境还是测试环境，正式环境为master，测试环境为develop，对应k8s的namespace<br><a href="/uploads/2019/01/k8scd/jks-cd.png"><img src="/uploads/2019/01/k8scd/jks-cd.png" alt></a></p>
+<p>此部分功能后期将通过开发部的构建凭条调用JenkinsAPI实现。</p>
+<h3 id="JenkinsAPI"><a href="#JenkinsAPI" class="headerlink" title="JenkinsAPI"></a>JenkinsAPI</h3><p>curl -X POST <a href="http://jenkinsapi.com/job/域名/build" target="_blank" rel="noopener">http://jenkinsapi.com/job/域名/build</a> \<br>  –user admin:11b80a61d260aa41eb4a43ef0115bcbb26 \<br>  –data-urlencode json=’{“parameter”: [{“name”:”VERSION”, “value”:”v1.2.0”}, {“name”:”TYPE”, “value”:”apply”}, {“name”:”BRANCH”, “value”:”develop”}]}’</p>
+<p>APIDoc：<a href="https://wiki.jenkins.io/display/JENKINS/Remote+access+API" target="_blank" rel="noopener">https://wiki.jenkins.io/display/JENKINS/Remote+access+API</a><br>Token：<a href="https://jingyan.baidu.com/article/0eb457e5dbad8003f0a9056c.html" target="_blank" rel="noopener">https://jingyan.baidu.com/article/0eb457e5dbad8003f0a9056c.html</a></p>
+<h3 id="备份策略-1"><a href="#备份策略-1" class="headerlink" title="备份策略"></a>备份策略</h3><p>Jenins安装ThinBackup插件，配置每小时进行一次全局备份，且最多保留10份，备份后数据传至异地<br><a href="/uploads/2019/01/k8scd/jks-backup.png"><img src="/uploads/2019/01/k8scd/jks-backup.png" alt></a></p>
+<p>注意：为了业务的稳定性，Jenkins由独立的服务运行，并不运行在K8S内。</p>
+<h2 id="GitLab-业务配置"><a href="#GitLab-业务配置" class="headerlink" title="GitLab 业务配置"></a>GitLab 业务配置</h2><h3 id="业务分组-2"><a href="#业务分组-2" class="headerlink" title="业务分组"></a>业务分组</h3><p>CD Gitlab项目下分两个组template与各domain ,template存放模板文件。例如：<br><a href="/uploads/2019/01/k8scd/gitlab-group.png"><img src="/uploads/2019/01/k8scd/gitlab-group.png" alt></a></p>
+<h3 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h3><p>default下以域名划分项目，每个项目划分master与develop两个分支，分别存放正式环境与测试环境CD文件<br><a href="/uploads/2019/01/k8scd/gitlab-b.png"><img src="/uploads/2019/01/k8scd/gitlab-b.png" alt></a></p>
+<h3 id="CD文件树"><a href="#CD文件树" class="headerlink" title="CD文件树"></a>CD文件树</h3><pre>
+├── catalina.sh              #tomcat配置文件
+├── config                  #程序配置文件，此文件夹会替换掉容器内的/data/conf
+│   └── hello.conf
+├── deployment.yaml         #k8s deploymen配置
+├── dockerfile               #docker镜像生成文件
+├── hosts                   #docker镜像的hosts，此文件将合并到deployment.yaml
+├── service.yaml             #k8s service配置
+└── tomcat                 #tomcat配置文件
+    ├── Catalina
+    │   └── localhost
+    ├── catalina.policy
+    ├── catalina.properties
+    ├── context.xml
+    ├── logging.properties
+    ├── server.xml
+    ├── tomcat-users.xml
+    └── web.xml
+</pre>
+
+<h3 id="备份策略-2"><a href="#备份策略-2" class="headerlink" title="备份策略"></a>备份策略</h3><p>Gitlab使用gitlab-rake gitlab:backup:create进行每日定期备份，并传送至异地</p>
+<h2 id="EFK与日志管理"><a href="#EFK与日志管理" class="headerlink" title="EFK与日志管理"></a>EFK与日志管理</h2><h3 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h3><p>ES数据通过索引仅保留近10天的数据，每日通过脚本方式进行数据删除。ES的数据保存在/data/elasticsearch目录下</p>
+<h3 id="Filebeat"><a href="#Filebeat" class="headerlink" title="Filebeat"></a>Filebeat</h3><p>在每个Node节点启动一个Filebeat进程，用于日志的采集工作，filebeat分别监控</p>
+<ul>
+<li>/data/nodelogs/<em>/accesslogs/</em>/<em>/</em></li>
+<li>/data/nodelogs/<em>/devlogs/</em>/<em>/</em></li>
+<li>/data/nodelogs/<em>/tomcatlogs/</em>/<em>/</em></li>
+</ul>
+<p>其中，tomcatlogs日志需要进行特殊处理，进行多行合并，数据写入ES时，使用processors. Dissect进行目录名称截取，并使用域名作为ES的索引使用</p>
+<pre>
+processors:
+- dissect:
+    tokenizer: "%{?key1}/%{?key2}/%{?key3}/%{wtype}/%{ltype}/%{domain}/%{?key7}/%{?key8}"
+    field: "source"
+target_prefix: "gy"
+</pre>
+
+<p>截取gy. wtype ( master或develop) , ltype(accesslogs 、tomcatlogs、devlogs),domain(xxx.gyyx.cn)</p>
+<h3 id="Kibana"><a href="#Kibana" class="headerlink" title="Kibana"></a>Kibana</h3><p>Kibana目前我们仅使用其discover节点，用于日志数据的查询，在配置方面<br>Kibana配置使用”域名-*”方式进行配置，每次新增域名，需要在此进行手工配置。<br><a href="/uploads/2019/01/k8scd/kibana-cfg.png"><img src="/uploads/2019/01/k8scd/kibana-cfg.png" alt></a></p>
+<p>Kibana使用discover查看时，默认展示一个域名下所有的日志，可以通过gy.wtype筛选选择查看测试环境还是正式环境，或者通过gy.ltype哪种日志类型。<br><a href="/uploads/2019/01/k8scd/kibana-show.png"><img src="/uploads/2019/01/k8scd/kibana-show.png" alt></a></p>
+<h2 id="容器资源监控"><a href="#容器资源监控" class="headerlink" title="容器资源监控"></a>容器资源监控</h2><p>容器资源使用WeaveScope进行资源消耗监控<br><a href="/uploads/2019/01/k8scd/ws.png"><img src="/uploads/2019/01/k8scd/ws.png" alt></a></p>
+<p><a href="/uploads/2019/01/k8scd/ws2.png"><img src="/uploads/2019/01/k8scd/ws2.png" alt></a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/07/2018/JumperServer的堡垒机应用方案/" rel="next" title="JumperServer的堡垒机应用方案">
+                <i class="fa fa-chevron-left"></i> JumperServer的堡垒机应用方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/15/2019/2018大总结,2019大畅想/" rel="prev" title="2018大总结,2019大畅想...">
+                2018大总结,2019大畅想... <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#方案概述"><span class="nav-number">1.</span> <span class="nav-text">方案概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用场景分析"><span class="nav-number">2.</span> <span class="nav-text">使用场景分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技术架构与选型"><span class="nav-number">3.</span> <span class="nav-text">技术架构与选型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K8S集群部署模式：Stacked-etcd-topology"><span class="nav-number">4.</span> <span class="nav-text">K8S集群部署模式：Stacked etcd topology</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K8S生态技术选型：对外服务选型Nodeport"><span class="nav-number">5.</span> <span class="nav-text">K8S生态技术选型：对外服务选型Nodeport</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#持续部署过程"><span class="nav-number">6.</span> <span class="nav-text">持续部署过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各组件业务配置"><span class="nav-number">7.</span> <span class="nav-text">各组件业务配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#K8S业务配置"><span class="nav-number">7.1.</span> <span class="nav-text">K8S业务配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#命名空间"><span class="nav-number">7.1.1.</span> <span class="nav-text">命名空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对外端口"><span class="nav-number">7.1.2.</span> <span class="nav-text">对外端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Master数据目录"><span class="nav-number">7.1.3.</span> <span class="nav-text">Master数据目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node数据目录"><span class="nav-number">7.1.4.</span> <span class="nav-text">Node数据目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Harbor业务配置"><span class="nav-number">7.2.</span> <span class="nav-text">Harbor业务配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#业务分组"><span class="nav-number">7.2.1.</span> <span class="nav-text">业务分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像命名"><span class="nav-number">7.2.2.</span> <span class="nav-text">镜像命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据目录"><span class="nav-number">7.2.3.</span> <span class="nav-text">数据目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备份策略"><span class="nav-number">7.2.4.</span> <span class="nav-text">备份策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jenkins业务配置"><span class="nav-number">7.3.</span> <span class="nav-text">Jenkins业务配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据目录-1"><span class="nav-number">7.3.1.</span> <span class="nav-text">数据目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#业务分组-1"><span class="nav-number">7.3.2.</span> <span class="nav-text">业务分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建参数"><span class="nav-number">7.3.3.</span> <span class="nav-text">构建参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JenkinsAPI"><span class="nav-number">7.3.4.</span> <span class="nav-text">JenkinsAPI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备份策略-1"><span class="nav-number">7.3.5.</span> <span class="nav-text">备份策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitLab-业务配置"><span class="nav-number">7.4.</span> <span class="nav-text">GitLab 业务配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#业务分组-2"><span class="nav-number">7.4.1.</span> <span class="nav-text">业务分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git分支"><span class="nav-number">7.4.2.</span> <span class="nav-text">Git分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CD文件树"><span class="nav-number">7.4.3.</span> <span class="nav-text">CD文件树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备份策略-2"><span class="nav-number">7.4.4.</span> <span class="nav-text">备份策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EFK与日志管理"><span class="nav-number">7.5.</span> <span class="nav-text">EFK与日志管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Elasticsearch"><span class="nav-number">7.5.1.</span> <span class="nav-text">Elasticsearch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filebeat"><span class="nav-number">7.5.2.</span> <span class="nav-text">Filebeat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kibana"><span class="nav-number">7.5.3.</span> <span class="nav-text">Kibana</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器资源监控"><span class="nav-number">7.6.</span> <span class="nav-text">容器资源监控</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
