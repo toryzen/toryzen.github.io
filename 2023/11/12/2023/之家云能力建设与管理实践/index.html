@@ -1,0 +1,864 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="运维,云平台,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="发一个近期做的分享，年初做的分享计划拖到了现在才落实，文字是用现场音频ASR转的，全部转完2w+字，优化精简了很大一部分（尤其是删掉了200多个“对”字），这个分享也能让大家更好的了解到之家云的发展、演进路线，以及近几年重点投入、技术突破、价值体现，文末附上了脱敏PPT，欢迎交流。 【分享全文】大家好，今天有幸跟大家分享一下关于”之家云能力建设和管理实践”，这个主题原计划是去平安集团做分享交流的，">
+<meta name="keywords" content="运维,云平台">
+<meta property="og:type" content="article">
+<meta property="og:title" content="之家云能力建设与管理实践">
+<meta property="og:url" content="http://toryzen.cn/2023/11/12/2023/之家云能力建设与管理实践/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="发一个近期做的分享，年初做的分享计划拖到了现在才落实，文字是用现场音频ASR转的，全部转完2w+字，优化精简了很大一部分（尤其是删掉了200多个“对”字），这个分享也能让大家更好的了解到之家云的发展、演进路线，以及近几年重点投入、技术突破、价值体现，文末附上了脱敏PPT，欢迎交流。 【分享全文】大家好，今天有幸跟大家分享一下关于”之家云能力建设和管理实践”，这个主题原计划是去平安集团做分享交流的，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2024-02-18T04:14:20.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="之家云能力建设与管理实践">
+<meta name="twitter:description" content="发一个近期做的分享，年初做的分享计划拖到了现在才落实，文字是用现场音频ASR转的，全部转完2w+字，优化精简了很大一部分（尤其是删掉了200多个“对”字），这个分享也能让大家更好的了解到之家云的发展、演进路线，以及近几年重点投入、技术突破、价值体现，文末附上了脱敏PPT，欢迎交流。 【分享全文】大家好，今天有幸跟大家分享一下关于”之家云能力建设和管理实践”，这个主题原计划是去平安集团做分享交流的，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2023/11/12/2023/之家云能力建设与管理实践/">
+
+
+
+
+
+  <title>之家云能力建设与管理实践 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2023/11/12/2023/之家云能力建设与管理实践/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">之家云能力建设与管理实践</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-11-12T09:00:01+08:00">
+                2023-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/团队管理/" itemprop="url" rel="index">
+                    <span itemprop="name">团队管理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>发一个近期做的分享，年初做的分享计划拖到了现在才落实，文字是用现场音频ASR转的，全部转完2w+字，优化精简了很大一部分（尤其是删掉了200多个“对”字），这个分享也能让大家更好的了解到之家云的发展、演进路线，以及近几年重点投入、技术突破、价值体现，文末附上了脱敏PPT，欢迎交流。</p>
+<h3 id="【分享全文】"><a href="#【分享全文】" class="headerlink" title="【分享全文】"></a>【分享全文】</h3><p>大家好，今天有幸跟大家分享一下关于”之家云能力建设和管理实践”，这个主题原计划是去平安集团做分享交流的，但由于后期出现了一些情况，未能到场。也正好借此机会，在之家内部做一次分享，交流一下相关的经验和心得。</p>
+<p>这次内容主要有以下四个方面，一起源，之家云开端，传统模式 VS 云计算模式，二历程，之家云的发展历程与现状，从1.0到4.0的发展历程，三演进，降本增效，技术与管理双入手、大幅IT资源提效，四未来，全面容器化、链路质量提升、Service Mesh。</p>
+<a id="more"></a>
+<p>下面开始进入正题，首先，让我们从’之家云’的起源开始谈起。在座的各位很多人可能经历了整个之家云的建设过程，但是，起初我们为何要建设之家云，我不确定在座的所有人是否都曾经思考过这个问题。在过去的数年中，IT基础设施经历了多轮演进，而之家云作为一个有着十几年历史的企业，也在随着互联网或IT基础设施的发展中不断迭代。</p>
+<p>在18年前，之家云的整体技术研发、运维模式更多的是传统建设模式为主。每个中心、事业部技术体系各自为政，统一的运维团队仅提供一些基础能力。这时候，运维团队的主要工作是负责Iaas的运维，装机、调网，然后交付给业务线，并负责持续维护相关网络，处理服务器宕机等问题。至于服务器上究竟在运行什么，运维侧并不关心。并且，一旦服务器作交付给了一个部门，那么它就不会再被交付给另一个部门。在这样的情况下，每个资源的使用和利用率情况都相对独立。这种传统的烟囱式结构已大大降低了新业务的启动速度和资源复用率。IT架构部分，不同产品间的定位和功能雷同</p>
+<p>基于这样的背景，在18-19年我们经历了一个显著的分水岭。阿里的高层就曾经表示，这是一个云计算时代的元年，之家也在同一时间也洞察到了这个趋势，并开始构建我们统一的云计算建设模式。</p>
+<p>这种云计算建设模式，是对我们原先的烟囱式模式的重构，将其变为多层次结构。基于底层云原生技术，我们设立了统一的容器资源池，云端数据库平台，以及一体化的中间件平台等基础服务，让各个业务单元能专注于业务研发，并通过引入了公司级研发效能度量指标，通过系统性的改进，提升了管理、技术以及协作等多个方面的能力。</p>
+<p>这就是我们整体演进的背景。接下来，我将详述我们的发展历程，并通过发展历程展现我们的整体情况和重点。汽车之家云平台现阶段已经经历了从1.0到4.0的演变，初期的1.0阶段主要是平台的搭建，该阶段开始于2018年并持续到2019年。</p>
+<p>在1.0时，首先是云战略的启动。汽车之家的云计算计划被提升为部门级PMO项目，我们将其命名为“汽车之家云平台”。这就是你现在看到的之家云产品的最初形态。接下来，我们在完成了产品规划的同时，构建了一个专门负责云平台建设的团队，即云平台部。在明确了产品方向和团队构成后，我们的下一阶段的任务就是进行技术改造。</p>
+<p>我们首先着手的是应用中心的改造，主要包括底层容器化平台相关的更新，以及持续集成和持续部署(CI/CD)的改造。我们在公司内部首先整合了底层容器技术，并建设了统一的发布平台，创建了以应用为中心的发布系统，我们内部称之为“A-One”，全力推进云战略的实施。</p>
+<p>这作为一个开端，然后进入2.0阶段，2.0阶段更多的是在做平台的融合，关键词是”统一”和”规范”。如我之前所述，在历史的发展过程中，运维侧将基础资源交付给业务，让业务自己进行应用发布、中间件安装和相关的容量规划，这导致了他们的技术标准并不统一。例如，经销商事业部和之前的用户产品部，他们对于服务组件的应用并不是很统一。因此，我们需要采取重要的一步，就是建立现在的统一规范。因此，我们实施了一个项目，即统一全公司的技术栈。我们对公司各个技术团队所使用的中间件进行了一次全面的梳理，了解他们所使用情况。在梳理完毕后，我们为公司制定了一套统一的规范，包括应使用哪些规范类型的中间件、应使用什么版本，以及如何进行容量规划等。基于我们的调研结果，我们确定了技术的规范和方向。同时，我们也推出了一系列的如研发类的规范，中间件使用类型的规范等。</p>
+<p>在此基础上，我们对所有由业务线自行安装和部署的中间件相关服务进行了统一管理。这过程中，许多中间件都进行了迁移，例如我们新上的缓存服务，你需要迁移到这个缓存服务上来。有的是做版本升级，比如一些ES服务，因为它们本身的机器就比较多，我们找一个晚上可以割接的窗口，然后把它从一个低版本升到我们的规范版本。这就是我们在2019年和2020年主要的工作，同时减少各个业务团队的黑屏化操作，并推广白屏化操作。黑屏化操作，就是使用控制台窗口，如登录Linux服务器等。而白屏化操作则是我们在云平台上完成产品化的设计，实现相关操作。无论是创建、修改、删除，或是监控、日志查询等，都可以在云平台上进行。</p>
+<p>3.0阶段是平台的进化阶段，这个阶段除了提供基础资源外，我们更多的是提供工具化的产品，或者说统一工具化的产品。比如统一网关，以及统一的微服务能力等。在这个阶段，我们希望进一步收拢整体技术栈。基于我们现有的云平台，各个业务系统都可以统一使用云平台进行相关的业务构建，而无需业务自行建立更多的服务。同时，在这个阶段，我们的云也开始向移动化发展。我们与汽车人团队合作，将汽车之家云移植到汽车人上，用户可以在远程进行日志查看和一些简单的操作。在3.0阶段，我们的云平台还进行了ToB业务销售。我们不仅赋能了内部企业部门，也对外进行营收，像平安健康险直播、豹尔资讯等，他们都依托于我们建立的云平台进行相关的业务构建。</p>
+<p>进入4.0阶段，即去年至今，我们更多的是聚焦于内部，并且与整个互联网行业的大方向一致，即降本增效。这也是我们从2022年至今做的最多的一部分，我们定义的是突破和变革。有技术突破才能带来真正的革新，在进行技术突破之前，我们确定了方向，制定了方案，进行了相关的尝试，并确定了方案的落地可能性。例如，我们进行了混部技术和大数据冷数据EC的尝试，这两个非常核心的内容为我们带来了大幅度的成本降低。同时，我们在规范性和管理上同步推进，建立了我们的FinOPS体系，从而实现了整体的降本，并有了较大幅度的提升。</p>
+<p>这就是我们整个云平台的历史过程。接下来看一下云平台的能力全景。云平台本身是一个产品，这个产品并不仅仅由云平台部门自行构建和建设，它是与我们整个汽车之家的技术团队一起构建的。所以在这里，像底层资源以及部分技术的PaaS层产品能力是由云平台部实施的，但也有很大一部分的PaaS层能力，是由其他技术部门和我们共同建设的。在底层的Iaas层，我们支持我们自有的私有云，覆盖两个大的机房。同时，我们也支持公有云，像在818期间，我们支持了众多公有云服务接入，如金山、阿里以及今年的华为。再往上是我们的PaaS层的管理，包括容器云、护航以及资产云，以及我们的一些技术运营平台，这些主要面向运维视角。再往上一层就面向技术视角，由我们的云开发服务支持，主要包括CI/CD相关内容以及日志监控，由研发人员主要负责构建和上线。云基础服务提供了一些基础能力，比如RDS、数据库、缓存、存储等，都可以在这个平台上进行申请。剩余的如大数据服务、人工智能或安全等，则由各个垂直的技术部门提供的能力，然后以云平台作为一个出口，统一提供给我们整个汽车之家的各个部门使用。</p>
+<p>接下来，我来详细阐述我们的几个核心系统的发展历程。</p>
+<p>首先是容器平台，因为我一直在强调，整体的容器化，特别是现在的K8S，是推进我们整个云发展的最重要的基石。我个人认为，如果没有容器化的发展，我们整体的云计算模式可能还会进一步延后。单机或者说虚拟化程度的云计算，无法在大范围内构建统一化的资源池能力。因此，容器化技术是我们基础设施的重要组成部分。在最初的发展阶段，我们看到了这个发展趋势，因此在各个技术团队中建立了许多小型的容器集群，但由于其规模较小，问题频发。因此，云平台的一个核心任务就是建立一个统一的容器平台。</p>
+<p>在建立统一容器平台的过程中，由于K8S技术也在不断发展过程中，我们就像整个行业中的其他公司一样，在摸索过程中前行。比如，应该建设多大规模的容器？单个容器集群的稳定性到底有多高？这些都是整个行业正在探索的问题。因此，在早期，由于我们担心整个容器集群可能出现重大问题，我们在每个机房都建立了一个双活集群，并在逻辑上通过发布系统将其捆绑成一个双活集群。这样，出现单个集群出现故障时，我们可以应对。这种决策帮助我们避免了多起重大故障。在初期，我们只有100多台机器规模，随着稳定性的不断提升，将其扩展到大约500台。然而，随着扩展，我们整体的稳定性建设压力也开始剧增。</p>
+<p>关于集群组件的优化，以及我们对标准化入口的规定，这些都是我们集中投入的重点方向。然而，在大规模集群上，当我们熟练掌握后，我们不仅在扩展相关的集群规模，因为稳定性是基础保障，在不断的工作过程中，我们还需要提供更多的能力，以支持我们的业务同事，让他们能更快地发展我们的业务。</p>
+<p>因此，在下一阶段，也就是当我们的整体容器规模达到1000台左右的时候，我们增加了更多的功能，比如固定IP，有状态存储，原地升级，一键上下负载等，这些功能都已经向用户开放。这使得用户可以快速使用这些功能构建自己的上层应用。</p>
+<p>随后，我们开始加强我们的能力并完善生态系统，此时我们的集群规模已经超过1900台。这个规模大约是在2021年左右的时间。在这个时候，我们增强了一些更丰富的能力，比如我们开始支持GPU，并将其接入到我们的K8S集群管理中。以及我们接入了GlusterFS，这其实也是一种有状态的存储。此外，我们也升级了VPA，进行垂直扩缩容，和HPA进行水平扩缩容。同时，我们也进行了大量的数据库和中间件的容器化工作。</p>
+<p>到了2022年，我们的整体方向是在降低成本和提高效益上，所以我们做了更多的创新，包括我们的混部创新。混部创新主要有两种，一种是在离线混部，在夜间将在线的资源借给离线进行计算。这部分的原因是，每天晚上的离线计算压力其实是相对较大的，同时每天晚上正是我们在线流量的低谷，在这方面的尝试中遇到的一个比较困难的问题就是，如何解决大数据任务一旦启动，基本上就会将CPU资源占满，使用尽可能多的资源，这种情况下我们如何在夜间减少对在线资源的影响，这其中，不仅包含技术问题，也涉及管理问题。从技术角度，我们进行了很多隔离工作，如cgroup相关隔离以及水位线的管理。从管理角度，我们对在线服务进行分级管控。我们不会让核心应用在夜间与大数据任务混跑。</p>
+<p>另外，还有离在线混部。虽然离在线混部的技术相对较简单，但这种技术确实需要特定的场景去使用。因为我们确实有这样的场景，例如，我们的ToB的业务，比如经销商的语音转文字服务。4S店打电话的时候可能会进行语音转文字的服务，但4S店晚上不会营业，所以这个业务只在白天有需求。而白天的时候基本上也是离线业务的一个低谷。再比如，我们有818的活动，这次的活动也是在晚8点进行的，而且也是在白天的一个离线低峰期进行的。我们的流量无所谓高峰期，我们的高峰期相对于淡季和旺季并没有太大的变化，所以我们可以选择在这个低峰期进行一些活动。在这种情况下，我们将一部分离线的资源借给在线服务使用。我们的离在线和在离线使用了一套统一的技术，虽然他们的应用场景不一样，但为了整体管理，我们还是采用了一整套统一的技术。所以在整个逻辑设计上，我们的架构设计做了很多工作。</p>
+<p>图左侧反映的就是我们现在的整个容器化能力的全景。我们有支持a-one相关的服务，机器学习平台相关的训练任务，大数据的Blink、Hbase相关的服务，以及中间件相关的服务，都是在我们现在的容器平台上进行支持的。在底层，我们的架构分为一层，有一层中间的统一API，也就是阿丽娜服务，这个服务主要就是刚才我提到的我们为了稳定性做了一些架构设计，例如单机房，两个集群，我们要做一层逻辑上的封装。再往下一层就是K8S相关内容，包括固定IP的能力、operator、VPA、HPA GPUShare等都包含在内。另外还有统一的镜像服务，我们是基于Harbor进行的镜像仓库的建设，并统一接入我们的auto-monitor和auto-log集群管理。我们现在的容器规模接近3000台，管理这样的规模，我们不可能全都手动去查看，无论是监控，还是自动化部署，都需要基于平台化的管理才能实现。底层上，我们接触的比较多，包括我们自建的IDC，自建IDC上部署的我们自己的服务，以及我们直接接入的公共云的K8S服务。</p>
+<p>接下来，我介绍一下中间件平台化。这个项目是从2019年中开始持续到2020年中。因为我们的业务是一个长期在线的业务，没有割接窗口，所以整个平台化最难的部分就是如何在不影响业务的情况下进行整个平台化的改造。而且之前各类的中间件都有各自的特性，很多都是混部的，一台机器上可能部署了多种中间件，那么如何将这些中间件隔离出来，这部分需要制定一个详细的计划，同时研发可能也需要花费大量的时间进行相关的改造。同时，我们运维和研发之间的配合也需要紧密无间。所以，一旦某一环节出现问题，整个场景可能就会受到影响。</p>
+<p>在平台化之前，每个服务都是由各个业务自己去申请主机，然后独立进行部署的。开发人员自行部署，同时也没有统一化的利用率标准，因为每个人都是自己部署，自己管理，机器权限也都在各个技术人员手中，可能会觉得这台机器实际运行并未达到满负荷，于是便再部署一个服务。这样的情况下，管理效率并不高。接下来，开发人员独立进行维护，也是一种成本开销。因为中间件服务其实是非常多的，如果想要对一个中间件有深入的理解和掌握，需要投入大量的精力。如果每个团队都需要有专人去研究中间件，变成一个专家，这确实是很耗费精力的。但实际上，各个业务线的技术更应该聚焦在我们的业务价值和产品能力的建设上。</p>
+<p>因此，平台化解决了我们当前的问题。通过平台化，我们将所有资源交由云平台统一管理，业务只需要关注自己需要使用什么，但需要在一定的标准下进行使用。我们进行资源的统一调配，这样的话，原先散落在各个主机上的资源，例如缓存实例，或者是ES实例，我可以将它们统一建成一个大的实例。比如说，我们现在的缓存，就有500多台物理机。其余的部分，大家可以通过平台进行申请，我们可以在这个大的资源池中进行调度。这样一来，我们整体的使用效率也会相对较高，因为我们会预留一定的缓冲，以供支撑增长，而这种增长是可以预测的。并且，一旦我们的缓冲区不够用时，我们就会引入更多的缓冲区。并且，我们有统一的利用率标准，这是一个全公司的统一标准，无论是经销商事业部还是主机厂事业部，甚至包括C端，都是遵循同样的标准，这使我们能够进行一些比较。最后，我们的整个运维管理将由运维团队统一管理。这样，我们只需要几个人就能维护整个系统，并达到专业水平，而不需要每个人都变成全能手。</p>
+<p>整个过程基本上是业务摸底，然后进行运维的接管。然后制定相关规范，进行迁移和升级，最后开始进行资源治理。此外，技术创新也是我们工作中的一部分，尤其在平台化过程中，最大的创新就是我们的容器化技术。我们进行中间件的容器化，因为中间件容器化与应用容器化之间的差异其实很大，因为中间件通常是有状态的，而现在的应用基本上都是无状态的。应用的无状态化实际上只是把状态下移到了中间件。因此，在这过程中，我们做了很多工作，尤其是我们的编排如何去做，以及存储如何去进行。</p>
+<p>我们可以以Redis为例，因为我对Redis有非常深刻的记忆。当我开始进行测试时，如何对Redis的主从实例进行编排，如何与K8S进行集成，因为K8S本身有启动机制。因此，当我创建了一个Redis集群并发现从库突然中断了与主库的连接，主库因OOM或其他原因突然宕机。然而K8S立即重启了这个主库，而这时Redis集群还没有反应过来。当主库恢复后发现自己仍旧是主库，就清除了重复的数据。</p>
+<p>这就是我们在编排这些中间件时需要解决和避免的问题。每个中间件可能都会遇到类似的问题，我们需要详细处理所有环节，解决所有编排的顺序以及如何与K8S集成的问题，然后才能完成我们的上线。</p>
+<p>接下来让我们讨论一下微服务，为什么要提及微服务，原因和刚才讨论的一样，因为我们建立这个云平台其实是基于云原生的方向去建立的，微服务也是云原生内部的一个重要组成部分。这也是为什么在2020年，我们推出了公司级统一的微服务能力。</p>
+<p>微服务是我们在2020年左右开始推出的。在云平台上，我们发布了我们的微服务平台，叫做ASF，这个ASF的底层是基于Dubbo服务进行构建的。同时，它与Spring Cloud进行了无缝结合，此外它还支持Java和Go编程语言。在协议方面，它也支持多种协议。</p>
+<p>在我们的整个架构中，红色部分是我们定义为微服务平台相关的部分，如微服务网关能力，包括认证鉴权，协议转换，以及A/B测试等，这些都可以在平台上进行使用。而在SDK方面，我们目前提供Java和Go的ASF SDK，这些都是可用的。</p>
+<p>在控制面，我们提供了服务监控，大家可以直观地在ASF服务平台上看到相关的监控数据。在数据面，如负载均衡、多协议支持、熔断降级等功能也都是平台的一部分。整体来看，因为我们需要统一构建微服务，所以在稳定性和功能上我们都进行了大量的构建。例如，我们的微服务支持服务的无损上下线，同时我们也为Go服务默认采集了一些关键指标。此外，我们的整个微服务是跨机房双活的，以防止单一机房问题。</p>
+<p>接下来，让我们谈谈DevOps。这是我们在开展工作时的第一步。因为每个BU都拥有自己的服务器，每个BU的服务器数量也不少，可能有几百台，甚至上千台。他们的上线发布不可能是人工发布，每个BU需要建立自己的发布、监控、日志系统并自行维护。</p>
+<p>确实，现如今我们有很多技术团队，特别是在我们的业务布局中，技术团队在业务部门内部进行闭环运作。因此，他们天然就需要去构建相关的服务和能力。所以，像以前有很多老系统，有好几套发布系统，监控系统也有很多。整体来看，接入现在的云平台的一个核心步骤就是我们需要建立一个统一的发布、日志和监控系统。这是由现实决定的。一旦我们决定只有几个基础的容器化集群，我们就不能把这个容器化集群的能力开放给每个发布系统。</p>
+<p>这样，稳定性无法保障，而且整体的研发成本也会极高。因此，建立一个统一的发布、日志和监控系统是至关重要的。因此，我们的A-One已经上线，从应用的发布、接入配置、运行配置，到编译打包和发布，包括扩展的DevOps能力，比如CICD，这只是操作部分的一部分。还有我们的日志监控，这可能是可观察性的一部分，以及一些操作，如Webshell，快速的扩缩容等，这些能力已经开放并集成在我们现在的云开发部分。</p>
+<p>上面就是我们云平台的整体发展史，以及我们现在的几个重点核心情况。接下来，我来讲一下聚焦降本增效。因为在之前分享时提到过，所以这次对于降本增效，我只会简单介绍，而不会深入。我认为在IT降本增效中，在技术方向上，主要有三大部分，一是我们的混部技术，二是大数据冷数据转EC，三是储备资源池，这三项是促进大幅度降低成本的关键因素。</p>
+<p>储备资源池这里多说两句。因为我们是自己的IDC和服务器，我们一定会预留部分的缓冲资源，这部分的储备资源池，我们的借调只针对其计算资源，而非存储资源，因为硬盘是消耗品。我们并未把硬盘借调，而只借给了他们CPU的计算能力，因为CPU损坏的概率相对较低。所以我们只是借给他们CPU资源，让他们进行离线计算。</p>
+<p>从管理的角度来看，我们构建了完整的FinOPS体系，这涉及到利用率的识别，结合红徽榜的一些公式，以及可用性管理和预算管理等因素，最终实现我们整体的降本增效目标。</p>
+<p>接下来，我简单介绍几个重要的点，其中一些我在之前的分享中也提到过。大数据和容器化的混部，这主要是通过利用离线业务的错峰时间，实现资源的复用。</p>
+<p>在我们的后台资源管理中，我们有应用混部的相关开关，应用的超配比，降级水位线等管理控制。当发布应用时，系统会根据你设置的应用级别，为应用打上一些核心标签，然后进行相关的资源调度。调度系统也是同样的逻辑，我们有相关的队列资源开关，统一进行调度。</p>
+<p>我们通过自主研发了yarn operator 和 KH Resource Controller，同时结合主机上的AgentDS采集的指标数据，综合解决大数据和容器如何进行调度，如何进行混部调度的问题。</p>
+<p>关于在线和离线任务的发起，决定其应在离线节点进行计算还是混部节点上进行计算，以及选择哪个混部节点进行计算，都是由Controller进行分配的。同样，当应用发布时，也需要决定应发布在在线节点上，还是混部节点上，因为混部节点可能会有大数据服务运行。例如，0级的应用肯定会在我们的在线节点上运行，而3级的应用可能就会运转到我们的混部节点上。通过这样的机制，我们实现了大数据与容器的混部，以及GPU资源的提效。</p>
+<p>刚才也简单提到过，英伟达的技术基于CPU卡进行分配。英伟达的卡，我们之前有1机4卡的，也有1机8卡的，但是基于卡进行调度时，仍然会有一定的浪费。例如，我们的A100有40G的，现在也有80G的，因此仍然会有一定的浪费。</p>
+<p>因此，我们借用了阿里开源的一套技术，即GPU Share，让我们可以基于显存进行资源分配。我们并不是直接使用阿里的Controller或者Operator，因为它需要与我们的深度学习平台进行集成。同时，还需要将一些产品化的能力构建在其中，才能确保其正常运行。因此，整体上看，我们的上线以及基于GPU share技术，对我们的GPU使用率有相当大的提升。</p>
+<p>在我刚才的讲述中，我已经提到了关于中间件的容器化，这里我要介绍的是MySQL的operator。我刚才讲述了Redis的operator如何进行编排，MySQL的operator也是遵循同样的原理。这里要说明的是，MySQL本身也是我们的主集群。</p>
+<p>在这种情况下，我们如何编排这个集群呢？我们并未在单一机房内部署MySQL，而是在双机房内部署。由于在双机房内部署，自然需要跨越两个K8S集群，因此在外层需要有一层组装。虽然我们会借鉴K8S集群内编排的一部分能力，但我们需要在外部将MySQL组装成一个集群，以防止集群出现问题导致整个数据库实例不可用。这是我们在数据库方向上的一个核心点。因此，我们可能会基于每个中间件的不同特性，为其设计不同的编排策略，实现其容器化。</p>
+<p>关于大数据冷备，这也是我们刚才在提到的提升效率中的一个关键部分。最重要的一点是我们需要识别出冷热数据。我们定义超过6个月的数据为冷数据。然而，冷数据和热数据之间是有转换的。比如，一旦有些数据被访问几次，我们就可以从日志中监测到这些数据已经不再是6个月以前的数据了，那么它就可能不再被定义为冷数据。</p>
+<p>如果数据在之后还有访问，我们就会启动一系列的数据转换过程，从原先的1.5副本EC进行转换。对于元数据的管理，我们是基于FS image和Audit log进行分析，来确定文件是冷数据还是热数据。尽管某些数据可能长期未被访问，但我们不能轻易将其转为EC，因为它可能随时被访问。因此，我们也有一些白名单，其中包括一些操作或数据，虽然本身的性能要求并不高，因此我们将其归入黑名单。即使经常被访问，我们也可以将其转换为EC，这都是没有问题的。这整个过程是一个精细化的管理。</p>
+<p>同时，我们还有一些相关的日志和分析，包括我们的冷数据分析服务，这些都是基于之前的能力。更进一步，我们将进行一些操作，包括动作转换、校验备份记录等，或者进行数据静默。接着，我们需要查看原始数据，评估其可能还会被存储一段时间，如果没有问题，就可以将其删除。最后，我们会进行通知。</p>
+<p>接下来就是FinOPS的部分，因为FinOPS是一个庞大的体系，这两年也特别受到关注。由于降低成本和提升效率已经成为主要趋势，各家公司都发现在云资源上的花费增加了许多。虽然FinOPS主要是基于公有云资源的设计和理念，但这套理念其实也同时适用于基于私有云的环境。只不过他们的方向可能会略有不同，因为公有云资源更具灵活性，比如，你可以随时停止资源使用，不再支付费用。</p>
+<p>然而，对于私有云来说，方向可能就不太一样了。各个业务线即使停止使用资源，我们已购入的机器也已经放在那里，无论如何使用成本也无法降低。所以这就是这两者一个天然的区别。在这里，我们更多的是建立一个成本中心和治理中心。成本中心让各个技术部门或者各个产品都知道他们究竟花费了多少。这也会培养大家的成本意识。因为我们经常会收到资源申请。比如，需要多少Gcodis，需要多少G的资源，需要多少T。这可能意味着数十台机器的投入，每台机器的成本都在数万以上。可能很多人对这些成本并没有太多意识，不清楚存储的数据是否有效，是否可以进行精简。这些都是有待探讨的问题。</p>
+<p>在这个基础上，我们还有一套完整的治理中心。清楚自己的账单，但这也与大家的意识有关。可能挣钱的部门会觉得他们挣了这么多钱，IT花的钱并不多，无关紧要。但是那些盈利不多的部门可能就会更关注这个问题。或者说，如果部门本身就是一个中台部门，没有营收，那他们可能更没有这个概念，甚至连ROI都无法计算。</p>
+<p>因此，每个人的标准可能都不一样，所以我们的治理中心更多的是要建立一套关于利用率和浪费的标准。我们不会接受你的部门挣了很多钱，就可以浪费很多机器的理由。也不会接受你是一个中台部门，没有营收，算不出ROI的理由。我们将统一这些标准，依据是否有浪费来进行计算。每个部门都有一个统一的标准，然后我们会在云平台上对各项资源进行定义，基于此推动大家提升整体的利用率。同时，我们也会识别出可能存在的资源冗余，然后进行降低。而且，由于我们是一个私有云，我们更主要的是将节省下来的这些资源投入到真正有业务增长的部分。</p>
+<p>我们整体的设计思考是，最后一定要得出一个数值。这是作为标准进行设计的前提。我们底层是基于物理机的利用率来计算的，然后再到上层会有服务的利用率。服务单一的利用率，然后折合成物理机的利用率，最终提供一个数据，比如，你们部门低利用率的物理机会有多少台。这就是为什么我们的低利用率服务器可能会有小数，因为它是一个折合的概念。有了利用率的判定标准后，剩下的就是对利用率的治理了。</p>
+<p>利用率是一方面，标准则是另一方面。例如，我们定义并计算出各个部门的利用率，以及低利用率的占比，但是这个低利用率占比多少是合理的呢？难道真的需要降到0吗？这并不一定，这是个伪命题，因为每个部门的不同业务，都有一定的业务属性在其中。可能有的业务为了保持稳定性，不让利用率过高，所以可能会存在一定的浪费、低利用率的情况。</p>
+<p>但我们其实有一部分还是需要放手，需要容忍的。因此，在了解了业务特性的基础上，我们也制定了相关的标准，比如说5%就是我们制定的标准。我们认为根据现状，我们给每个部门预设5%的冗余利用率，用于他们内部的某些可能存在的备机、主备需求或者一部分的核心业务。</p>
+<p>这些都作为他们的一个标准，比如中间件的利用率，以及ES的冷数据。对于ES，我们也制定了一个冷数据的标准，即不要超过55%。我们的ES通常都有三个副本，甚至有的副本会更高。对于Kafka，你长期存储数据在那里也没有很大的意义，你应该将数据消费掉，用于应该用于的地方，而非长期存在于此。所以，我们有各类的利用率标准，然后再进行相关的尺度计算。</p>
+<p>这也是去年我们实现整体降本增效的原因。之家近几年每年都是近千台的采购，但是我们在去年，通过降本项目的实施，实现了零采购。</p>
+<p>第三部分已经基本讲完，第四部分就是挑战与展望。由于这份分享的制作时间较早，一部分内容我们已经实现了。接下来简单看一下，第一部分就是我们要做全量的在线离线混部和秒级的伸缩感知。如之前提到的，我们现在有在线离线混部的资源池。</p>
+<p>我们的一个特性就是，我们有能力在单个机房内进行全量的在线离线混部，因为很多限制在线离线混部的因素，主要还是物理环境的限制。比如很多大公司可能离线业务也很多，由多个团队分散管理。他们可能将离线业务部署在张家口、淮北等地，而在线业务在北京，这就导致他们无法实现在线离线混部。但是，我们的情况是，我们只有两个机房，且廊坊机房的规模相对比较大。因此，廊坊机房具备了我们进行在线和离线业务统一成一个大资源池的条件，这是我们的一个方向。</p>
+<p>第二个就是我们要实现100%的储备主机，进行资源池的利用。这其中要解决的细节问题非常多，这也是我在思考的一个问题点。新的机器不成问题，因为新机器相对好操作。但是老的机器就是我们很头疼的一个部分，即装机问题，每次都要装好几次。然后当你把它装完机，放到离线资源池里后，可能没用两天就出问题了。所以这个性价比也是我们需要考虑的一个问题。但是这一部分也是我们要努力的一个方向。</p>
+<p>接下来是结合HPA和在线离线混部进行深度整合。在上述图表中，我们可以看到我们业务的流量特点。我们的业务流量非常平稳，非常具有特征性，它是互联网标准用户流量增长周期的一个典型代表。我们基本上没有大的流量突发，因为我们很少有热点事件。尽管在今年的Q1，我们有降价炒作热点事件，但即使在这种情况下，它也是基于这种趋势进行每天的流量分布的。它不像微博，一个热点事件就会使流量急剧上升。所以我们可以基于这种情况进行一些分析，然后进行我们的资源流量的调度。例如，在夜间时段，我们的在线资源占用了大量的资源，但夜间的流量其实已经比白天的流量低了一半以上。那么，是否可以在夜间降低资源的使用，释放出来的资源空间可以用来执行离线任务？然后到了白天开始流量高峰时，我们再将资源调整上去，这部分内容就是正常运行到晚上再开始进行调整。</p>
+<p>因此，这是我们正在考虑的一个方向，我们在部分的三级应用上已经实现了这个目标，但我们还没有大规模的进行推行，这也是我们正在探索的一个过程和方向。接下来是提供统一的开放工具，其实这部分就不多讲了，在之家云上也有这个开放平台，所有人可以使用的所有工具都可以加入我们现在的云平台，然后为整个公司提供服务。</p>
+<p>最后一个目标就是我们要建立统一服务网格，在这两个季度我们在服务网格上投入了大量的时间和精力。这也是我们定义下一代基础架构的一个方向。由于时间关系，我不会深入讲解，但我们整个的服务网格实际上是基于Istio做的，整体的观测是基于jeager做的。其实，这个服务网格已经进入到第二个阶段了，就是我们要丰富里面的功能，逐渐扩大规模，然后让它形成更大规模的落地。这也是我们可能后面要重点投入的一个技术方向。</p>
+<p>以上就是全部的内容，感谢大家的时间。</p>
+<h3 id="【脱敏PPT】"><a href="#【脱敏PPT】" class="headerlink" title="【脱敏PPT】"></a>【脱敏PPT】</h3><iframe style="width: 100%; height: 550px;" src="/uploads/2023/cloud/之家云能力建设与管理实践-脱敏.pdf" width="320" height="240"></iframe>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/运维/" rel="tag"># 运维</a>
+          
+            <a href="/tags/云平台/" rel="tag"># 云平台</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/02/01/2023/2022大总结,2023大畅想/" rel="next" title="2022大总结,2023大畅想...">
+                <i class="fa fa-chevron-left"></i> 2022大总结,2023大畅想...
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/02/18/2024/2023大总结,2024大畅想/" rel="prev" title="2023大总结,2024大畅想...">
+                2023大总结,2024大畅想... <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#【分享全文】"><span class="nav-number">1.</span> <span class="nav-text">【分享全文】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【脱敏PPT】"><span class="nav-number">2.</span> <span class="nav-text">【脱敏PPT】</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,773 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="PHP,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="生成时间维度Add.php 为生成入口设置里面的开始时间与结束时间（Unix时间戳）即可生成时间维度,写入MYSQL中。格式为：公历 - 公历短杠 - 公历反斜杠 - 短公历 - 阴历 - 第几天 - 第几周 - 周内第几天 - 数字年 - 数字月 - 数字季度 -中文年 - 中文月(数字) - 中文月 - 中文天 - 中文周 - 中文季度 - 月旬 - 半年 - 英文月 - 英文星期">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP时间维度生成">
+<meta property="og:url" content="http://toryzen.cn/2013/01/07/2013/PHP时间维度生成/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="生成时间维度Add.php 为生成入口设置里面的开始时间与结束时间（Unix时间戳）即可生成时间维度,写入MYSQL中。格式为：公历 - 公历短杠 - 公历反斜杠 - 短公历 - 阴历 - 第几天 - 第几周 - 周内第几天 - 数字年 - 数字月 - 数字季度 -中文年 - 中文月(数字) - 中文月 - 中文天 - 中文周 - 中文季度 - 月旬 - 半年 - 英文月 - 英文星期">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2024-02-18T04:14:20.918Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP时间维度生成">
+<meta name="twitter:description" content="生成时间维度Add.php 为生成入口设置里面的开始时间与结束时间（Unix时间戳）即可生成时间维度,写入MYSQL中。格式为：公历 - 公历短杠 - 公历反斜杠 - 短公历 - 阴历 - 第几天 - 第几周 - 周内第几天 - 数字年 - 数字月 - 数字季度 -中文年 - 中文月(数字) - 中文月 - 中文天 - 中文周 - 中文季度 - 月旬 - 半年 - 英文月 - 英文星期">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2013/01/07/2013/PHP时间维度生成/">
+
+
+
+
+
+  <title>PHP时间维度生成 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2013/01/07/2013/PHP时间维度生成/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP时间维度生成</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-07T18:52:52+08:00">
+                2013-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>生成时间维度<br>Add.php 为生成入口<br>设置里面的开始时间与结束时间（Unix时间戳）即可生成时间维度,写入MYSQL中。<br>格式为：<br>公历 - 公历短杠 - 公历反斜杠 - 短公历 - 阴历 - 第几天 - 第几周 - 周内第几天 - 数字年 - 数字月 - 数字季度 -<br>中文年 - 中文月(数字) - 中文月 - 中文天 - 中文周 - 中文季度 - 月旬 - 半年 - 英文月 - 英文星期<br><a id="more"></a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`timer`</span> (</span><br><span class="line">  <span class="string">`gregorian`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'公历'</span>,</span><br><span class="line">  <span class="string">`g_shortbars`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'公历短杠'</span>,</span><br><span class="line">  <span class="string">`g_backslash`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'公历反斜杠'</span>,</span><br><span class="line">  <span class="string">`g_short`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'短公历'</span>,</span><br><span class="line">  <span class="string">`lunar`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'阴历'</span>,</span><br><span class="line">  <span class="string">`dayofyear`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'第几天'</span>,</span><br><span class="line">  <span class="string">`weekofyear`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'第几周'</span>,</span><br><span class="line">  <span class="string">`dayofweek`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'周内第几天'</span>,</span><br><span class="line">  <span class="string">`year_num`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'数字年'</span>,</span><br><span class="line">  <span class="string">`month_num`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'数字月'</span>,</span><br><span class="line">  <span class="string">`day_num`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'数字天'</span>,</span><br><span class="line">  <span class="string">`season_num`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'数字季度'</span>,</span><br><span class="line">  <span class="string">`year_cn`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'中文年'</span>,</span><br><span class="line">  <span class="string">`month_cn`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'中文月(数字)'</span>,</span><br><span class="line">  <span class="string">`month_allcn`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'中文月'</span>,</span><br><span class="line">  <span class="string">`day_cn`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'中文天'</span>,</span><br><span class="line">  <span class="string">`week_cn`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'中文周'</span>,</span><br><span class="line">  <span class="string">`season_cn`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'中文季度'</span>,</span><br><span class="line">  <span class="string">`tendays`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'月旬'</span>,</span><br><span class="line">  <span class="string">`halfyear`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'半年'</span>,</span><br><span class="line">  <span class="string">`month_en`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'英文星期'</span>,</span><br><span class="line">  <span class="string">`week_en`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'英文星期'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span>  (<span class="string">`gregorian`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> +------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 时间维度生成</span></span><br><span class="line"><span class="comment"> +------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Framework</span>  None</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Platform</span>   None</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>     ToryZen &lt;toryzen<span class="doctag">@gmail</span>.com&gt;</span></span><br><span class="line"><span class="comment"> +------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">ini_set(&lt;max_execution_time&lt;, &lt;<span class="number">180000</span>&lt;);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">'Function.php'</span>);</span><br><span class="line"><span class="keyword">require_once</span> <span class="string">'Lunar.php'</span>;</span><br><span class="line">$begintime = <span class="number">1136131200</span>;<span class="comment">//开始时间20060101</span></span><br><span class="line">$endtime = <span class="number">1577808000</span>;<span class="comment">//结束时间20200101</span></span><br><span class="line">$con = mysql_connect(&lt;localhost&lt;,&lt;root&lt;,&lt;&lt;);</span><br><span class="line">mysql_select_db(&lt;NewTimter&lt;, $con);</span><br><span class="line">mysql_query(<span class="string">'set names utf8'</span>);</span><br><span class="line"><span class="keyword">for</span>($begintime;$begintime&lt;=$endtime;$begintime+=<span class="number">86400</span>)&#123;</span><br><span class="line">        $gl = date(<span class="string">'Ymd'</span>,$begintime);<span class="comment">//公历</span></span><br><span class="line">        $gl_shortbars = date(<span class="string">'Y-m-d'</span>,$begintime);<span class="comment">//公历短斜杠</span></span><br><span class="line">        $gl_backslash = date(<span class="string">'Y/m/d'</span>,$begintime);<span class="comment">//公历反斜杠</span></span><br><span class="line">        $gl_short = date(<span class="string">'ymd'</span>,$begintime);<span class="comment">//短公历</span></span><br><span class="line">        $lunar = <span class="keyword">new</span> Lunar();</span><br><span class="line">        $nl = date(&lt;Ymd&lt;,$lunar-&gt;S2L(date(&lt;Y-m-d&lt;,$begintime))); <span class="comment">//农历</span></span><br><span class="line">        $year_num = date(<span class="string">'Y'</span>,$begintime);<span class="comment">//数字年</span></span><br><span class="line">        $year_cn = $year_num.&lt;年&lt;;<span class="comment">//中文年</span></span><br><span class="line">        $month_num = date(<span class="string">'m'</span>,$begintime);<span class="comment">//数字月</span></span><br><span class="line">        $month_cn = (int)($month_num).&lt;月&lt;;<span class="comment">//中文月(数字)</span></span><br><span class="line">        $month_allcn = monthcn($month_num);<span class="comment">//中文月</span></span><br><span class="line">        $day_num = date(<span class="string">'d'</span>,$begintime);<span class="comment">//数字天</span></span><br><span class="line">        $day_cn = (int)($day_num).&lt;日&lt;;<span class="comment">//中文天</span></span><br><span class="line">        $week = week(date(<span class="string">'D'</span>,$begintime));</span><br><span class="line">        $dayofweek = $week[num];<span class="comment">//数字星期</span></span><br><span class="line">        $week_cn = $week[cn];<span class="comment">//中文星期</span></span><br><span class="line">        $season = season($month_num);</span><br><span class="line">        $season_num = $season[num];<span class="comment">//数字季度</span></span><br><span class="line">        $season_cn = $season[cn];<span class="comment">//中文季度</span></span><br><span class="line">        $halfyear = halfyear($month_num);<span class="comment">//半年</span></span><br><span class="line">        $tendays = tendays($day_num);<span class="comment">//月旬</span></span><br><span class="line">        $month_en = date(<span class="string">'M'</span>,$begintime);<span class="comment">//英文月</span></span><br><span class="line">        $week_en = date(<span class="string">'l'</span>,$begintime);<span class="comment">//英文周</span></span><br><span class="line">        $dayofyear = date(<span class="string">'z'</span>,$begintime)+<span class="number">1</span>;<span class="comment">//第几天</span></span><br><span class="line">        $weekofyear = date(<span class="string">'W'</span>,$begintime);<span class="comment">//第几周</span></span><br><span class="line">        <span class="comment">//$dayofweek =  date('W',$begintime);//第几周</span></span><br><span class="line">        <span class="comment">//echo $gl.&lt;        &lt;.$weekofyear.&lt;&lt;br/&gt;&lt;;</span></span><br><span class="line">        <span class="comment">//echo $month_allcn.&lt;&lt;br&gt;&lt; ;</span></span><br><span class="line">        mysql_query(&lt;INSERT INTO timer (gregorian,g_shortbars,g_backslash,g_short,lunar,dayofyear,weekofyear,dayofweek,year_num,month_num,day_num,season_num,year_cn,month_cn,month_allcn,day_cn,week_cn,season_cn,tendays,halfyear,month_en,week_en) VALUES (<span class="string">'&lt;.$gl.&lt;'</span>,<span class="string">'&lt;.$gl_shortbars.&lt;'</span>,<span class="string">'&lt;.$gl_backslash.&lt;'</span>,<span class="string">'&lt;.$gl_short.&lt;'</span>,<span class="string">'&lt;.$nl.&lt;'</span>,<span class="string">'&lt;.$dayofyear.&lt;'</span>,<span class="string">'&lt;.$weekofyear.&lt;'</span>,<span class="string">'&lt;.$dayofweek.&lt;'</span>,<span class="string">'&lt;.$year_num.&lt;'</span>,<span class="string">'&lt;.$month_num.&lt;'</span>,<span class="string">'&lt;.$day_num.&lt;'</span>,<span class="string">'&lt;.$season_num.&lt;'</span>,<span class="string">'&lt;.$year_cn.&lt;'</span>,<span class="string">'&lt;.$month_cn.&lt;'</span>,<span class="string">'&lt;.$month_allcn.&lt;'</span>,<span class="string">'&lt;.$day_cn.&lt;'</span>,<span class="string">'&lt;.$week_cn.&lt;'</span>,<span class="string">'&lt;.$season_cn.&lt;'</span>,<span class="string">'&lt;.$halfyear.&lt;'</span>,<span class="string">'&lt;.$tendays.&lt;'</span>,<span class="string">'&lt;.$month_en.&lt;'</span>,<span class="string">'&lt;.$week_en.&lt;'</span>)&lt;,$con);</span><br><span class="line">&#125;</span><br><span class="line">mysql_close($con);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> +------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 时间维度方法</span></span><br><span class="line"><span class="comment"> +------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Framework</span>  None</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Platform</span>   None</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>     ToryZen &lt;toryzen<span class="doctag">@gmail</span>.com&gt;</span></span><br><span class="line"><span class="comment"> +------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">week</span><span class="params">($s)</span></span>&#123;</span><br><span class="line"><span class="comment">//星期方法</span></span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'Sun'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'7'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'星期天'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'Mon'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'1'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'星期一'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'Tue'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'2'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'星期二'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'Wed'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'3'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'星期三'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'Thu'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'4'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'星期四'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'Fri'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'5'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'星期天'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'Sat'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'6'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'星期六'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">season</span><span class="params">($s)</span></span>&#123;</span><br><span class="line"><span class="comment">//季度方法</span></span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'01'</span>||$s==<span class="string">'02'</span>||$s==<span class="string">'03'</span>||$s==<span class="string">'04'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'1'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'一季度'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'05'</span>||$s==<span class="string">'06'</span>||$s==<span class="string">'07'</span>||$s==<span class="string">'08'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'2'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'二季度'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'09'</span>||$s==<span class="string">'10'</span>||$s==<span class="string">'11'</span>||$s==<span class="string">'12'</span>)&#123;</span><br><span class="line">                $r[num] = <span class="string">'3'</span>;</span><br><span class="line">                $r[cn] = <span class="string">'三季度'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">halfyear</span><span class="params">($s)</span></span>&#123;</span><br><span class="line"><span class="comment">//半年方法</span></span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'01'</span>||$s==<span class="string">'2'</span>||$s==<span class="string">'3'</span>||$s==<span class="string">'4'</span>||$s==<span class="string">'5'</span>||$s==<span class="string">'6'</span>)&#123;</span><br><span class="line">                $r = <span class="string">'上半年'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">                $r = <span class="string">'下半年'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tendays</span><span class="params">($s)</span></span>&#123;</span><br><span class="line"><span class="comment">//月旬方法</span></span><br><span class="line">        $s = (int)$s;</span><br><span class="line">        <span class="keyword">if</span>($s&lt;<span class="number">11</span>)&#123;</span><br><span class="line">                $r = <span class="string">'上旬'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s&lt;<span class="number">21</span>&amp;amp;&amp;amp;$s&gt;<span class="number">10</span>)&#123;</span><br><span class="line">                $r = <span class="string">'中旬'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>($s&gt;<span class="number">20</span>)&#123;</span><br><span class="line">                $r = <span class="string">'下旬'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">monthcn</span><span class="params">($s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'01'</span>)&#123;$r = <span class="string">'一月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'02'</span>)&#123;$r = <span class="string">'二月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'03'</span>)&#123;$r = <span class="string">'三月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'04'</span>)&#123;$r = <span class="string">'四月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'05'</span>)&#123;$r = <span class="string">'五月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'06'</span>)&#123;$r = <span class="string">'六月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'07'</span>)&#123;$r = <span class="string">'七月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'08'</span>)&#123;$r = <span class="string">'八月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'09'</span>)&#123;$r = <span class="string">'九月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'10'</span>)&#123;$r = <span class="string">'十月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'11'</span>)&#123;$r = <span class="string">'十一月'</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>($s==<span class="string">'12'</span>)&#123;$r = <span class="string">'十二月'</span>;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lunar</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">        <span class="keyword">private</span>  $_SMDay = <span class="keyword">array</span>(<span class="number">1</span> =&gt; <span class="number">31</span>, <span class="number">28</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>);<span class="comment">//定义公历月分天数</span></span><br><span class="line">        <span class="keyword">private</span>  $_LStart = <span class="number">1950</span> ;<span class="comment">//农历从1950年开始</span></span><br><span class="line">        <span class="keyword">private</span>  $_LMDay = <span class="keyword">array</span>(</span><br><span class="line">        <span class="comment">//差：该年的农历正月初一到该年公历1月1日的天数；1~12：农历月份天数；闰：如有闰月，记录该月平月天数</span></span><br><span class="line">        <span class="comment">//差  1  2  3  4  5  6  7  8  9 10 11 12 闰</span></span><br><span class="line">        <span class="keyword">array</span>(<span class="number">47</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">36</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">6</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),    <span class="comment">//五月29 闰五月30</span></span><br><span class="line">           <span class="keyword">array</span>(<span class="number">44</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">33</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">23</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),    <span class="comment">//三月29 闰三月30</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">42</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//八月30 闰八月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">48</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">38</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">27</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//六月30 闰六月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">45</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">35</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">24</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">58</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>),    <span class="comment">//四月29 闰四月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">43</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">32</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">20</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//三月30 闰三月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">39</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//七月30 闰七月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">47</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">36</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">26</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//五月30 闰五月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">45</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">33</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">22</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//四月30 闰四月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">41</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//八月30 闰八月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">48</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">37</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">27</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">60</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//六月30 闰六月30</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">46</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">35</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">24</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">58</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),    <span class="comment">//四月29 闰四月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">43</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">32</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//十月30 闰十月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">50</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">39</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">28</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//六月30 闰六月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">47</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">36</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">26</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//五月30 闰五月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">45</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">34</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">22</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//三月30 闰三月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">40</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//八月30 闰八月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">49</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">37</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">27</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">58</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),    <span class="comment">//五月29 闰五月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">46</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">35</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">23</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//四月30 闰四月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">42</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">31</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">21</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//二月30 闰二月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">39</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">28</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//七月30 闰七月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">48</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">37</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">25</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//五月30 闰五月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">44</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">33</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">22</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//四月30 闰四月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">40</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//九月30 闰九月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">49</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">38</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">27</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),    <span class="comment">//六月29 闰六月30</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">46</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">35</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">24</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//四月30 闰四月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">42</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">31</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">21</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//二月30 闰二月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">40</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">28</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//六月30 闰六月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">47</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">36</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">25</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//五月30 闰五月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">43</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">33</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">22</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//三月30 闰三月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">41</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//十一月30 闰十一月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">49</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">38</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">27</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),    <span class="comment">//六月29 闰六月30</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">45</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">34</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">23</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>),    <span class="comment">//五月30 闰五月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">42</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">31</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">21</span>,<span class="number">29</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>),    <span class="comment">//二月30 闰二月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">40</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">58</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>),    <span class="comment">//七月29 闰七月29</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">47</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">36</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">25</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),    <span class="comment">//五月29 闰五月30</span></span><br><span class="line">    <span class="keyword">array</span>(<span class="number">44</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">32</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">22</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">59</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">29</span>,<span class="number">29</span>),    <span class="comment">//三月29 闰三月30</span></span><br><span class="line">        );</span><br><span class="line">        <span class="comment">//是否闰年</span></span><br><span class="line">        <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">IsLeapYear</span><span class="params">($AYear)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ($AYear % <span class="number">4</span> == <span class="number">0</span>) &amp;amp;&amp;amp; (($AYear % <span class="number">100</span> != <span class="number">0</span>) || ($AYear % <span class="number">400</span> == <span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//公历该月的天数(year：年份； month：月份)</span></span><br><span class="line">        <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">GetSMon</span><span class="params">($year,$month)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;IsLeapYear($year) &amp;amp;&amp;amp; $month == <span class="number">2</span>)</span><br><span class="line">                        <span class="keyword">return</span> <span class="number">29</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;_SMDay[$month];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//农历名称转换</span></span><br><span class="line">        <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">LYearName</span><span class="params">($year)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                $Name = <span class="keyword">array</span>(&lt;零&lt;,&lt;一&lt;,&lt;二&lt;,&lt;三&lt;,&lt;四&lt;,&lt;五&lt;,&lt;六&lt;,&lt;七&lt;,&lt;八&lt;,&lt;九&lt;);</span><br><span class="line">                <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;<span class="number">4</span>;$i++)</span><br><span class="line">                        <span class="keyword">for</span>($k=<span class="number">0</span>;$k&lt;<span class="number">10</span>;$k++)</span><br><span class="line">                                <span class="keyword">if</span>($year[$i]==$k)</span><br><span class="line">                                        $tmp.=$Name[$k];</span><br><span class="line">                <span class="keyword">return</span> $tmp;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">LMonName</span><span class="params">($month)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                <span class="keyword">if</span>($month &gt;=<span class="number">1</span> &amp;amp;&amp;amp; $month &lt;=<span class="number">12</span> )</span><br><span class="line">                &#123;</span><br><span class="line">                        $Name = <span class="keyword">array</span>( <span class="number">1</span>=&gt;&lt;正&lt;,&lt;二&lt;,&lt;三&lt;,&lt;四&lt;,&lt;五&lt;,&lt;六&lt;,&lt;七&lt;,&lt;八&lt;,&lt;九&lt;,&lt;十&lt;,&lt;十一&lt;,&lt;十二&lt;);</span><br><span class="line">                        <span class="keyword">return</span> $Name[$month];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> $month;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">LDayName</span><span class="params">($day)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                <span class="keyword">if</span>($day &gt;=<span class="number">1</span> &amp;amp;&amp;amp; $day &lt;=<span class="number">30</span> )</span><br><span class="line">                &#123;</span><br><span class="line">                        $Name = <span class="keyword">array</span>( <span class="number">1</span> =&gt;</span><br><span class="line">                        &lt;初一&lt;,&lt;初二&lt;,&lt;初三&lt;,&lt;初四&lt;,&lt;初五&lt;,&lt;初六&lt;,&lt;初七&lt;,&lt;初八&lt;,&lt;初九&lt;,&lt;初十&lt;,</span><br><span class="line">                        &lt;十一&lt;,&lt;十二&lt;,&lt;十三&lt;,&lt;十四&lt;,&lt;十五&lt;,&lt;十六&lt;,&lt;十七&lt;,&lt;十八&lt;,&lt;十九&lt;,&lt;二十&lt;,</span><br><span class="line">                        &lt;廿一&lt;,&lt;廿二&lt;,&lt;廿三&lt;,&lt;廿四&lt;,&lt;廿五&lt;,&lt;廿六&lt;,&lt;廿七&lt;,&lt;廿八&lt;,&lt;廿九&lt;,&lt;三十&lt;</span><br><span class="line">                        );</span><br><span class="line">                        <span class="keyword">return</span> $Name[$day];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> $day;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//公历转农历(Sdate：公历日期)</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">S2L</span><span class="params">($date)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                <span class="keyword">list</span>($year, $month, $day) = explode(&lt;-&lt;, $date);</span><br><span class="line">                <span class="keyword">if</span>($year &lt;= <span class="number">1951</span> || $month &lt;= <span class="number">0</span> || $day &lt;= <span class="number">0</span> || $year &gt;= <span class="number">2051</span> )        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                <span class="comment">//获取查询日期到当年1月1日的天数</span></span><br><span class="line">                $date1 = strtotime($year.&lt;<span class="number">-01</span><span class="number">-01</span>&lt;);<span class="comment">//当年1月1日</span></span><br><span class="line">                $date2 = strtotime($year.&lt;-&lt;.$month.&lt;-&lt;.$day);</span><br><span class="line">                $days=round(($date2-$date1)/<span class="number">3600</span>/<span class="number">24</span>);</span><br><span class="line">                $days += <span class="number">1</span>;</span><br><span class="line">                <span class="comment">//获取相应年度农历数据，化成数组Larray</span></span><br><span class="line">                $Larray = <span class="keyword">$this</span>-&gt;_LMDay[$year - <span class="keyword">$this</span>-&gt;_LStart];</span><br><span class="line">                <span class="keyword">if</span>($days &lt;= $Larray[<span class="number">0</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                        $Lyear = $year - <span class="number">1</span>;</span><br><span class="line">                        $days = $Larray[<span class="number">0</span>] - $days;</span><br><span class="line">                        $Larray = <span class="keyword">$this</span>-&gt;_LMDay[$Lyear - <span class="keyword">$this</span>-&gt;_LStart];</span><br><span class="line">                        <span class="keyword">if</span>($days &lt; $Larray[<span class="number">12</span>])</span><br><span class="line">                        &#123;</span><br><span class="line">                                $Lmonth = <span class="number">12</span>;</span><br><span class="line">                                $Lday = $Larray[<span class="number">12</span>] - $days;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">else</span></span><br><span class="line">                        &#123;</span><br><span class="line">                                $Lmonth = <span class="number">11</span>;</span><br><span class="line">                                $days = $days - $Larray[<span class="number">12</span>];</span><br><span class="line">                                $Lday = $Larray[<span class="number">11</span>] - $days;</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                        $Lyear = $year;</span><br><span class="line">                        $days = $days - $Larray[<span class="number">0</span>];</span><br><span class="line">                        <span class="keyword">for</span>($i = <span class="number">1</span>;$i &lt;= <span class="number">12</span>;$i++)</span><br><span class="line">                        &#123;</span><br><span class="line">                                <span class="keyword">if</span>($days &gt; $Larray[$i]) $days = $days - $Larray[$i];</span><br><span class="line">                                <span class="keyword">else</span></span><br><span class="line">                                &#123;</span><br><span class="line">                                        <span class="keyword">if</span> ($days &gt; <span class="number">30</span>)&#123;</span><br><span class="line">                                                $days = $days - $Larray[<span class="number">13</span>];</span><br><span class="line">                                                $Ltype = <span class="number">1</span>;</span><br><span class="line">                                        &#125;</span><br><span class="line"></span><br><span class="line">                                        $Lmonth = $i;</span><br><span class="line">                                        $Lday = $days;</span><br><span class="line">                                        <span class="keyword">break</span>;</span><br><span class="line">                                &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> mktime(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, $Lmonth, $Lday, $Lyear);</span><br><span class="line">                <span class="comment">//$Ldate = $Lyear.&lt;-&lt;.$Lmonth.&lt;-&lt;.$Lday;</span></span><br><span class="line">                <span class="comment">//$Ldate = $this-&gt;LYearName($Lyear).&lt;年&lt;.$this-&gt;LMonName($Lmonth).&lt;月&lt;.$this-&gt;LDayName($Lday);</span></span><br><span class="line">                <span class="comment">//if($Ltype) $Ldate.=&lt;(闰)&lt;;</span></span><br><span class="line">                <span class="comment">//return $Ldate;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//农历转公历(date：农历日期； type：是否闰月)</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">L2S</span><span class="params">($date,$type = <span class="number">0</span>)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                <span class="keyword">list</span>($year, $month, $day) = split(&lt;-&lt;,$date);</span><br><span class="line">                <span class="keyword">if</span>($year &lt;= <span class="number">1951</span> || $month &lt;= <span class="number">0</span> || $day &lt;= <span class="number">0</span> || $year &gt;= <span class="number">2051</span> )        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                $Larray = <span class="keyword">$this</span>-&gt;_LMDay[$year - <span class="keyword">$this</span>-&gt;_LStart];</span><br><span class="line">                <span class="keyword">if</span>($type == <span class="number">1</span> &amp;amp;&amp;amp; count($Larray)&lt;=<span class="number">12</span> ) <span class="keyword">return</span> <span class="keyword">false</span>;<span class="comment">//要求查询闰，但查无闰月</span></span><br><span class="line">                <span class="comment">//如果查询的农历是闰月并该年度农历数组存在闰月数据就获取</span></span><br><span class="line">                <span class="keyword">if</span>($Larray[$month]&gt;<span class="number">30</span> &amp;amp;&amp;amp; $type == <span class="number">1</span> &amp;amp;&amp;amp; count($Larray) &gt;=<span class="number">13</span>)        $day = $Larray[<span class="number">13</span>] + $day;</span><br><span class="line">                <span class="comment">//获取该年农历日期到公历1月1日的天数</span></span><br><span class="line">                $days = $day;</span><br><span class="line">                <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;=$month<span class="number">-1</span>;$i++)</span><br><span class="line">                        $days += $Larray[$i];</span><br><span class="line">                <span class="comment">//当查询农历日期距离公历1月1日超过一年时</span></span><br><span class="line">                <span class="keyword">if</span>($days &gt; <span class="number">366</span> || (<span class="keyword">$this</span>-&gt;GetSMon($month,<span class="number">2</span>)!=<span class="number">29</span> &amp;amp;&amp;amp; $days&gt;<span class="number">365</span> ))</span><br><span class="line">                &#123;</span><br><span class="line">                        $Syear = $year +<span class="number">1</span>;</span><br><span class="line">                        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;GetSMon($month,<span class="number">2</span>)!=<span class="number">29</span>)</span><br><span class="line">                                $days-=<span class="number">366</span>;</span><br><span class="line">                        <span class="keyword">else</span></span><br><span class="line">                                $days-=<span class="number">365</span>;</span><br><span class="line">                        <span class="keyword">if</span>($days &gt; <span class="keyword">$this</span>-&gt;_SMDay[<span class="number">1</span>])</span><br><span class="line">                        &#123;</span><br><span class="line">                                $Smonth = <span class="number">2</span>;</span><br><span class="line">                                $Sday = $days - <span class="keyword">$this</span>-&gt;_SMDay[<span class="number">1</span>];</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">else</span></span><br><span class="line">                        &#123;</span><br><span class="line">                                $Smonth = <span class="number">1</span>;</span><br><span class="line">                                $Sday = $days;</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                        $Syear =$year;</span><br><span class="line">                        <span class="keyword">for</span>($i=<span class="number">1</span>;$i&lt;=<span class="number">12</span>;$i++)</span><br><span class="line">                        &#123;</span><br><span class="line">                                <span class="keyword">if</span>($days &gt; <span class="keyword">$this</span>-&gt;GetSMon($Syear,$i))</span><br><span class="line">                                        $days-=<span class="keyword">$this</span>-&gt;GetSMon($Syear,$i);</span><br><span class="line">                                <span class="keyword">else</span></span><br><span class="line">                                &#123;</span><br><span class="line">                                        $Smonth = $i;</span><br><span class="line">                                        $Sday = $days;</span><br><span class="line">                                        <span class="keyword">break</span>;</span><br><span class="line">                                &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> mktime(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, $Smonth, $Sday, $Syear);</span><br><span class="line">                <span class="comment">//$Sdate = $Syear.&lt;-&lt;.$Smonth.&lt;-&lt;.$Sday;</span></span><br><span class="line">                <span class="comment">//return $Sdate;</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/01/01/2013/2012大总结,2013大畅想/" rel="next" title="2012大总结,2013大畅想...">
+                <i class="fa fa-chevron-left"></i> 2012大总结,2013大畅想...
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/03/05/2013/Python抓取Torrentkitty磁力链/" rel="prev" title="Python抓取Torrentkitty磁力链">
+                Python抓取Torrentkitty磁力链 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

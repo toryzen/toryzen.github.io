@@ -1,0 +1,854 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="需求分析,团队管理,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="定义本指导规范适用于存在用户界面的系统需求分析及设计，对业务部门所给予的需求，利用技术及工具进行业务规则、业务范围、业务流程等方面分析，并产出开发人员可以理解的需求分析产出。 需求分析流程">
+<meta name="keywords" content="需求分析,团队管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="系统需求分析管理[指导规范]">
+<meta property="og:url" content="http://toryzen.cn/2019/05/05/2019/系统需求分析管理[指导规范]/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="定义本指导规范适用于存在用户界面的系统需求分析及设计，对业务部门所给予的需求，利用技术及工具进行业务规则、业务范围、业务流程等方面分析，并产出开发人员可以理解的需求分析产出。 需求分析流程">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2019/05/xq/lc.png">
+<meta property="og:updated_time" content="2024-02-18T04:14:20.953Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="系统需求分析管理[指导规范]">
+<meta name="twitter:description" content="定义本指导规范适用于存在用户界面的系统需求分析及设计，对业务部门所给予的需求，利用技术及工具进行业务规则、业务范围、业务流程等方面分析，并产出开发人员可以理解的需求分析产出。 需求分析流程">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2019/05/xq/lc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2019/05/05/2019/系统需求分析管理[指导规范]/">
+
+
+
+
+
+  <title>系统需求分析管理[指导规范] | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2019/05/05/2019/系统需求分析管理[指导规范]/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">系统需求分析管理[指导规范]</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-05T23:49:31+08:00">
+                2019-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/产品之家/" itemprop="url" rel="index">
+                    <span itemprop="name">产品之家</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>本指导规范适用于存在用户界面的系统需求分析及设计，对业务部门所给予的需求，利用技术及工具进行业务规则、业务范围、业务流程等方面分析，并产出开发人员可以理解的需求分析产出。</p>
+<h1 id="需求分析流程"><a href="#需求分析流程" class="headerlink" title="需求分析流程"></a>需求分析流程</h1><p><a href="/uploads/2019/05/xq/lc.png"><img src="/uploads/2019/05/xq/lc.png" alt></a></p>
+<a id="more"></a>
+<h2 id="用例分析"><a href="#用例分析" class="headerlink" title="用例分析"></a>用例分析</h2><p>理清业务需求是所有分析与设计的前提：</p>
+<ul>
+<li>确定系统的「关系人」及他们的「关注点」。</li>
+<li>确定系统的业务需求，即「谁」使用该系统「做什么」。</li>
+<li>确定系统的功能范围，即该系统「包含什么」，不包含「什么」。</li>
+</ul>
+<p>系统需要满足关系人的所有关注点，所以要确保所有这些关注点都有涉及到。最重要的关系人当然就是用户（有时还会细分为不同类型的用户），其他的还有系统数据的间接用户、领导等。</p>
+<p>关联附件：</p>
+<iframe style="width: 100%; height: 500px;" src="/uploads/2019/05/xq/PowerDesigner16用例图使用说明.pdf"></iframe>
+
+<h2 id="建立实体模型"><a href="#建立实体模型" class="headerlink" title="建立实体模型"></a>建立实体模型</h2><p>实体模型是确定系统包含的实体以及它们之间的关联的过程：</p>
+<ul>
+<li>理清业务概念，统一业务词汇。</li>
+<li>抽象业务实体，包括事件、人/角色、地点和事物等。</li>
+<li>识别实体关系：继承、聚合、关联等。</li>
+</ul>
+<p>实体模型也叫 ER（Entity-Relation）模型。需要注意的是一定要理清业务的概念，统一命名和定义业务相关词汇，这是进一步沟通的基础。</p>
+<p>关联附件：</p>
+<iframe style="width: 100%; height: 500px;" src="/uploads/2019/05/xq/PowerDesigner16下画E-R图.pdf"></iframe>
+
+<h2 id="物理模型设计-数据库设计"><a href="#物理模型设计-数据库设计" class="headerlink" title="物理模型设计(数据库设计)"></a>物理模型设计(数据库设计)</h2><p>根据实体模型由专门的技术人员进行数据库设计</p>
+<h2 id="功能结构设计"><a href="#功能结构设计" class="headerlink" title="功能结构设计"></a>功能结构设计</h2><p>确定系统内部的功能模块及其职责：</p>
+<ul>
+<li>确定系统的模块划分。</li>
+<li>确定每个模块的职责以及模块间的关联。</li>
+</ul>
+<p>功能模块对应的就是功能视图。这一步需要明确系统的功能结构，并基于功能结构进行可视化节点的划分。</p>
+<h2 id="系统原型设计"><a href="#系统原型设计" class="headerlink" title="系统原型设计"></a>系统原型设计</h2><p>当上面的工作都已经做到位以后，就可以进行系统的原型设计了，设计时可以参考下面的一些设计原则</p>
+<h3 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h3><p> -常用：将最常用的或者说最主要的功能放在主页或者最醒目的位置（不需要点击或者打开什么，直接可以开展操作）</p>
+<ul>
+<li>其他：其他不常用的功能，有一个统一的入口，然后使用列表或者树形结构；(需要点击一个按钮后才能看见)</li>
+</ul>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><ul>
+<li>不要让用户点来点去，尽量让每一次点击做尽可能多的工作</li>
+<li>走一个业务流程，不要让用户从这里个窗口跳到那个窗口，从这个页面跳到那个页面，尽可能一个页面搞定</li>
+</ul>
+<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><ul>
+<li>“操作成功”种类提示可以有，但是提示框会自动消失，不可以让用户确认之后提示才消失(就是不可使用alert提示成功)</li>
+<li>操作失败或者警告一类提示，需要用户点击确认一下；</li>
+<li>表单验证：验证失败，不要弹出alert，直接在页面给红色高亮出提示，并注明原因</li>
+<li>涉及到请求服务的内容，默认显示正在加载，给予友好提示(返回数据后再显示内容)</li>
+</ul>
+<h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><ul>
+<li>对于人为操作的系统业务流程原则上必须有日志记录</li>
+</ul>
+<h2 id="重点或复杂子流程设计"><a href="#重点或复杂子流程设计" class="headerlink" title="重点或复杂子流程设计"></a>重点或复杂子流程设计</h2><p>对于一些复杂或需要跨部门间合作的功能特性，需要对其进行跟深入的分析与设计，产出可供双方确认的文档或流程图。</p>
+<h1 id="工具选型"><a href="#工具选型" class="headerlink" title="工具选型"></a>工具选型</h1><p>为了使各设计文档交流更加方便，工具与文档的产出关系如下</p>
+<ul>
+<li>PowerDesigner 16.5 : 《用例图》、《ER图》、《物理模型》</li>
+<li>MindMaster 6.5 : 《系统结构》</li>
+<li>Axure 8.0 : 《系统原型》</li>
+<li>Visio2013 : 《重点流程》</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/需求分析/" rel="tag"># 需求分析</a>
+          
+            <a href="/tags/团队管理/" rel="tag"># 团队管理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/15/2019/2018大总结,2019大畅想/" rel="next" title="2018大总结,2019大畅想...">
+                <i class="fa fa-chevron-left"></i> 2018大总结,2019大畅想...
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/06/2019/基于Linux策略路由的智能网关系统/" rel="prev" title="基于Linux策略路由的多线路智能网关系统">
+                基于Linux策略路由的多线路智能网关系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#需求分析流程"><span class="nav-number">2.</span> <span class="nav-text">需求分析流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用例分析"><span class="nav-number">2.1.</span> <span class="nav-text">用例分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立实体模型"><span class="nav-number">2.2.</span> <span class="nav-text">建立实体模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#物理模型设计-数据库设计"><span class="nav-number">2.3.</span> <span class="nav-text">物理模型设计(数据库设计)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能结构设计"><span class="nav-number">2.4.</span> <span class="nav-text">功能结构设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统原型设计"><span class="nav-number">2.5.</span> <span class="nav-text">系统原型设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导航"><span class="nav-number">2.5.1.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作"><span class="nav-number">2.5.2.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提示"><span class="nav-number">2.5.3.</span> <span class="nav-text">提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志"><span class="nav-number">2.5.4.</span> <span class="nav-text">日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重点或复杂子流程设计"><span class="nav-number">2.6.</span> <span class="nav-text">重点或复杂子流程设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工具选型"><span class="nav-number">3.</span> <span class="nav-text">工具选型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

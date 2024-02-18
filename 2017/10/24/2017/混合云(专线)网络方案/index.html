@@ -1,0 +1,837 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="运维,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="规划概述根据公司的整体战略需求，公司IDC资源在逐步向公有云进行过渡，基于公司混合云的管理思路，并根据目前IDC的问题，对现有IDC规范化统一改造，主要针对主机，网络互联等进行一次较大规模的革新。 混合云网络整体架构 架构描述  公司混合云架构融合专线、VPN、互联网三条网络线路方案，实现网络传输的可靠性 所有IDC均设置一个10.x.0.0/16位地址段 所有IDC间内网实现互通，并可以自主选择">
+<meta name="keywords" content="运维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混合云(专线)网络方案">
+<meta property="og:url" content="http://toryzen.cn/2017/10/24/2017/混合云(专线)网络方案/index.html">
+<meta property="og:site_name" content="Toryzen&#39;s Blog">
+<meta property="og:description" content="规划概述根据公司的整体战略需求，公司IDC资源在逐步向公有云进行过渡，基于公司混合云的管理思路，并根据目前IDC的问题，对现有IDC规范化统一改造，主要针对主机，网络互联等进行一次较大规模的革新。 混合云网络整体架构 架构描述  公司混合云架构融合专线、VPN、互联网三条网络线路方案，实现网络传输的可靠性 所有IDC均设置一个10.x.0.0/16位地址段 所有IDC间内网实现互通，并可以自主选择">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/10/mcloud-1.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/10/mcloud-2.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/10/mcloud-3.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/10/mcloud-4.png">
+<meta property="og:image" content="http://toryzen.cn/uploads/2017/10/mcloud-5.png">
+<meta property="og:updated_time" content="2024-02-18T04:14:20.949Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="混合云(专线)网络方案">
+<meta name="twitter:description" content="规划概述根据公司的整体战略需求，公司IDC资源在逐步向公有云进行过渡，基于公司混合云的管理思路，并根据目前IDC的问题，对现有IDC规范化统一改造，主要针对主机，网络互联等进行一次较大规模的革新。 混合云网络整体架构 架构描述  公司混合云架构融合专线、VPN、互联网三条网络线路方案，实现网络传输的可靠性 所有IDC均设置一个10.x.0.0/16位地址段 所有IDC间内网实现互通，并可以自主选择">
+<meta name="twitter:image" content="http://toryzen.cn/uploads/2017/10/mcloud-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://toryzen.cn/2017/10/24/2017/混合云(专线)网络方案/">
+
+
+
+
+
+  <title>混合云(专线)网络方案 | Toryzen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42f15cb3cabf8deb7037661cd65164d6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toryzen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱技术,好产品,探管理,享生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/10/24/2017/混合云(专线)网络方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">混合云(专线)网络方案</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T12:07:58+08:00">
+                2017-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="规划概述"><a href="#规划概述" class="headerlink" title="规划概述"></a>规划概述</h1><p>根据公司的整体战略需求，公司IDC资源在逐步向公有云进行过渡，基于公司混合云的管理思路，并根据目前IDC的问题，对现有IDC规范化统一改造，主要针对主机，网络互联等进行一次较大规模的革新。</p>
+<h1 id="混合云网络整体架构"><a href="#混合云网络整体架构" class="headerlink" title="混合云网络整体架构"></a>混合云网络整体架构</h1><p><a href="/uploads/2017/10/mcloud-1.png"><img src="/uploads/2017/10/mcloud-1.png" alt title="mcloud"></a></p>
+<p><strong>架构描述</strong></p>
+<ul>
+<li>公司混合云架构融合专线、VPN、互联网三条网络线路方案，实现网络传输的可靠性</li>
+<li>所有IDC均设置一个10.x.0.0/16位地址段</li>
+<li>所有IDC间内网实现互通，并可以自主选择使用专线网络或VPN网络</li>
+<li>办公网均通过10.x.0.0/16位地址段进行主机的管理</li>
+</ul>
+<a id="more"></a>
+<h1 id="VPN互联"><a href="#VPN互联" class="headerlink" title="VPN互联"></a>VPN互联</h1><p><a href="/uploads/2017/10/mcloud-2.png"><img src="/uploads/2017/10/mcloud-2.png" alt title="mcloud"></a></p>
+<p><strong>架构描述</strong></p>
+<ul>
+<li>VPN网络采用OpenVPN技术实现，且整体为1套VPN网络</li>
+<li>洋桥VPN服务器作为VPN SERVER，其他IDC VPN服务器作为VPN CLIENT</li>
+<li>VPN服务器同时承担内网网关的角色</li>
+<li>各IDC间网络互访通过iptables控制</li>
+</ul>
+<h1 id="专线互联"><a href="#专线互联" class="headerlink" title="专线互联"></a>专线互联</h1><p><a href="/uploads/2017/10/mcloud-3.png"><img src="/uploads/2017/10/mcloud-3.png" alt title="mcloud"></a></p>
+<p><strong>架构描述</strong></p>
+<ul>
+<li>IDC网络互通默认走专线网络，在专线存在异常时切换至VPN网络（实现自助切换）</li>
+</ul>
+<h1 id="路由走向"><a href="#路由走向" class="headerlink" title="路由走向"></a>路由走向</h1><p><a href="/uploads/2017/10/mcloud-4.png"><img src="/uploads/2017/10/mcloud-4.png" alt title="mcloud"></a></p>
+<p><strong>描述</strong></p>
+<ul>
+<li>各IDC之间网络互通均可通过三种方式进行网络互通，公网数据流（有公网IP和无公网IP）、专线数据流、vpn数据流</li>
+<li>公有云与公有云之间网络互通通过自建机房网络进行中转</li>
+</ul>
+<h1 id="自建IDC主机连接"><a href="#自建IDC主机连接" class="headerlink" title="自建IDC主机连接"></a>自建IDC主机连接</h1><p><a href="/uploads/2017/10/mcloud-5.png"><img src="/uploads/2017/10/mcloud-5.png" alt title="mcloud"></a></p>
+<p><strong>描述</strong></p>
+<ul>
+<li>内网IP为主机必备IP，且内部管理均使用此IP进行管理</li>
+<li>所有机器（实体机，虚拟机）均需要配置并连接两块网卡</li>
+</ul>
+<hr>
+<p><strong>BTW:预期改造周期：3-6个月</strong></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/运维/" rel="tag"># 运维</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/18/2017/smartping开源、高效、便捷的网络质量监控神器/" rel="next" title="smartping开源、高效、便捷的网络质量监控神器">
+                <i class="fa fa-chevron-left"></i> smartping开源、高效、便捷的网络质量监控神器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/03/2017/新一代CC防火墙-SHIELD2-0/" rel="prev" title="新一代CC防火墙(SHIELD2.0)">
+                新一代CC防火墙(SHIELD2.0) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="toryzen">
+          <p class="site-author-name" itemprop="name">toryzen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/toryzen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/toryzen" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/toryzen" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/toryzen" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:36927999@qq.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-address-card"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#规划概述"><span class="nav-number">1.</span> <span class="nav-text">规划概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#混合云网络整体架构"><span class="nav-number">2.</span> <span class="nav-text">混合云网络整体架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VPN互联"><span class="nav-number">3.</span> <span class="nav-text">VPN互联</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#专线互联"><span class="nav-number">4.</span> <span class="nav-text">专线互联</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由走向"><span class="nav-number">5.</span> <span class="nav-text">路由走向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自建IDC主机连接"><span class="nav-number">6.</span> <span class="nav-text">自建IDC主机连接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toryzen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
