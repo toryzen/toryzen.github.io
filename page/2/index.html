@@ -95,7 +95,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Toryzen&#39;s Blog">
-<meta property="og:url" content="http://toryzen.cn/page/2/index.html">
+<meta property="og:url" content="http://toryzen.cn/archives/page/2/index.html">
 <meta property="og:site_name" content="Toryzen&#39;s Blog">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
@@ -127,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://toryzen.cn/page/2/">
+  <link rel="canonical" href="http://toryzen.cn/archives/page/2/">
 
 
 
 
 
-  <title>Toryzen's Blog</title>
+  <title>归档 | Toryzen's Blog</title>
   
 
 
@@ -168,9 +168,7 @@
     
   
 
-  <div class="container sidebar-position-right 
-   page-home 
- ">
+  <div class="container sidebar-position-right  page-archive  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -273,1450 +271,392 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
+
+    <span class="archive-page-counter">
+      
+      
+       
+        
+      很好! 目前共计 94 篇日志。 继续努力。
+    </span>
+
     
+
+      
+      
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2018/12/30/2018/基于kubernetes的持续部署(CD)方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/30/2018/基于kubernetes的持续部署(CD)方案/" itemprop="url">基于kubernetes的持续部署(CD)方案</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-30T15:41:07+08:00">
-                2018-12-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术之道/" itemprop="url" rel="index">
-                    <span itemprop="name">技术之道</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2019">2019</h2>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
       
       
 
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-          <h1 id="方案概述"><a href="#方案概述" class="headerlink" title="方案概述"></a>方案概述</h1><p>本技术方案为基于kubernetes(下文简称K8S)为核心的持续部署(下文简称CD)方案，可以满足开发方的程序级日志查看分析，运维方的快速扩容与日常运维分析，并且可以保证用户的服务体验。并且整套放在可以在资源利用率上进一步提升，在不降低服务可靠性的前提下降低资源使用成本。</p>
-<h1 id="使用场景分析"><a href="#使用场景分析" class="headerlink" title="使用场景分析"></a>使用场景分析</h1><p>本方案适用于以Tomcat为容器的JavaWeb项目的持续部署过程，在K8S方案中，所有的Node节点均采用统一配置，根据业务环境的需求进行节点数量的控制</p>
-<h1 id="技术架构与选型"><a href="#技术架构与选型" class="headerlink" title="技术架构与选型"></a>技术架构与选型</h1><p><a href="/uploads/2019/01/k8scd/k8s.png"><img src="/uploads/2019/01/k8scd/k8s.png" alt></a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/12/30/2018/基于kubernetes的持续部署(CD)方案/#more" rel="contents">
-              阅读全文 &raquo;
+            <a class="post-title-link" href="/2019/02/15/2019/2018大总结,2019大畅想/" itemprop="url">
+              
+                <span itemprop="name">2018大总结,2019大畅想...</span>
+              
             </a>
-          </div>
-          <!--/noindex-->
         
-      
-    </div>
+      </h2>
 
-    <div>
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-02-15T18:00:00+08:00" content="2019-02-15">
+          02-15
+        </time>
+      </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+    </header>
   </article>
 
 
+
     
+
+      
+      
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2018/03/07/2018/JumperServer的堡垒机应用方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/07/2018/JumperServer的堡垒机应用方案/" itemprop="url">JumperServer的堡垒机应用方案</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-07T15:41:07+08:00">
-                2018-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术之道/" itemprop="url" rel="index">
-                    <span itemprop="name">技术之道</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2018">2018</h2>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
       
       
 
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-          
-            <p>为加固当前服务器管理的安全性，解决现阶段多个入口的登录方式，推进资产统一使用堡垒机（JumperServer）进行管理</p>
-<h1 id="JMS部署架构"><a href="#JMS部署架构" class="headerlink" title="JMS部署架构"></a>JMS部署架构</h1><p><a href="/uploads/2018/03/jump-arc.png"><img src="/uploads/2018/03/jump-arc.png" alt></a></p>
-<h1 id="基于JMSV1-0修订部分"><a href="#基于JMSV1-0修订部分" class="headerlink" title="基于JMSV1.0修订部分"></a>基于JMSV1.0修订部分</h1><ul>
-<li>修订JMS节点相关数据结构，加快JMSZtree的生成速度(20s-&gt;2s)</li>
-<li>阉割web terminal(取消掉此功能)</li>
-<li>阉割资产信息、节点信息的编辑操作(每三分钟与中心应用进行同步)</li>
-<li>取消每次程序启动执行的资产信息检测，将定期检测修订为每2小时一次</li>
-<li>阉割coco的分组显示功能(分组无法有层级结构，遂取消，建议使用搜索)</li>
-<li>coco只允许使用密钥登录(不允许使用密码登录)</li>
-<li>修复重置公钥BUG(管理员重置公钥时不生效BUG修复)</li>
-<li>默认ssh连接超时修订为30s，修复不支持10s以上超时显示BUG(目前最多支持两位数)</li>
-<li>禁止删除ROOT帐号(安全性考虑防止用户误删ROOT帐号)</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2018/02/11/2018/2017大总结,2018大畅想/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/11/2018/2017大总结,2018大畅想/" itemprop="url">2017大总结,2018大畅想...</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2018/12/30/2018/基于kubernetes的持续部署(CD)方案/" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">基于kubernetes的持续部署(CD)方案</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-11T16:26:27+08:00">
-                2018-02-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/生活志/" itemprop="url" rel="index">
-                    <span itemprop="name">生活志</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>鉴于去年的总结拖延症问题，今年的总结整理的时间还是比较早的，回顾今年的一整年的生活及工作，各方面都在有条不紊的进步，但整体来说我自我感觉对本年度并不是特别满意，其实这也是一个矛盾的体现，生活、工作上事事顺利是努力的目标，但向这个目标努力也越发感到危机，今年比较郁闷的是原先的Blog域名忘记续费了，然后被抢注了，还挂上了六*彩，郁闷！等它到期再买回来吧。好了，感慨就发到这了，下面开始回顾2017年度的大事件吧！</p>
-<h1 id="2017大总结"><a href="#2017大总结" class="headerlink" title="2017大总结"></a>2017大总结</h1><p>比较惭愧，“2016大总结，2017大畅想”中没有畅想！今年好好畅想。</p>
-<h2 id="生活篇"><a href="#生活篇" class="headerlink" title="生活篇"></a>生活篇</h2><h3 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a>阅读</h3><p>今年没有读几本书，自己的阅读能力这几年在逐年下降，现在越来越不愿意进行完整化的阅读了，但碎片化的阅读又非常没有营养，今年要立志改善！尽量避免碎片化阅读，像什么刷今日头条、脉脉、微博等今年要一刀切拒绝！阅读的目标转向得到、即刻、知乎、豆瓣。并且今年重启豆瓣主页，在阅读的书籍方面，仍然以技术方向为主（偏技术底层），管理、民科为辅的阅读。<br><a href="/uploads/2018/02/zj/books.png"><img src="/uploads/2018/02/zj/books.png" alt title="books"></a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/11/2018/2017大总结,2018大畅想/#more" rel="contents">
-              阅读全文 &raquo;
             </a>
-          </div>
-          <!--/noindex-->
         
-      
-    </div>
+      </h2>
 
-    <div>
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2018-12-30T15:41:07+08:00" content="2018-12-30">
+          12-30
+        </time>
+      </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+    </header>
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2018/02/06/2018/私密信息传递工具Pandora/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
 
     
-      <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/06/2018/私密信息传递工具Pandora/" itemprop="url">私密信息传递工具PandoraBox</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T18:32:42+08:00">
-                2018-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/作品集/" itemprop="url" rel="index">
-                    <span itemprop="name">作品集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
+      
+      
+      
 
       
       
 
       
-        
-          <div align="center"><br>    <img src="/uploads/2018/01/pandora-3rd/icon.png" style="padding:0;margin-top:-60px;"><br>    <h3 align="center" style="padding:0;margin:-10px 0 -10px 0 ">PandoraBox | 私密信息传递工具</h3><br>    <div align="center" style="padding:0;margin-top:-40px;"><br>         基于非对称加密(RSA)的私密信息传递工具，数据由本地客户端进行加密、解密操作，密文通过网络进行传输，确保信息的安全性！<br>         <a href="https://github.com/gy-games/pandorabox" target="_blank" rel="noopener"><strong>– Browse Website –</strong></a><br>    </div><br></div>
 
-<h1 id="系统介绍"><a href="#系统介绍" class="headerlink" title="系统介绍"></a>系统介绍</h1><p>PandoraBox 由Server与Client两部分组成，Server使用Java SpringBoot编写，数据存储为Mysql，欢迎页面使用iview编写；Client使用C#编写，数据存储为sqlite，Client使用inno setup打包为安装包。且为了方便快速的信息发送，Server的数据结构内需要维护一套用户验证体系与用户组织结构，目前PandoraBox仅可发送文本信息。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/06/2018/私密信息传递工具Pandora/#more" rel="contents">
-              阅读全文 &raquo;
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2018/03/07/2018/JumperServer的堡垒机应用方案/" itemprop="url">
+              
+                <span itemprop="name">JumperServer的堡垒机应用方案</span>
+              
             </a>
-          </div>
-          <!--/noindex-->
         
-      
-    </div>
+      </h2>
 
-    <div>
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2018-03-07T15:41:07+08:00" content="2018-03-07">
+          03-07
+        </time>
+      </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+    </header>
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2018/01/27/2018/敏捷迭代管理-2018版指导规范/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
 
     
-      <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/27/2018/敏捷迭代管理-2018版指导规范/" itemprop="url">敏捷迭代管理[2018版指导规范]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T14:51:01+08:00">
-                2018-01-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/团队管理/" itemprop="url" rel="index">
-                    <span itemprop="name">团队管理</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
+      
+      
+      
 
       
       
 
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-          <p>经过一年的敏捷管理实践，基于PO制的敏捷模式在团队内效果良好，尤其是运维团队中，让运维的工作更具有节奏性且工作更为紧密。好的方面有很多，但是其中也发现很多的不足。</p>
-<ul>
-<li>流程规范中众多的章节都是偏向于开发团队的，很多场景不适合运维团队</li>
-<li>业务文档，技术文档拆分太细，不利于成员的理解与界限隔离</li>
-<li>太过于依赖于会议进行沟通，导致开会前准备不足，会议效率过低</li>
-</ul>
-<p>基于以上的问题，我们针对2017版的指导规范进行了需要重要的调整，合并运维项目管理与开发项目管理，规范更名在“敏捷迭代管理”，简化会议流程，追加需求实现规划阶段。</p>
-<p>下面来看一下新版的规范</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/27/2018/敏捷迭代管理-2018版指导规范/#more" rel="contents">
-              阅读全文 &raquo;
+            <a class="post-title-link" href="/2018/02/11/2018/2017大总结,2018大畅想/" itemprop="url">
+              
+                <span itemprop="name">2017大总结,2018大畅想...</span>
+              
             </a>
-          </div>
-          <!--/noindex-->
         
-      
-    </div>
+      </h2>
 
-    <div>
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2018-02-11T16:26:27+08:00" content="2018-02-11">
+          02-11
+        </time>
+      </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+    </header>
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/11/26/2017/gitc2017/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
 
     
-      <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/26/2017/gitc2017/" itemprop="url">2017GITC-开源运维自动化平台架构实现与运营实践</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-26T18:17:49+08:00">
-                2017-11-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术之道/" itemprop="url" rel="index">
-                    <span itemprop="name">技术之道</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
+      
+      
+      
 
       
       
 
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-          <p>非常有幸作为2017GITC的运维专场演讲嘉宾参与本次GITC，下面是本次演讲的内容。</p>
-<p>各位运维同胞们早上好，很高兴来到GITC运维专场跟大家共同交流分享我以及我们团队在运维上的一些认知、经验以及历程，来参加GITC好几年了以往都是在会场下聆听，这次站在讲台上还是有些激动哈，好的，下面就开始我本次的主题《开源运维自动化平台架构实现与运营实践》。</p>
-<p>开始之前先做个自我介绍，我目前所供职的公司为光宇游戏，是研发、运营、发型一体化的网游公司，我是在2012年加入的光宇游戏，目前负责运维架构、自动化平台、大数据平台的建设及人员管理工作，本次主题主要是分享一下在自动化平台建设方面的一些历程。</p>
-<p>本次主题的议程分为三个部分,第一部分为运维系统平台化建设思考，主要介绍一些光宇在运维自动化过程中的一些历程以及思考的一些问题；第二额部分为ELVES开源运维自动化开发平台，主要介绍光宇在解决平台化建设过程中发布的一款针对开发运维自动化平台的一款开源产品；第三部分为光宇游戏平台化建设运营实践，主要简单介绍光宇在运维自动化平台的几个重点组成部分。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/26/2017/gitc2017/#more" rel="contents">
-              阅读全文 &raquo;
+            <a class="post-title-link" href="/2018/02/06/2018/私密信息传递工具Pandora/" itemprop="url">
+              
+                <span itemprop="name">私密信息传递工具PandoraBox</span>
+              
             </a>
-          </div>
-          <!--/noindex-->
         
-      
-    </div>
+      </h2>
 
-    <div>
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2018-02-06T18:32:42+08:00" content="2018-02-06">
+          02-06
+        </time>
+      </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+    </header>
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/11/03/2017/新一代CC防火墙-SHIELD2-0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
 
     
-      <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/03/2017/新一代CC防火墙-SHIELD2-0/" itemprop="url">新一代CC防火墙(SHIELD2.0)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T20:01:24+08:00">
-                2017-11-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术之道/" itemprop="url" rel="index">
-                    <span itemprop="name">技术之道</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
+      
+      
+      
 
       
       
 
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-          <p>社区CC防火墙是公司对外提供服务的WEB站点的一层防护屏障，可以过滤访问请求，识别出攻击者，并与之屏蔽，保证WEB站点安全稳定的运行，新一代的CC防火墙产品是前一代的基础上在架构及功能上的一次重大革新</p>
-<ul>
-<li>新算法的应用，可缓解、抵御所有web站点遭到CC的攻击强度。</li>
-<li>整合不同部门的防火墙类产品，降低开发成本，增强用户体验。</li>
-<li>针对攻击IP的访问行为进行特征分析，增加分析维度</li>
-</ul>
-<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p><a href="/uploads/2017/11/shield2.0.jpg"><img src="/uploads/2017/11/shield2.0.jpg" alt title="shield2"></a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/03/2017/新一代CC防火墙-SHIELD2-0/#more" rel="contents">
-              阅读全文 &raquo;
+            <a class="post-title-link" href="/2018/01/27/2018/敏捷迭代管理-2018版指导规范/" itemprop="url">
+              
+                <span itemprop="name">敏捷迭代管理[2018版指导规范]</span>
+              
             </a>
-          </div>
-          <!--/noindex-->
         
-      
-    </div>
+      </h2>
 
-    <div>
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2018-01-27T14:51:01+08:00" content="2018-01-27">
+          01-27
+        </time>
+      </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+    </header>
   </article>
 
 
+
     
+
+      
+      
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/10/24/2017/混合云(专线)网络方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/24/2017/混合云(专线)网络方案/" itemprop="url">混合云(专线)网络方案</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T12:07:58+08:00">
-                2017-10-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术之道/" itemprop="url" rel="index">
-                    <span itemprop="name">技术之道</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
       
       
 
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-          <h1 id="规划概述"><a href="#规划概述" class="headerlink" title="规划概述"></a>规划概述</h1><p>根据公司的整体战略需求，公司IDC资源在逐步向公有云进行过渡，基于公司混合云的管理思路，并根据目前IDC的问题，对现有IDC规范化统一改造，主要针对主机，网络互联等进行一次较大规模的革新。</p>
-<h1 id="混合云网络整体架构"><a href="#混合云网络整体架构" class="headerlink" title="混合云网络整体架构"></a>混合云网络整体架构</h1><p><a href="/uploads/2017/10/mcloud-1.png"><img src="/uploads/2017/10/mcloud-1.png" alt title="mcloud"></a></p>
-<p><strong>架构描述</strong></p>
-<ul>
-<li>公司混合云架构融合专线、VPN、互联网三条网络线路方案，实现网络传输的可靠性</li>
-<li>所有IDC均设置一个10.x.0.0/16位地址段</li>
-<li>所有IDC间内网实现互通，并可以自主选择使用专线网络或VPN网络</li>
-<li>办公网均通过10.x.0.0/16位地址段进行主机的管理</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/24/2017/混合云(专线)网络方案/#more" rel="contents">
-              阅读全文 &raquo;
+            <a class="post-title-link" href="/2017/11/26/2017/gitc2017/" itemprop="url">
+              
+                <span itemprop="name">2017GITC-开源运维自动化平台架构实现与运营实践</span>
+              
             </a>
-          </div>
-          <!--/noindex-->
         
-      
-    </div>
+      </h2>
 
-    <div>
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2017-11-26T18:17:49+08:00" content="2017-11-26">
+          11-26
+        </time>
+      </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+    </header>
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/09/18/2017/smartping开源、高效、便捷的网络质量监控神器/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
 
     
-      <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/18/2017/smartping开源、高效、便捷的网络质量监控神器/" itemprop="url">smartping开源、高效、便捷的网络质量监控神器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T10:30:47+08:00">
-                2017-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/作品集/" itemprop="url" rel="index">
-                    <span itemprop="name">作品集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
+      
+      
+      
 
       
       
 
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-          <h1 id="SmartPing"><a href="#SmartPing" class="headerlink" title="SmartPing"></a>SmartPing</h1><p>SmartPing为一个各机器(点)间间互PING检测工具，支持互PING，单向PING，绘制拓扑及报警功能。</p>
-<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
-<li>单向PING，反向Ping绘图</li>
-<li>互PING间机器的状态拓扑</li>
-<li>自定义延迟、丢包阈值报警</li>
-</ul>
-<h2 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h2><p>本系统设计为无中心化原则，所有的数据均存储自身点中，默认每个Ping目标点的数据循环保留1个月时间，由自身点的数据绘制 <strong>出PING包</strong> 的状态，由各其他点的数据绘制 <strong>进PING包</strong> 的状态，从任意一点查询数据均会通过Ajax请求关联点的API接口获取其他点数据组装全部数据，绘制 出Ping曲线图，进Ping曲线图，网络互Ping拓扑图。并可以设置阈值进行报警，方便对网络质量的监控。</p>
-<h2 id="项目截图"><a href="#项目截图" class="headerlink" title="项目截图"></a>项目截图</h2><p><img src="/uploads/2017/09/app-bg.png" alt="app-bg.jpg"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/18/2017/smartping开源、高效、便捷的网络质量监控神器/#more" rel="contents">
-              阅读全文 &raquo;
+            <a class="post-title-link" href="/2017/11/03/2017/新一代CC防火墙-SHIELD2-0/" itemprop="url">
+              
+                <span itemprop="name">新一代CC防火墙(SHIELD2.0)</span>
+              
             </a>
-          </div>
-          <!--/noindex-->
         
-      
-    </div>
+      </h2>
 
-    <div>
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2017-11-03T20:01:24+08:00" content="2017-11-03">
+          11-03
+        </time>
+      </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+    </header>
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2017/06/30/2017/ELVES开源啦/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
 
     
-      <header class="post-header">
 
+      
+      
+      
+
+      
+      
+
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2017/10/24/2017/混合云(专线)网络方案/" itemprop="url">
+              
+                <span itemprop="name">混合云(专线)网络方案</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/2017/ELVES开源啦/" itemprop="url">ELVES开源啦</a></h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-30T21:25:19+08:00">
-                2017-06-30
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2017-10-24T12:07:58+08:00" content="2017-10-24">
+          10-24
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术之道/" itemprop="url" rel="index">
-                    <span itemprop="name">技术之道</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="欢迎关注Elves-Project"><a href="#欢迎关注Elves-Project" class="headerlink" title="欢迎关注Elves-Project"></a>欢迎关注Elves-Project</h1><p><strong>自动化运维开发平台</strong></p>
-<p>Elves-Project 才刚刚起步，欢迎更多的人加入我们，共同见证其成长！</p>
-<p>QQ群：69748845</p>
-<hr>
-<h2 id="作者列表"><a href="#作者列表" class="headerlink" title="作者列表"></a>作者列表</h2><ul>
-<li><a href="http://toryzen.cn">toryzen</a></li>
-<li>eastFu</li>
-<li>光宇游戏系统部</li>
-</ul>
-<h2 id="贡献列表"><a href="#贡献列表" class="headerlink" title="贡献列表"></a>贡献列表</h2><ul>
-<li>Zhangguangxin</li>
-<li>Liyong</li>
-<li>Xiehuanhuan</li>
-</ul>
-<hr>
-<p><em>如果您在使用Elves，那么可以修改</em><a href="https://github.com/gy-games/elves-book/blob/master/huan-ying.md" target="_blank" rel="noopener">_ huan-ying.md_</a>_ , 然后提交pull-request到gy-games/elves-book，等待merge过后，即可在这里显示。_</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+    </header>
   </article>
 
 
+
     
+
+      
+      
+      
+
+      
+      
+
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2017/09/18/2017/smartping开源、高效、便捷的网络质量监控神器/" itemprop="url">
+              
+                <span itemprop="name">smartping开源、高效、便捷的网络质量监控神器</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2017-09-18T10:30:47+08:00" content="2017-09-18">
+          09-18
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+    
+
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/10/">10</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
+
 
 
 
@@ -1758,7 +698,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-count">94</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1869,7 +809,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1889,9 +829,6 @@
 </div>
 
 
-<script>
-!function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"KG9hRahDQCRJP4ho",ck:"KG9hRahDQCRJP4ho"});
-</script>
         
 
         
@@ -1975,10 +912,12 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
   
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
+
 
   
 
