@@ -284,6 +284,145 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2016/06/17/2016/Strom实现服务器关系拓扑及状态监控/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="toryzen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toryzen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/17/2016/Strom实现服务器关系拓扑及状态监控/" itemprop="url">Strom实现服务器关系拓扑及状态监控</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-17T13:15:27+08:00">
+                2016-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术之道/" itemprop="url" rel="index">
+                    <span itemprop="name">技术之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>前段时间使用Strom实时分析实现了CC防火墙，既然Nginx的原始数据已经有了，那我们其实还可以基于Strom做更多有价值的事情，近期我们使用Strom上线了服务器拓扑图的功能，并可以实现接近实时的监控效果。</p>
+<div></div><br><div>先看一下业务背景，我们的社区业务分为10个模块，模块与模块间通过RESTful形式进行交互与调用，经过多年的开发的迭代，目前整个社区的业务错综复杂，这其实也给运维造成了不小的难度，可能因某个接口出现问题导致多个业务受损，而因运维对接口间的调用并不熟悉导致接到业务问题后不能快速准确定定位问题，基于这些背景拓扑图项目就来了！</div><br><div></div><br><div></div><br><div>数据的采集架构与前段时间的CC防火墙采用同一套，基于Kafka支持多个消费者的特性，我们只需要重新取出一份数据来就可以了。</div><br><div>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/17/2016/Strom实现服务器关系拓扑及状态监控/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div></article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2016/06/01/2016/运维体系阶段性分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1539,146 +1678,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://toryzen.cn/2015/04/06/2015/手游数据分析标准LOG库/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="toryzen">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Toryzen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/04/06/2015/手游数据分析标准LOG库/" itemprop="url">手游数据分析标准LOG库</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-06T20:13:42+08:00">
-                2015-04-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术之道/" itemprop="url" rel="index">
-                    <span itemprop="name">技术之道</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>经过半年的系统开发与数据分析，目前最为复杂的地方就是在游戏研发方记录的LOG日志上，每个CP团队的日志记录方式，时间点均有所差异，而面对产品所需要的数据我们只能逐一进行分析，而且尤其是时间点问题导致数据计算异常的事情时有发生，鉴于以上的问题进过多部分游戏的分析最终产出一套基于我们开发的系统的标准LOG库，并且逐步的与新接入研发方沟通，在数据记录/时间点上以此作为规范。<br>以下的数据基本上囊括了我们的产品所需要计算的所有数值，也几乎容纳了网上对于游戏运营所需要的基础数值。</p>
-<p><strong>结构简述</strong></p>
-<p>手游日志库包含两部分，<br>1、  中心数据库(ucenter)，所有的游戏公用的数据库，存储未分区服前的数据，<br>2、  独立游戏库(ugame)，每区服一个，存储已区分区服的游戏数据
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/04/06/2015/手游数据分析标准LOG库/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1726,7 +1725,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-count">95</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1837,7 +1836,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
