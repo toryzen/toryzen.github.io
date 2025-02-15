@@ -1678,7 +1678,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff52ff;
+  background: #df0a94;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2851,4 +2851,15 @@ pre .javascript .function {
   .post-body {
     text-align: justify;
   }
+}
+.myalbum a {
+  text-decoration: none;
+  border-bottom: none;
+}
+.myalbum img {
+  border: none;
+}
+.myalbum {
+  display: flex;
+  justify-content: space-around;
 }
